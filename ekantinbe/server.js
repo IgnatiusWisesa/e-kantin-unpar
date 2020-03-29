@@ -23,7 +23,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Set routes
-app.get('/', (req, res) => res.send('Server is running...'));
+const { adminRoutes, publicRoutes } = require('./routes');
+app.get('/', (req, res) => res.send('Server e-kantin Unpar is running...'));
+app.use('/admin', adminRoutes);
+app.use('/public', publicRoutes);
 
 // Set PORT
 const PORT = process.env.PORT || 1919;
