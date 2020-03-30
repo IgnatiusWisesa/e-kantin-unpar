@@ -30,4 +30,11 @@ router.post('/edit-stand-profile', adminControllers.adminEditProfileStand);
  */
 router.post('/delete-stand', adminControllers.adminDeleteStand);
 
+/**
+ * @routes POST admin/menu
+ * @description Admin get all menu
+ * @access Admin
+ */
+router.post('/menu', adminControllers.adminGetStandMenu);
+
 module.exports = router;

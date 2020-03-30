@@ -126,5 +126,37 @@ module.exports = {
 				return res.status(200).send({ error: false, message: 'Data berhasil di hapus!' });
 			}
 		});
+	},
+
+	/**
+	 * @routes POST admin/menu
+	 * @description Admin get all menu
+	 * @access Admin
+	 */
+	adminGetStandMenu: (req, res) => {
+		// Get Profile Id
+		const { profileId } = req.body; // req.body.data
+
+		// Set SQL Syntax
+		const sqlMenu = `
+			SELECT 
+				sm.menuId, 
+				sm.menuName, 
+				sm.menuPrice, 
+				sm.menuDesc 
+			FROM 
+				stand_menu sm 
+			WHERE sm.profileId = ?`;
+
+		// Database Action
+		db.query(sqlMenu, parseInt(profileId), (err, menuResult) => {
+			if (err) res.status(500).send(err);
+
+			if (menuResult.length === 0) {
+				return res.status(200).send({ error: true, message: 'Data tidak tersedia!' });
+			} else {
+				return res.status(200).send({ error: false, menuResult });
+			}
+		});
 	}
 };
