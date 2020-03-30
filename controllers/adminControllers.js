@@ -29,7 +29,7 @@ module.exports = {
 						.status(200)
 						.send({ error: true, message: 'Email yang anda masukkan tidak terdaftar!' });
 				} else {
-					return res.status(200).send({ error: false, result: loginResult });
+					return res.status(200).send({ error: false, result: loginResult[0] });
 				}
 			});
 		}
