@@ -9,7 +9,7 @@ module.exports = {
 	 */
 	publicGetListStand: (req, res) => {
 		// Set SQL Syntax
-		const sql = `
+		const sqlStand = `
 			SELECT 
 				sp.profileId,
         sp.standName,
@@ -21,43 +21,111 @@ module.exports = {
             stand_address sa ON sa.profileId = sp.profileId`;
 
 		// Database Action
-		db.query(sql, (err, standResult) => {
+		db.query(sqlStand, (err, standResult) => {
 			if (err) res.status(500).send(err);
 
 			if (standResult.length === 0) {
 				return res.status(200).send({ error: true, message: 'Data tidak tersedia!' });
 			} else {
-				return res.status(200).send({ error: false, listStands: standResult });
+				return res.status(200).send({ error: false, standResult });
 			}
 		});
 	},
 
 	/**
-	 * @routes POST public/stand-items
-	 * @description Public get list stand items
+	 * @routes POST public/stand/details
+	 * @description Public get stand profile & menu
 	 * @access Public
 	 */
-	publicGetItemsStand: (req, res) => {
+	publicGetDetailStand: (req, res) => {
 		// Get Stand Id
-		const profileId = parseInt(req.body.profileId);
+		const { profileId } = req.body; // req.body.data
 
 		// Set SQL Syntax
-		const sqlItems = `
-      SELECT 
-        si.itemId, 
-        si.itemName, 
-        si.itemPrice, 
-        si.itemDesc, 
-        si.itemPhoto 
-      FROM stand_items si 
-      WHERE si.profileId = ?;`;
+		const sqlMenu = `
+			SELECT 
+				sp.profileId,
+				sp.standName,
+				sp.standContact,
+				sp.standPhoto,
+        sm.menuId, 
+        sm.menuName, 
+        sm.menuPrice, 
+        sm.menuCategory, 
+        sm.menuDesc
+			FROM 
+				stand_profile as sp
+			JOIN
+				stand_menu sm 
+					ON sm.profileId = sp.profileId
+      WHERE sp.profileId = ?`;
 
 		// Database Action
-		db.query(sqlItems, profileId, (err, itemsResult) => {
+		db.query(sqlMenu, parseInt(profileId), (err, menuResult) => {
 			if (err) res.status(500).send(err);
 
-			if (itemsResult.length === 0) {
+			if (menuResult.length === 0) {
 				return res.status(200).send({ error: true, message: 'Data tidak tersedia!' });
+			} else {
+				return res.status(200).send({ error: false, menuResult });
+			}
+		});
+	},
+
+	/**
+	 * @routes POST public/menu/food
+	 * @description Public get all food menu
+	 * @access Public
+	 */
+	publicGetFoodMenu: (req, res) => {
+		// Set SQL Syntax
+		const sqlFood = `
+			SELECT
+				sm.menuId,
+				sm.menuName,
+				sm.menuPrice,
+				sm.menuDesc
+			FROM
+				stand_menu sm
+			WHERE sm.menuCategory = 'food'`;
+
+		// Database Action
+		db.query(sqlFood, (err, foodResult) => {
+			if (err) res.status(500).send(err);
+
+			if (foodResult.length === 0) {
+				return res.status(200).send({ error: true, message: 'Data tidak tersedia!' });
+			} else {
+				return res.status(200).send({ error: false, foodResult });
+			}
+		});
+	},
+
+	/**
+	 * @routes POST public/menu/drink
+	 * @description Public get all drink menu
+	 * @access Public
+	 */
+	publicGetDrinkMenu: (req, res) => {
+		// Set SQL Syntax
+		const sqlDrink = `
+			SELECT
+				sm.menuId,
+				sm.menuName,
+				sm.menuPrice,
+				sm.menuDesc
+			FROM
+				stand_menu sm
+			WHERE sm.menuCategory = 'drink'`;
+
+		// Database Action
+		db.query(sqlDrink, (err, drinkResult) => {
+			if (err) res.status(500).send(err);
+
+			if (drinkResult.length === 0) {
+				return res.status(200).send({ error: true, message: 'Data tidak tersedia!' });
+			} else {
+				return res.status(200).send({ error: false, drinkResult });
 			}
 		});
 	}
