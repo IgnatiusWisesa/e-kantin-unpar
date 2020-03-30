@@ -10,11 +10,11 @@ module.exports = {
 	publicGetListStand: (req, res) => {
 		// Set SQL Syntax
 		const sql = `
-      SELECT 
+			SELECT 
+				sp.profileId,
         sp.standName,
         sp.standContact,
-        sp.standPhoto,
-        sa.standAddress
+        sp.standPhoto
       FROM
         stand_profile sp
           JOIN
