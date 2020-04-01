@@ -158,5 +158,107 @@ module.exports = {
 				return res.status(200).send({ error: false, menuResult });
 			}
 		});
+	},
+
+	/**
+	 * @routes POST admin/add-menu
+	 * @description Admin create a new menu
+	 * @access Admin
+	 */
+	adminAddStandMenu: (req, res) => {
+		// Get Data Menu
+		const { profileId, menuName, menuPrice, menuCategory, menuDesc } = req.body; // req.body.data
+
+		// Validation Data
+		if (
+			profileId === undefined ||
+			profileId === 0 ||
+			menuName === undefined ||
+			menuName === '' ||
+			menuPrice === undefined ||
+			menuPrice === '' ||
+			menuCategory === undefined ||
+			menuCategory === '' ||
+			menuDesc === undefined ||
+			menuDesc === ''
+		) {
+			return res.status(200).send({ error: true, message: 'Data tidak boleh kosong!' });
+		} else {
+			// Set Data
+			const data = {
+				profileId,
+				menuName,
+				menuPrice,
+				menuCategory,
+				menuDesc
+			};
+
+			// Set SQL Syntax
+			const sqlAddMenu = `INSERT INTO stand_menu SET ?`;
+
+			// Database Action
+			db.query(sqlAddMenu, data, (err, addResult) => {
+				if (err) res.status(500).send(err);
+
+				if (addResult.insertId === 0) {
+					return res
+						.status(200)
+						.send({ error: true, message: 'Data tidak berhasil di tambah!' });
+				} else {
+					return res.status(200).send({ error: false, message: 'Data berhasil di tambah!' });
+				}
+			});
+		}
+	},
+
+	/**
+	 * @routes POST admin/edit-menu
+	 * @description Admin update a menu
+	 * @access Admin
+	 */
+	adminEditStandMenu: (req, res) => {
+		// Get Data Update
+		const { profileId } = req.body; // req.body.data
+
+		// Set Data
+		const data = req.body; // req.body.data
+
+		// Set SQL Syntax
+		const sqlUpdateMenu = `UPDATE FROM stand_menu sm SET ? WHERE sm.profileId = ?`;
+
+		// Database Action
+		db.query(sqlUpdateMenu, [data, parseInt(profileId)], (err, updateResult) => {
+			if (err) res.status(500).send(err);
+
+			if (updateResult.affectedRows === 0) {
+				return res.status(200).send({ error: true, message: 'Data gagal di update!' });
+			} else {
+				return res.status(200).send({ error: false, message: 'Data berhasil di update!' });
+			}
+		});
+	},
+
+	/**
+	 * @routes POST admin/delete-menu
+	 * @description Admin delete a menu
+	 * @access Admin
+	 */
+	adminDeleteStandMenu: (req, res) => {
+		// Get Menu Id
+		const { menuId } = req.body; // req.body.data
+
+		// Set SQL Syntax
+		const sqlDeleteMenu = `DELETE FROM stand_menu sm WHERE sm.menuId = ?`;
+
+		// Database Action
+		db.query(sqlDeleteMenu, parseInt(menuId), (err, deleteResult) => {
+			if (err) res.status(500).send(err);
+
+			if (deleteResult.affectedRows === 0) {
+				return res.status(200).send({ error: true, message: 'Data gagal di hapus!' });
+			} else {
+				return res.status(200).send({ error: false, message: 'Data berhasil di hapus!' });
+			}
+		});
 	}
 };

@@ -37,4 +37,25 @@ router.post('/delete-stand', adminControllers.adminDeleteStand);
  */
 router.post('/menu', adminControllers.adminGetStandMenu);
 
+/**
+ * @routes POST admin/add-menu
+ * @description Admin create a new menu
+ * @access Admin
+ */
+router.post('/add-menu', adminControllers.adminAddStandMenu);
+
+/**
+ * @routes POST admin/edit-menu
+ * @description Admin update a menu
+ * @access Admin
+ */
+router.post('/edit-menu', adminControllers.adminEditStandMenu);
+
+/**
+ * @routes POST admin/delete-menu
+ * @description Admin delete a menu
+ * @access Admin
+ */
+router.post('/delete-menu', adminControllers.adminDeleteStandMenu);
+
 module.exports = router;
