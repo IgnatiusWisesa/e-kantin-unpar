@@ -1,0 +1,3 @@
+//
+// BOTTOM NAV
+export const SET_VALUE_BOTTOMNAV = "SET_VALUE_BOTTOMNAV";

@@ -1,12 +1,15 @@
 import React, { Fragment } from "react";
 import { Switch, Route } from "react-router-dom";
 
-import AppBar from "./components/AppBar";
-import Homepage from "./pages/Homepage";
-
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
 import CssBaseline from "@material-ui/core/CssBaseline";
+
+import AppBar from "./components/AppBar";
+import BottomNav from "./components/BottomNav";
+import Katalog from "./pages/Katalog";
+import DaftarMenu from "./pages/DaftarMenu";
+import ProfilKantin from "./pages/ProfilKantin";
 
 const theme = createMuiTheme({
   palette: {
@@ -24,8 +27,11 @@ function App() {
       <ThemeProvider theme={theme}>
         <AppBar />
         <Switch>
-          <Route path="/" component={Homepage} />
+          <Route path="/" exact component={Katalog} />
+          <Route path="/daftar_menu" component={DaftarMenu} />
+          <Route path="/profil" component={ProfilKantin} />
         </Switch>
+        <BottomNav />
       </ThemeProvider>
     </Fragment>
   );
