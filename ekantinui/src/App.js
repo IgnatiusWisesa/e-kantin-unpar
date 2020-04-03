@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment } from "react";
+import { Switch, Route } from "react-router-dom";
+
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import blue from "@material-ui/core/colors/blue";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+import AppBar from "./components/AppBar";
+import BottomNav from "./components/BottomNav";
+import Katalog from "./pages/Katalog";
+import DaftarMenu from "./pages/DaftarMenu";
+import ProfilKantin from "./pages/ProfilKantin";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+    secondary: {
+      main: "#f44336"
+    }
+  }
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <AppBar />
+        <Switch>
+          <Route path="/" exact component={Katalog} />
+          <Route path="/daftar_menu" component={DaftarMenu} />
+          <Route path="/profil" component={ProfilKantin} />
+        </Switch>
+        <BottomNav />
+      </ThemeProvider>
+    </Fragment>
   );
 }
 
