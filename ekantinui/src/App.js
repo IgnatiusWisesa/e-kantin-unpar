@@ -4,20 +4,18 @@ import { Switch, Route } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import "./styles/App.css";
 
-import AppBar from "./components/AppBar";
-import BottomNav from "./components/BottomNav";
-import Katalog from "./pages/Katalog";
-import DaftarMenu from "./pages/DaftarMenu";
-import ProfilKantin from "./pages/ProfilKantin";
+import Homepage from "./pages/Homepage";
+import Admin from "./pages/Admin";
 
 const theme = createMuiTheme({
   palette: {
     primary: blue,
     secondary: {
-      main: "#f44336"
-    }
-  }
+      main: "#f44336",
+    },
+  },
 });
 
 function App() {
@@ -25,13 +23,10 @@ function App() {
     <Fragment>
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        <AppBar />
         <Switch>
-          <Route path="/" exact component={Katalog} />
-          <Route path="/daftar_menu" component={DaftarMenu} />
-          <Route path="/profil" component={ProfilKantin} />
+          <Route path="/admin" component={Admin} />
+          <Route path="/" component={Homepage} />
         </Switch>
-        <BottomNav />
       </ThemeProvider>
     </Fragment>
   );

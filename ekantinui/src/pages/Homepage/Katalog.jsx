@@ -10,11 +10,11 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
-import LogoWA from "../chat_via_wa.svg";
-import ScrollToTop from "../components/ScrollToTop";
+import LogoWA from "../../chat_via_wa.svg";
+import ScrollToTop from "../../components/ScrollToTop";
 import { Link } from "react-router-dom";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     minHeight: "100vh",
     maxWidth: 480,
@@ -23,36 +23,36 @@ const useStyles = makeStyles(theme => ({
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: 30,
-    backgroundColor: "#fff"
-  }
+    backgroundColor: "#fff",
+  },
 }));
 
-const cardStyles = makeStyles(theme => ({
+const cardStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexWrap: "wrap",
     height: "100%",
     justifyContent: "space-around",
-    alignContent: "space-between"
+    alignContent: "space-between",
   },
   root: {
     width: 180,
-    marginBottom: "5%"
+    marginBottom: "5%",
   },
   title: {
     fontSize: 16,
-    textAlign: "center"
+    textAlign: "center",
   },
   button: {
     marginRight: "auto",
-    marginLeft: "auto"
+    marginLeft: "auto",
   },
   avatar: {
     width: theme.spacing(10),
     height: theme.spacing(10),
     marginRight: "auto",
-    marginLeft: "auto"
-  }
+    marginLeft: "auto",
+  },
 }));
 
 const dataKantin = [
@@ -65,7 +65,7 @@ const dataKantin = [
   { id: 7, name: "Kantin Tujuh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/7.jpg" },
   { id: 8, name: "Kantin Delapan", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/3.jpg" },
   { id: 9, name: "Kantin Sembilan", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/4.jpg" },
-  { id: 10, name: "Kantin Sepuluh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/5.jpg" }
+  { id: 10, name: "Kantin Sepuluh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/5.jpg" },
 ];
 
 export default function Katalog() {
@@ -78,7 +78,7 @@ export default function Katalog() {
       <div className={classes.container}>
         <Toolbar />
         <div className={cardStyle.container}>
-          {dataKantin.map(kantin => {
+          {dataKantin.map((kantin) => {
             return (
               <div variant="outlined" key={kantin.id} className={cardStyle.root}>
                 <CardActionArea component={Link} to={{ pathname: "/profil", id: kantin.id }}>
