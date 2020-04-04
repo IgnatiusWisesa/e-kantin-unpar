@@ -1,6 +1,5 @@
 import React, { useState, Fragment } from "react";
 import { Link, useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,11 +11,11 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Popover from "@material-ui/core/Popover";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 480,
     backgroundColor: "grey",
-    flexGrow: 1
+    flexGrow: 1,
   },
   appBar: {
     width: 460,
@@ -24,10 +23,10 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 10,
     marginLeft: "auto",
     marginRight: "auto",
-    zIndex: theme.zIndex.drawer + 1
+    zIndex: theme.zIndex.drawer + 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
@@ -35,22 +34,22 @@ const useStyles = makeStyles(theme => ({
     color: "inherit",
     display: "block",
     [theme.breakpoints.up("sm")]: {
-      display: "block"
-    }
+      display: "block",
+    },
   },
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+      backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
     width: "50%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(1),
-      width: "auto"
-    }
+      width: "auto",
+    },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -59,10 +58,10 @@ const useStyles = makeStyles(theme => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   inputRoot: {
-    color: "inherit"
+    color: "inherit",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -73,21 +72,21 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       width: "12ch",
       "&:focus": {
-        width: "20ch"
-      }
-    }
-  }
+        width: "20ch",
+      },
+    },
+  },
 }));
 
 function ElevationScroll(props) {
   const { children } = props;
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 0
+    threshold: 0,
   });
 
   return React.cloneElement(children, {
-    elevation: trigger ? 4 : 0
+    elevation: trigger ? 4 : 0,
   });
 }
 
@@ -131,7 +130,7 @@ export default function SearchAppBar(props) {
                     placeholder="Search…"
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput
+                      input: classes.inputInput,
                     }}
                     inputProps={{ "aria-label": "search" }}
                   />
@@ -148,11 +147,11 @@ export default function SearchAppBar(props) {
         onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left"
+          horizontal: "left",
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "left"
+          horizontal: "left",
         }}>
         <div style={{ width: 480, marginLeft: "auto", marginRight: "auto" }}>
           <Typography className={classes.typography}>The content of the Popover.</Typography>
@@ -161,7 +160,3 @@ export default function SearchAppBar(props) {
     </Fragment>
   );
 }
-
-ElevationScroll.propTypes = {
-  children: PropTypes.element.isRequired
-};
