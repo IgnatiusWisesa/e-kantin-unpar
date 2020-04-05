@@ -10,15 +10,14 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import Popover from "@material-ui/core/Popover";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Paper from "@material-ui/core/Paper";
-import Divider from "@material-ui/core/Divider";
+// import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+// import List from "@material-ui/core/List";
+// import ListItem from "@material-ui/core/ListItem";
+// import ListItemIcon from "@material-ui/core/ListItemIcon";
+// import IconButton from "@material-ui/core/IconButton";
+// import MenuIcon from "@material-ui/icons/Menu";
+// import Paper from "@material-ui/core/Paper";
+// import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -105,13 +104,13 @@ function HeaderAppBar(props) {
   const location = useLocation();
   const history = useHistory();
 
-  const [state, setState] = useState(false);
-  const toggleDrawer = (open) => (event) => {
-    if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
-      return;
-    }
-    setState(open);
-  };
+  // const [state, setState] = useState(false);
+  // const toggleDrawer = (open) => (event) => {
+  //   if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+  //     return;
+  //   }
+  //   setState(open);
+  // };
 
   return (
     <Fragment>
@@ -122,14 +121,14 @@ function HeaderAppBar(props) {
               <Toolbar>
                 {location.pathname === "/" || location.pathname === "/daftar_menu" ? (
                   <>
-                    <IconButton
+                    {/* <IconButton
                       onClick={toggleDrawer(true)}
                       edge="start"
                       className={classes.menuButton}
                       color="inherit"
                       aria-label="menu">
                       <MenuIcon />
-                    </IconButton>
+                    </IconButton> */}
                     <Typography className={classes.title} variant="h6" noWrap>
                       eKantin
                     </Typography>
@@ -159,7 +158,7 @@ function HeaderAppBar(props) {
           </AppBar>
         </div>
       </ElevationScroll>
-      <SwipeableDrawer anchor="left" open={state} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
+      {/* <SwipeableDrawer anchor="left" open={state} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
         <div className={classes.toolbar} />
         <Divider />
         <Paper elevation={0} style={{ width: 200 }}>
@@ -169,7 +168,7 @@ function HeaderAppBar(props) {
             </Button>
           </ListItem>
         </Paper>
-      </SwipeableDrawer>
+      </SwipeableDrawer> */}
     </Fragment>
   );
 }

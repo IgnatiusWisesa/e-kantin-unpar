@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import ManageMerchant from "./admin/manageMerchant";
 import ManageMenus from "./admin/manageMenus";
@@ -17,6 +17,7 @@ function Admin(props) {
           <Route path="/admin/managemerchant" component={ManageMerchant} />
           <Route path="/admin/managemenus/:id" component={ManageMenus} />
           <Route path="/admin/login" component={LoginPage} />
+          <Redirect from="/admin" to="/admin/login" />
         </Switch>
         <AdminFooter />
       </div>
