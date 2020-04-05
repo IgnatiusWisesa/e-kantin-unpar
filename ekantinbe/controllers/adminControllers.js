@@ -14,7 +14,12 @@ module.exports = {
 		const { adminMail, adminPassword } = req.body; // req.body.data
 
 		// Validation Email And Password
-		if (adminMail === undefined || adminPassword === undefined) {
+		if (
+			adminMail === undefined ||
+			adminMail === '' ||
+			adminPassword === undefined ||
+			adminMail === ''
+		) {
 			return res
 				.status(200)
 				.send({ error: true, message: 'Kolom email/password tidak boleh kosong!' });
