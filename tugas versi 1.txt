@@ -1,0 +1,8 @@
+Req Body Add & Edit Menu:
+- idstand (angka)
+- select category (makanan & minuman) --> pokonya kirim string
+- menu
+- deskripsi
+- harga
+
+Telpon ilangin

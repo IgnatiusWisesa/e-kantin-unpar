@@ -100,7 +100,7 @@ function ElevationScroll(props) {
   });
 }
 
-export default function HeaderAppBar(props) {
+function HeaderAppBar(props) {
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
@@ -173,3 +173,5 @@ export default function HeaderAppBar(props) {
     </Fragment>
   );
 }
+
+export default HeaderAppBar;

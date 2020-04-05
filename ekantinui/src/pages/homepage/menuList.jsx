@@ -1,16 +1,16 @@
-import React, { Fragment, useState } from "./node_modules/react";
+import React, { Fragment, useState } from "react";
 import Numeral from "numeral";
-import { makeStyles, useTheme } from "./node_modules/@material-ui/core/styles";
-import Toolbar from "./node_modules/@material-ui/core/Toolbar";
-import AppBar from "./node_modules/@material-ui/core/AppBar";
-import Tabs from "./node_modules/@material-ui/core/Tabs";
-import Tab from "./node_modules/@material-ui/core/Tab";
-import Typography from "./node_modules/@material-ui/core/Typography";
-import Box from "./node_modules/@material-ui/core/Box";
-import ListItem from "./node_modules/@material-ui/core/ListItem";
-import ListItemText from "./node_modules/@material-ui/core/ListItemText";
-import RestaurantIcon from "./node_modules/@material-ui/icons/Restaurant";
-import LocalCafeIcon from "./node_modules/@material-ui/icons/LocalCafe";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import RestaurantIcon from "@material-ui/icons/Restaurant";
+import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 
 import ScrollToTop from "../../components/scrollToTop";
 
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MenuList() {
+function MenuList() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
@@ -153,3 +153,5 @@ const daftarMinuman = [
   { name: "Kopi", description: "dingin/panas", price: 4000 },
   { name: "Mineral Prima", description: "botol dingin/panas", price: 5000 },
 ];
+
+export default MenuList;

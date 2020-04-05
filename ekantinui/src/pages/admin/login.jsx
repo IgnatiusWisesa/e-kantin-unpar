@@ -7,9 +7,9 @@ class LoginPage extends Component {
   };
   render() {
     return (
-      <div class="login-page">
-        <div class="form">
-          <form class="login-form">
+      <div className="login-page">
+        <div className="form">
+          <form className="login-form">
             <input type="text" placeholder="email" />
             <input type="password" placeholder="password" />
             <button>login</button>

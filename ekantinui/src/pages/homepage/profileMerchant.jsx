@@ -1,28 +1,29 @@
 /* eslint-disable no-unused-vars */
-import React, { Fragment, useState } from "./node_modules/react";
+import React, { Fragment, useState } from "react";
+import { Redirect, useLocation } from "react-router-dom";
 import Numeral from "numeral";
-import { Redirect, useLocation } from "./node_modules/react-router-dom";
-import { makeStyles } from "./node_modules/@material-ui/core/styles";
-import Toolbar from "./node_modules/@material-ui/core/Toolbar";
-import Paper from "./node_modules/@material-ui/core/Paper";
-import Card from "./node_modules/@material-ui/core/Card";
-import CardActionArea from "./node_modules/@material-ui/core/CardActionArea";
-import CardActions from "./node_modules/@material-ui/core/CardActions";
-import CardContent from "./node_modules/@material-ui/core/CardContent";
-import CardMedia from "./node_modules/@material-ui/core/CardMedia";
-import Button from "./node_modules/@material-ui/core/Button";
-import Typography from "./node_modules/@material-ui/core/Typography";
-import Avatar from "./node_modules/@material-ui/core/Avatar";
-import List from "./node_modules/@material-ui/core/List";
-import ListItem from "./node_modules/@material-ui/core/ListItem";
-import ListItemIcon from "./node_modules/@material-ui/core/ListItemIcon";
-import ListItemText from "./node_modules/@material-ui/core/ListItemText";
-import Collapse from "./node_modules/@material-ui/core/Collapse";
-import Divider from "./node_modules/@material-ui/core/Divider";
-import RestaurantIcon from "./node_modules/@material-ui/icons/Restaurant";
-import LocalCafeIcon from "./node_modules/@material-ui/icons/LocalCafe";
-import ExpandLessIcon from "./node_modules/@material-ui/icons/ExpandLess";
-import ExpandMoreIcon from "./node_modules/@material-ui/icons/ExpandMore";
+
+import { makeStyles } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Paper from "@material-ui/core/Paper";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Avatar from "@material-ui/core/Avatar";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Collapse from "@material-ui/core/Collapse";
+import Divider from "@material-ui/core/Divider";
+import RestaurantIcon from "@material-ui/icons/Restaurant";
+import LocalCafeIcon from "@material-ui/icons/LocalCafe";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import LogoWA from "../../chat_via_wa.svg";
 import ScrollToTop from "../../components/scrollToTop";
@@ -52,7 +53,7 @@ const profilStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProfileDetails() {
+function ProfileMerchant() {
   const profil = profilStyles();
   const location = useLocation();
   const detailKantin = dataKantin[location.id - 1];
@@ -176,3 +177,5 @@ const dataKantin = [
   { id: 9, name: "Kantin Sembilan", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/4.jpg" },
   { id: 10, name: "Kantin Sepuluh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/5.jpg" },
 ];
+
+export default ProfileMerchant;

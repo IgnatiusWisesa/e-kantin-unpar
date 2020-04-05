@@ -12,13 +12,13 @@ function Admin(props) {
   return (
     <div className="content">
       <div className="App">
-        <AdminHeader />
+        {/* <AdminHeader /> */}
+        <AdminFooter />
         <Switch>
           <Route path="/admin" component={LoginPage} />
           <Route path="/managemerchant" component={ManageMerchant} />
           <Route path="/managemenu/:id" component={ManageMenu} />
         </Switch>
-        <AdminFooter />
       </div>
     </div>
   );

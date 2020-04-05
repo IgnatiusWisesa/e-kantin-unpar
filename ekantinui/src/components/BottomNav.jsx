@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BottomNav() {
+function BottomNav() {
   const classes = useStyles();
   const location = useLocation();
 
@@ -51,3 +51,4 @@ export default function BottomNav() {
     </div>
   );
 }
+export default BottomNav;

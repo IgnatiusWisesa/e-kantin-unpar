@@ -1,0 +1,67 @@
+{
+  "admin": [
+    {
+      "id": 1,
+      "adminMail": "admin@email.com",
+      "password": 1234,
+      "error": false
+    },
+    {
+      "id": 2,
+      "adminMail": "adminsalah@email.com",
+      "password": 1234,
+      "error": true,
+      "message": "Email yang Anda masukkan tidak terdaftar!"
+    }
+  ],
+  "kantin": [
+    {
+      "nama": "Kantin A",
+      "lokasi": "Fakultas Hukum",
+      "whatsapp": "0895804582683",
+      "deskripsi": "Menjual seblak dan kerupuk basah",
+      "id": 1
+    },
+    {
+      "nama": "Kantin B",
+      "lokasi": "Fakultas Ekonomi",
+      "whatsapp": "08937847283",
+      "deskripsi": "Menjual indomie pedas",
+      "id": 3
+    }
+  ],
+  "menus": [
+    {
+      "merchantid": "1",
+      "menu": "ayam goreng bandung",
+      "deskripsi": "ayam digoreng pake kol",
+      "kategori": "makanan",
+      "harga": "3500",
+      "id": 1
+    },
+    {
+      "merchantid": "3",
+      "menu": "nasi goreng kambing",
+      "deskripsi": "nasi goreng pake daging kambing",
+      "kategori": "makanan",
+      "harga": "22000",
+      "id": 2
+    },
+    {
+      "merchantid": "3",
+      "menu": "kerupuk udang",
+      "deskripsi": "kerupuk biasa",
+      "kategori": "makanan",
+      "harga": "1500",
+      "id": 4
+    },
+    {
+      "merchantid": "1",
+      "menu": "es cendol",
+      "deskripsi": "cendol pake es",
+      "kategori": "minuman",
+      "harga": "12000",
+      "id": 5
+    }
+  ]
+}
