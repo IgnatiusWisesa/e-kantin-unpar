@@ -1,5 +1,6 @@
 // Import Database
 const db = require('../database/db');
+const { uploader } = require('../helper/uploader');
 
 module.exports = {
 	/**
@@ -22,7 +23,7 @@ module.exports = {
 
 			// Database Action
 			db.query(sqlLogin, [adminMail, adminPassword], (err, loginResult) => {
-				if (err) res.status(200).send(err);
+				if (err) res.status(500).send(err);
 
 				if (loginResult.length === 0) {
 					return res
@@ -60,6 +61,73 @@ module.exports = {
 				return res.status(200).send({ error: false, standResult });
 			}
 		});
+	},
+
+	/**
+	 * @routes POST admin/add-stand
+	 * @description Admin create a new stand
+	 * @access Admin
+	 */
+	adminAddStand: (req, res) => {
+		// Get Data Stand
+		const { standName, standContact, standAddress } = req.body; // req.body.data
+
+		// Validation Data
+		if (
+			standName === undefined ||
+			standName === '' ||
+			standContact === undefined ||
+			standContact === '' ||
+			standAddress === undefined ||
+			standAddress === ''
+		) {
+			return res.status(200).send({ error: true, message: 'Data tidak boleh kosong!' });
+		} else {
+			// Set Data For stand_profile table
+			let data = {
+				standName,
+				standContact,
+				standPhoto: 'img1586087837004.retail-store-icon.png'
+			};
+
+			// Set SQL Syntax
+			const sqlAddStand = 'INSERT INTO stand_profile SET ?';
+
+			// Database Action
+			db.query(sqlAddStand, data, (err, addProfileResult) => {
+				if (err) res.status(500).send(err);
+
+				if (addProfileResult.insertId === 0) {
+					return res
+						.status(200)
+						.send({ error: true, message: 'Data tidak berhasil di tambah!' });
+				} else {
+					// Set Data For stand_address table
+					data = {
+						profileId: addProfileResult.insertId,
+						standAddress
+					};
+
+					// Set SQL Syntax
+					const sqlAddAddress = 'INSERT INTO stand_address SET ?';
+
+					// Database Action
+					db.query(sqlAddAddress, data, (err, addAddressResult) => {
+						if (err) return res.status(500).send(err);
+
+						if (addAddressResult.insertId === 0) {
+							return res
+								.status(200)
+								.send({ error: true, message: 'Data tidak berhasil di tambah!' });
+						} else {
+							return res
+								.status(200)
+								.send({ error: false, message: 'Data berhasil di tambah!' });
+						}
+					});
+				}
+			});
+		}
 	},
 
 	/**
@@ -102,6 +170,55 @@ module.exports = {
 				}
 			});
 		}
+	},
+
+	/**
+	 * @routes POST admin/edit-stand-photo
+	 * @description Admin edit photo stand action
+	 * @access Admin
+	 */
+	adminEditPhotoStand: (req, res) => {
+		// Set Path
+		const path = '/standimages';
+
+		// Multer Action
+		const upload = uploader(path, 'standimg').fields([{ name: 'standImage' }]);
+
+		upload(req, res, err => {
+			if (err)
+				return res.status(500).send({ error: err.message, message: 'Upload foto gagal!' });
+
+			// Get Image After Multer Process
+			const { standImage } = req.files;
+
+			if (standImage === undefined) {
+				return res.status(200).send({ error: true, message: 'Foto tidak berhasil di update!' });
+			} else {
+				// Get Stand Profile Id
+				const profileId = JSON.parse(req.body.standId);
+
+				// Set Data
+				const newPhoto = {
+					standPhoto: standImage[0].filename
+				};
+
+				// Set SQL Syntax
+				const sqlUpdatePhoto = 'UPDATE stand_profile SET ? WHERE profileId = ?';
+
+				// Database Action
+				db.query(sqlUpdatePhoto, [newPhoto, parseInt(profileId)], (err, updateResult) => {
+					if (err) return res.status(500).send(err);
+
+					if (updateResult.affectedRows === 0) {
+						return res
+							.status(200)
+							.send({ error: true, message: 'Foto tidak berhasil di update!' });
+					} else {
+						return res.status(200).send({ erro: false, message: 'Foto berhasil di update!' });
+					}
+				});
+			}
+		});
 	},
 
 	/**
