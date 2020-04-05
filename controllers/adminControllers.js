@@ -1,5 +1,6 @@
 // Import Database
 const db = require('../database/db');
+const paginate = require('jw-paginate');
 const { uploader } = require('../helper/uploader');
 
 module.exports = {
@@ -43,23 +44,58 @@ module.exports = {
 	 */
 	adminGetListStand: (req, res) => {
 		// Set SQL Syntax
-		const sqlStand = `
-			SELECT 
-				sp.profileId, 
-				sp.standName, 
-				sp.standContact, 
-				sp.standPhoto
-			FROM stand_profile sp`;
+		const sqlCount = 'SELECT COUNT(*) AS count FROM stand_profile';
 
 		// Database Action
-		db.query(sqlStand, (err, standResult) => {
-			if (err) res.status(500).send(err);
+		db.query(sqlCount, (err, countResult) => {
+			if (err) return res.status(500).send(err);
 
-			if (standResult.length === 0) {
-				return res.status(200).send({ error: true, message: 'Data tidak tersedia!' });
+			// Collection Data Count
+			const dataCount = countResult[0].count;
+
+			// Get Page or Default to First Page
+			const page = parseInt(req.body.page) || 1;
+
+			// Set Page Size
+			const pageSize = 10;
+
+			// Get Pager Object for Specified Page
+			const pager = paginate(dataCount, page, pageSize);
+
+			// Set Limit Data
+			let offset;
+
+			if (page === 1) {
+				offset = 0;
 			} else {
-				return res.status(200).send({ error: false, standResult });
+				offst === pageSize * (page - 1);
 			}
+
+			// Set SQL Syntax
+			const sqlStand = `
+				SELECT 
+					sp.profileId, 
+					sp.standName, 
+					sp.standContact, 
+					sp.standPhoto,
+					sa.standAddress
+				FROM stand_profile sp
+					JOIN
+						stand_address sa ON sa.profileId = sp.profileId
+				LIMIT ? OFFSET ?`;
+
+			// Database Action
+			db.query(sqlStand, [pageSize, offset], (err, standResult) => {
+				if (err) res.status(500).send(err);
+
+				if (standResult.length === 0) {
+					return res.status(200).send({ error: true, message: 'Data tidak tersedia!' });
+				} else {
+					// Collection Data Stand
+					const pageOfData = standResult;
+					return res.status(200).send({ error: false, standResult, pager });
+				}
+			});
 		});
 	},
 
