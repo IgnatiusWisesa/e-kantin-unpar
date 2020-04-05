@@ -1,23 +1,24 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import Managemerchant from "../admin/managemerchant";
-import Managemenus from "../admin/managemenus";
-import HeaderAdmin from "../admincomponent/header";
-import FooterAdmin from "../admincomponent/footer";
-import LoginAdmin from "../admin/login";
+import ManageMerchant from "./admin/manageMerchant";
+import ManageMenu from "./admin/manageMenu";
+import LoginPage from "./admin/login";
 
-function Admin({ match }) {
+import AdminHeader from "../components/admin/adminHeader";
+import AdminFooter from "../components/admin/adminFooter";
+
+function Admin(props) {
   return (
     <div className="content">
       <div className="App">
-        <HeaderAdmin />
+        <AdminHeader />
         <Switch>
-          <Route path="/admin" component={LoginAdmin} />
-          <Route path="/managemerchant" component={Managemerchant} />
-          <Route path="/managemenus/:id" component={Managemenus} />
+          <Route path="/admin" component={LoginPage} />
+          <Route path="/managemerchant" component={ManageMerchant} />
+          <Route path="/managemenu/:id" component={ManageMenu} />
         </Switch>
-        <FooterAdmin />
+        <AdminFooter />
       </div>
     </div>
   );

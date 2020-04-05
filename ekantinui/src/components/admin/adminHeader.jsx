@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
-class Header extends Component {
+class AdminHeader extends Component {
   state = {};
   render() {
     return (
@@ -31,4 +31,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default AdminHeader;

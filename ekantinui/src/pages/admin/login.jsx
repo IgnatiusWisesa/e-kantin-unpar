@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class LoginAdmin extends Component {
+class LoginPage extends Component {
   state = {
     alert: true,
     message: "Email yang Anda masukan tidak terdaftar!",
@@ -35,4 +35,4 @@ class LoginAdmin extends Component {
   }
 }
 
-export default LoginAdmin;
+export default LoginPage;

@@ -1,18 +1,18 @@
 /* eslint-disable no-unused-vars */
-import React, { Fragment } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Toolbar from "@material-ui/core/Toolbar";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
+import React, { Fragment } from "./node_modules/react";
+import { makeStyles } from "./node_modules/@material-ui/core/styles";
+import Toolbar from "./node_modules/@material-ui/core/Toolbar";
+import Card from "./node_modules/@material-ui/core/Card";
+import CardActionArea from "./node_modules/@material-ui/core/CardActionArea";
+import CardActions from "./node_modules/@material-ui/core/CardActions";
+import CardContent from "./node_modules/@material-ui/core/CardContent";
+import Button from "./node_modules/@material-ui/core/Button";
+import Typography from "./node_modules/@material-ui/core/Typography";
+import Avatar from "./node_modules/@material-ui/core/Avatar";
 
 import LogoWA from "../../chat_via_wa.svg";
-import ScrollToTop from "../../components/ScrollToTop";
-import { Link } from "react-router-dom";
+import ScrollToTop from "../../components/scrollToTop";
+import { Link } from "./node_modules/react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -68,7 +68,7 @@ const dataKantin = [
   { id: 10, name: "Kantin Sepuluh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/5.jpg" },
 ];
 
-export default function Katalog() {
+export default function Catalog() {
   const classes = useStyles();
   const cardStyle = cardStyles();
 

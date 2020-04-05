@@ -6,8 +6,8 @@ import blue from "@material-ui/core/colors/blue";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import "./styles/App.css";
 
-import Homepage from "./pages/Homepage";
-import Admin from "./pages/Admin";
+import Homepage from "./pages/homepage";
+import Admin from "./pages/admin";
 
 const theme = createMuiTheme({
   palette: {

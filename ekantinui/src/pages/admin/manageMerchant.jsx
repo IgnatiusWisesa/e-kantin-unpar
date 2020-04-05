@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
 // class component react
 import React, { Component } from "react";
@@ -14,12 +16,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
-// material-ui select
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 // import box
 import Box from "@material-ui/core/Box";
 // button color
@@ -34,38 +30,43 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 // input field
 import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
-// numeral
-import numeral from "numeral";
 
-class Managemenus extends Component {
+class ManageMerchant extends Component {
   state = {
-    datamenu: [],
+    datakantin: [],
     loading: true,
+    // state foto kantin
+    kantinfotoawal:
+      "https://cdn1.iconfinder.com/data/icons/school-education-9/24/school_canteen_lunch_canteen_food_fork_school_community_eating-512.png",
+    insertfoto: -1,
     // modal tambah kantin
     modaladd: false,
-    // add menu states starts
-    addmenu: "",
-    adddeskripsi: "",
-    addcategory: "",
-    addharga: "",
-    // add menu states ends
-    // edit menu states starts
+    // add kantin states starts
+    addkantinfoto: "",
+    addkantinnama: "",
+    addkantinlokasi: "",
+    addkantintelepon: "",
+    addkantinwhatsapp: "",
+    addkantindeskripsi: "",
+    // add kantin states ends
+    // edit kantin states starts
     idedit: -1,
     indexedit: -1,
     modaledit: false,
-    editmenu: "",
-    editdeksripsi: "",
-    editcategory: "",
-    editharga: "",
-    // edit menu states ends
+    editkantinfoto: "",
+    editkantinnama: "",
+    editkantinlokasi: "",
+    editkantintelepon: "",
+    editkantinwhatsapp: "",
+    editkantindeskripsi: "",
+    // edit kantin states ends
   };
 
   componentDidMount() {
-    Axios.get(`http://localhost:2020/menus?merchantid=${this.props.match.params.id}`)
+    Axios.get(`http://localhost:2020/kantin`)
       .then((res) => {
         console.log(res.data);
-        this.setState({ datamenu: res.data, loading: false });
+        this.setState({ datakantin: res.data, loading: false });
       })
       .catch((err) => {
         console.log(err);
@@ -73,29 +74,29 @@ class Managemenus extends Component {
   }
 
   onClickSave = () => {
-    let merchantid = this.props.match.params.id;
-    let menu = this.state.addmenu;
-    let deskripsi = this.state.adddeskripsi;
-    let kategori = this.state.addcategory;
-    let harga = this.state.addharga;
+    let foto = this.state.addkantinfoto;
+    let nama = this.state.addkantinnama;
+    let lokasi = this.state.addkantinlokasi;
+    let telepon = this.state.addkantintelepon;
+    let whatsapp = this.state.addkantinwhatsapp;
+    let deskripsi = this.state.addkantindeskripsi;
 
-    let menubaru = {
-      merchantid,
-      menu,
+    let kantinbaru = {
+      foto,
+      nama,
+      lokasi,
+      telepon,
+      whatsapp,
       deskripsi,
-      kategori,
-      harga,
     };
 
-    console.log(menubaru);
-
-    Axios.post(`http://localhost:2020/menus`, menubaru)
+    Axios.post(`http://localhost:2020/kantin`, kantinbaru)
       .then((res) => {
         console.log(res.data);
-        Axios.get(`http://localhost:2020/menus?merchantid=${this.props.match.params.id}`)
+        Axios.get(`http://localhost:2020/kantin`)
           .then((res1) => {
             console.log(res1.data);
-            this.setState({ datamenu: res1.data, modaladd: false });
+            this.setState({ datakantin: res1.data, modaladd: false });
           })
           .catch((err) => {
             console.log(err);
@@ -109,13 +110,13 @@ class Managemenus extends Component {
   onClickDelete = (id, index) => {
     console.log(id, index);
 
-    Axios.delete(`http://localhost:2020/menus/${id}`)
+    Axios.delete(`http://localhost:2020/kantin/${id}`)
       .then((res) => {
         console.log(res.data);
-        Axios.get(`http://localhost:2020/menus?merchantid=${this.props.match.params.id}`)
+        Axios.get(`http://localhost:2020/kantin`)
           .then((res1) => {
             console.log(res1.data);
-            this.setState({ datamenu: res1.data, modaladd: false });
+            this.setState({ datakantin: res1.data, modaladd: false });
           })
           .catch((err) => {
             console.log(err);
@@ -131,29 +132,27 @@ class Managemenus extends Component {
     let id = this.state.idedit;
     let index = this.state.indexedit;
 
-    let merchantid = this.props.match.params.id;
-    let menu = this.state.editmenu || this.state.datamenu[index].menu;
-    let deskripsi = this.state.editdeskripsi || this.state.datamenu[index].deskripsi;
-    let kategori = this.state.editcategory || this.state.datamenu[index].kategori;
-    let harga = this.state.editharga || this.state.datamenu[index].harga;
+    let nama = this.state.editkantinnama || this.state.datakantin[id].nama;
+    let lokasi = this.state.editkantinlokasi || this.state.datakantin[id].lokasi;
+    let whatsapp = this.state.editkantinwhatsapp || this.state.datakantin[id].whatsapp;
+    let deskripsi = this.state.editkantindeskripsi || this.state.datakantin[id].deskripsi;
 
-    let menuedit = {
-      merchantid,
-      menu,
+    let kantinedit = {
+      nama,
+      lokasi,
+      whatsapp,
       deskripsi,
-      kategori,
-      harga,
     };
 
-    console.log(menuedit);
+    console.log(kantinedit);
 
-    Axios.put(`http://localhost:2020/menus/${id}`, menuedit)
+    Axios.put(`http://localhost:2020/kantin/${id}`, kantinedit)
       .then((res) => {
         console.log(res.data);
-        Axios.get(`http://localhost:2020/menus?merchantid=${this.props.match.params.id}`)
+        Axios.get(`http://localhost:2020/kantin`)
           .then((res1) => {
             console.log(res1.data);
-            this.setState({ datamenu: res1.data, modaledit: false });
+            this.setState({ datakantin: res1.data, modaledit: false });
           })
           .catch((err) => {
             console.log(err);
@@ -164,15 +163,51 @@ class Managemenus extends Component {
       });
   };
 
-  rendermenu = () => {
-    return this.state.datamenu.map((val, index) => {
+  onEditPhoto = (e) => {
+    console.log(e.target.files[0]);
+  };
+
+  renderkantin = () => {
+    return this.state.datakantin.map((val, index) => {
       return (
         <TableRow key={index}>
-          <TableCell style={{ width: "0px" }}>{index + 1}</TableCell>
-          <TableCell style={{ width: "250px" }}>{val.menu}</TableCell>
-          <TableCell style={{ width: "600px" }}>{val.deskripsi}</TableCell>
-          <TableCell style={{ width: "100px" }}>{val.kategori}</TableCell>
-          <TableCell style={{ width: "150px" }}>{"Rp." + numeral(val.harga).format("Rp,0.00")}</TableCell>
+          <TableCell style={{ width: "50px" }}>{val.id}</TableCell>
+          {this.state.insertfoto === val.id ? (
+            <TableCell style={{ width: "300px" }}>
+              <Button variant="contained" component="label">
+                Upload File
+                <input type="file" style={{ display: "none" }} onChange={(e) => this.onEditPhoto(e)} />
+              </Button>
+            </TableCell>
+          ) : (
+            <TableCell style={{ width: "300px" }}>
+              <img
+                className="card-img-top"
+                style={{ height: "200px", width: "300px" }}
+                src={val.foto || this.state.kantinfotoawal}
+                alt="Canteen's Photo"
+                onClick={() => {
+                  this.setState({ insertfoto: val.id });
+                }}
+              />
+            </TableCell>
+          )}
+          <TableCell>
+            <TableBody>
+              <TableRow>
+                Nama <a style={{ paddingLeft: "30px" }}>: {val.nama}</a>
+              </TableRow>
+              <TableRow>
+                Lokasi <a style={{ paddingLeft: "27px" }}>: {val.lokasi}</a>
+              </TableRow>
+              <TableRow>
+                Whatsapp <a style={{ paddingLeft: "6px" }}>: {val.whatsapp}</a>
+              </TableRow>
+              <TableRow>
+                Deskripsi <a style={{ paddingLeft: "12px" }}>: {val.deskripsi}</a>
+              </TableRow>
+            </TableBody>
+          </TableCell>
           <TableCell>
             <TableBody>
               <TableRow>
@@ -181,15 +216,22 @@ class Managemenus extends Component {
                     onClick={() => this.setState({ idedit: val.id, indexedit: index, modaledit: true })}
                     variant="outlined"
                     style={{ width: "150px", color: purple.A200 }}>
-                    Edit Menu
+                    Edit Profile
                   </Button>
                 </Box>
               </TableRow>
               <TableRow>
+                <Box mb={1}>
+                  <Link to={"/managemenus/" + val.id}>
+                    <Button variant="outlined" style={{ width: "150px", color: blue.A200 }}>
+                      Detail Menu
+                    </Button>
+                  </Link>
+                </Box>
+              </TableRow>
+              <TableRow>
                 <Button
-                  onClick={() => {
-                    this.onClickDelete(val.id, index);
-                  }}
+                  onClick={() => this.onClickDelete(val.id, index)}
                   variant="outlined"
                   style={{ width: "150px" }}
                   color="secondary">
@@ -240,14 +282,14 @@ class Managemenus extends Component {
                   width: "500px",
                 }}>
                 <Box ml={20}>
-                  <h2 id="transition-modal-title">Input Menu</h2>
+                  <h2 id="transition-modal-title">Input Kantin</h2>
                 </Box>
                 <Box mb={1}>
                   <TextField
-                    onChange={(e) => this.setState({ addmenu: e.target.value })}
-                    label="Canteen's Menu"
+                    onChange={(e) => this.setState({ addkantinnama: e.target.value })}
+                    label="Canteen's Name"
                     style={{ margin: 4 }}
-                    placeholder="Menu"
+                    placeholder="Nama"
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -258,8 +300,36 @@ class Managemenus extends Component {
                 </Box>
                 <Box mb={1}>
                   <TextField
-                    onChange={(e) => this.setState({ adddeskripsi: e.target.value })}
-                    label="Menu's Description"
+                    onChange={(e) => this.setState({ addkantinlokasi: e.target.value })}
+                    label="Canteen's Location"
+                    style={{ margin: 4 }}
+                    placeholder="Lokasi"
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                </Box>
+                <Box mb={1}>
+                  <TextField
+                    onChange={(e) => this.setState({ addkantinwhatsapp: e.target.value })}
+                    label="Canteen's Whatsapp Number"
+                    style={{ margin: 4 }}
+                    placeholder="0895 - 804 - xxx"
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                </Box>
+                <Box mb={1}>
+                  <TextField
+                    onChange={(e) => this.setState({ addkantindeskripsi: e.target.value })}
+                    label="Canteen's Description"
                     style={{ margin: 4 }}
                     placeholder="Deskripsi"
                     fullWidth
@@ -270,40 +340,8 @@ class Managemenus extends Component {
                     variant="outlined"
                   />
                 </Box>
-                <Box mb={1}>
-                  <FormControl variant="outlined" style={{ margin: 4, minWidth: 120, width: "100%" }}>
-                    <InputLabel id="demo-simple-select-outlined-label">Menu's Category</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={this.state.addcategory}
-                      onChange={(e) => this.setState({ addcategory: e.target.value })}
-                      label="Menu's Category ">
-                      {/* <MenuItem value="">
-                                            <em>Kategori</em>
-                                        </MenuItem> */}
-                      <MenuItem value="makanan">Makanan</MenuItem>
-                      <MenuItem value="minuman">Minuman</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-                <Box mb={1}>
-                  <TextField
-                    onChange={(e) => this.setState({ addharga: e.target.value })}
-                    label="Menu's Price"
-                    style={{ margin: 4 }}
-                    placeholder="Harga"
-                    fullWidth
-                    margin="normal"
-                    startAdornment={<InputAdornment position="start">Rp.</InputAdornment>}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined"
-                  />
-                </Box>
                 <Box ml={20}>
-                  <Button onClick={this.onClickSave} variant="outlined" style={{ width: "150px", color: blue.A200 }}>
+                  <Button onClick={this.onClickSave} variant="outlined" style={{ width: "150px", color: lightGreen.A700 }}>
                     Save
                   </Button>
                 </Box>
@@ -337,14 +375,14 @@ class Managemenus extends Component {
                   width: "500px",
                 }}>
                 <Box ml={20}>
-                  <h2 id="transition-modal-title">Edit Menu</h2>
+                  <h2 id="transition-modal-title">Edit Kantin</h2>
                 </Box>
                 <Box mb={1}>
                   <TextField
-                    onChange={(e) => this.setState({ editmenu: e.target.value })}
-                    label="Canteen's Menu"
+                    onChange={(e) => this.setState({ editkantinnama: e.target.value })}
+                    label="Canteen's Name"
                     style={{ margin: 4 }}
-                    defaultValue={this.state.datamenu[this.state.indexedit].menu}
+                    defaultValue={this.state.datakantin[this.state.indexedit].nama}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -355,10 +393,10 @@ class Managemenus extends Component {
                 </Box>
                 <Box mb={1}>
                   <TextField
-                    onChange={(e) => this.setState({ editdeskripsi: e.target.value })}
-                    label="Menu's Description"
+                    onChange={(e) => this.setState({ editkantinlokasi: e.target.value })}
+                    label="Canteen's Location"
                     style={{ margin: 4 }}
-                    defaultValue={this.state.datamenu[this.state.indexedit].deskripsi}
+                    defaultValue={this.state.datakantin[this.state.indexedit].lokasi}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -368,28 +406,25 @@ class Managemenus extends Component {
                   />
                 </Box>
                 <Box mb={1}>
-                  <FormControl variant="outlined" style={{ margin: 4, minWidth: 120, width: "100%" }}>
-                    <InputLabel id="demo-simple-select-outlined-label">Menu's Category</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={this.state.editcategory || this.state.datamenu[this.state.indexedit].kategori}
-                      onChange={(e) => this.setState({ editcategory: e.target.value })}
-                      label="Menu's Category ">
-                      {/* <MenuItem value="">
-                                            <em>Kategori</em>
-                                        </MenuItem> */}
-                      <MenuItem value="makanan">Makanan</MenuItem>
-                      <MenuItem value="minuman">Minuman</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <TextField
+                    onChange={(e) => this.setState({ editkantinwhatsapp: e.target.value })}
+                    label="Canteen's Whatsapp Number"
+                    style={{ margin: 4 }}
+                    defaultValue={this.state.datakantin[this.state.indexedit].whatsapp}
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
                 </Box>
                 <Box mb={1}>
                   <TextField
-                    onChange={(e) => this.setState({ editharga: e.target.value })}
-                    label="Menu's Price"
+                    onChange={(e) => this.setState({ editkantindeskripsi: e.target.value })}
+                    label="Canteen's Description"
                     style={{ margin: 4 }}
-                    defaultValue={this.state.datamenu[this.state.indexedit].harga}
+                    defaultValue={this.state.datakantin[this.state.indexedit].deskripsi}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -413,11 +448,9 @@ class Managemenus extends Component {
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  <TableCell>No.</TableCell>
-                  <TableCell>Menu</TableCell>
-                  <TableCell>Deskripsi</TableCell>
-                  <TableCell>Kategori</TableCell>
-                  <TableCell>Harga</TableCell>
+                  <TableCell>ID.</TableCell>
+                  <TableCell>Foto</TableCell>
+                  <TableCell>Profil</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -426,29 +459,21 @@ class Managemenus extends Component {
                   <TableCell></TableCell>
                   <TableCell></TableCell>
                   <TableCell>
-                    <Box mb={1} mt={1} style={{ paddingLeft: "42vh" }}>
-                      <Link to={"/managemerchant"}>
-                        <Button variant="outlined" style={{ width: "150px", color: lightGreen.A700 }}>
-                          Kembali
-                        </Button>
-                      </Link>
-                    </Box>
-                    <Box mb={1} mt={1} style={{ paddingLeft: "42vh" }}>
+                    <Box mb={1} mt={1} style={{ paddingLeft: "30vh" }}>
                       <Button
                         onClick={() => {
                           this.setState({ modaladd: true });
                         }}
                         variant="outlined"
-                        style={{ width: "150px", color: blue.A200 }}>
-                        Tambah Menu
+                        style={{ width: "150px", color: lightGreen.A700 }}>
+                        Tambah Kantin
                       </Button>
                     </Box>
                   </TableCell>
                   <TableCell></TableCell>
-                  <TableCell></TableCell>
                 </TableRow>
               </TableBody>
-              <TableBody>{this.rendermenu()}</TableBody>
+              <TableBody>{this.renderkantin()}</TableBody>
             </Table>
           </TableContainer>
         </Paper>
@@ -457,4 +482,4 @@ class Managemenus extends Component {
   }
 }
 
-export default Managemenus;
+export default ManageMerchant;

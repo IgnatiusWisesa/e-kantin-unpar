@@ -100,7 +100,7 @@ function ElevationScroll(props) {
   });
 }
 
-export default function SearchAppBar(props) {
+export default function HeaderAppBar(props) {
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
