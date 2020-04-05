@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { Fragment, useState } from "react";
-import Numeral from "numeral";
 import { Redirect, useLocation } from "react-router-dom";
+import Numeral from "numeral";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Paper from "@material-ui/core/Paper";
@@ -24,10 +25,10 @@ import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import LogoWA from "../chat_via_wa.svg";
-import ScrollToTop from "../components/ScrollToTop";
+import LogoWA from "../../chat_via_wa.svg";
+import ScrollToTop from "../../components/scrollToTop";
 
-const profilStyles = makeStyles(theme => ({
+const profilStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 480,
     paddingLeft: 30,
@@ -35,24 +36,24 @@ const profilStyles = makeStyles(theme => ({
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: 30,
-    minHeight: "100vh"
+    minHeight: "100vh",
     // backgroundColor: "#fff"
   },
   root: {
-    padding: 20
+    padding: 20,
   },
   avatar: {
     width: theme.spacing(15),
     height: theme.spacing(15),
     marginRight: "auto",
-    marginLeft: "auto"
+    marginLeft: "auto",
   },
   nested: {
-    paddingLeft: theme.spacing(4)
-  }
+    paddingLeft: theme.spacing(4),
+  },
 }));
 
-export default function ProfilKantin() {
+function ProfileMerchant() {
   const profil = profilStyles();
   const location = useLocation();
   const detailKantin = dataKantin[location.id - 1];
@@ -68,6 +69,7 @@ export default function ProfilKantin() {
     setBevsOpen(!bevsOpen);
   };
 
+  console.log(location.id);
   if (!location.id) {
     return <Redirect to="/" />;
   } else {
@@ -153,14 +155,14 @@ const daftarMakanan = [
   { name: "Mie Goreng", description: "mie yang digoreng", price: 15000 },
   { name: "Mie Rebus", description: "mie yang direbus", price: 15000 },
   { name: "Cap Cay", description: "yur sayur", price: 12000 },
-  { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 }
+  { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
 ];
 
 const daftarMinuman = [
   { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
   { name: "Teh Manis", description: "dingin/panas", price: 4000 },
   { name: "Kopi", description: "dingin/panas", price: 4000 },
-  { name: "Mineral Prima", description: "botol dingin/panas", price: 5000 }
+  { name: "Mineral Prima", description: "botol dingin/panas", price: 5000 },
 ];
 
 const dataKantin = [
@@ -173,5 +175,7 @@ const dataKantin = [
   { id: 7, name: "Kantin Tujuh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/7.jpg" },
   { id: 8, name: "Kantin Delapan", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/3.jpg" },
   { id: 9, name: "Kantin Sembilan", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/4.jpg" },
-  { id: 10, name: "Kantin Sepuluh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/5.jpg" }
+  { id: 10, name: "Kantin Sepuluh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/5.jpg" },
 ];
+
+export default ProfileMerchant;

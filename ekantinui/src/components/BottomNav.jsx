@@ -16,17 +16,17 @@ const useStyles = makeStyles({
     paddingLeft: 10,
     paddingRight: 10,
     marginLeft: "auto",
-    marginRight: "auto"
+    marginRight: "auto",
   },
   bottomNav: {
     width: 460,
     borderTop: "solid",
     borderWidth: 0.5,
-    borderColor: "#c7c7c7"
-  }
+    borderColor: "#c7c7c7",
+  },
 });
 
-export default function BottomNav() {
+function BottomNav() {
   const classes = useStyles();
   const location = useLocation();
 
@@ -51,3 +51,4 @@ export default function BottomNav() {
     </div>
   );
 }
+export default BottomNav;

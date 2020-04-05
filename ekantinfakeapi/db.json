@@ -17,9 +17,9 @@
   "kantin": [
     {
       "nama": "Kantin A",
-      "lokasi": "Fakultas Hukum",
-      "whatsapp": "0895804582683",
-      "deskripsi": "Menjual seblak dan kerupuk basah",
+      "lokasi": "Fakultas Ekonomi",
+      "whatsapp": "08937847283",
+      "deskripsi": "Menjual indomie pedas",
       "id": 1
     },
     {
@@ -32,28 +32,12 @@
   ],
   "menus": [
     {
-      "merchantid": "1",
-      "menu": "ayam goreng bandung",
-      "deskripsi": "ayam digoreng pake kol",
-      "kategori": "makanan",
-      "harga": "3500",
-      "id": 1
-    },
-    {
       "merchantid": "3",
       "menu": "nasi goreng kambing",
       "deskripsi": "nasi goreng pake daging kambing",
       "kategori": "makanan",
       "harga": "22000",
       "id": 2
-    },
-    {
-      "merchantid": "1",
-      "menu": "ayam goreng bandung",
-      "deskripsi": "ayam digoreng pake kol",
-      "kategori": "makanan",
-      "harga": "22000",
-      "id": 3
     },
     {
       "merchantid": "3",
@@ -70,6 +54,14 @@
       "kategori": "minuman",
       "harga": "12000",
       "id": 5
+    },
+    {
+      "merchantid": "1",
+      "menu": "es teh",
+      "deskripsi": "manis",
+      "kategori": "minuman",
+      "harga": "5000",
+      "id": 6
     }
   ]
 }

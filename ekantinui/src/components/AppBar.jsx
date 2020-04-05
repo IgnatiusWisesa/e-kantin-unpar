@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, Fragment } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -9,7 +10,14 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import Popover from "@material-ui/core/Popover";
+// import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+// import List from "@material-ui/core/List";
+// import ListItem from "@material-ui/core/ListItem";
+// import ListItemIcon from "@material-ui/core/ListItemIcon";
+// import IconButton from "@material-ui/core/IconButton";
+// import MenuIcon from "@material-ui/icons/Menu";
+// import Paper from "@material-ui/core/Paper";
+// import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  toolbar: theme.mixins.toolbar,
 }));
 
 function ElevationScroll(props) {
@@ -90,17 +99,18 @@ function ElevationScroll(props) {
   });
 }
 
-export default function SearchAppBar(props) {
+function HeaderAppBar(props) {
   const classes = useStyles();
   const location = useLocation();
+  const history = useHistory();
 
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  // const [state, setState] = useState(false);
+  // const toggleDrawer = (open) => (event) => {
+  //   if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+  //     return;
+  //   }
+  //   setState(open);
+  // };
 
   return (
     <Fragment>
@@ -109,19 +119,27 @@ export default function SearchAppBar(props) {
           <AppBar>
             <div id="appbar-menu" className={classes.appBar}>
               <Toolbar>
-                <Typography className={classes.title} component={Link} to="/" variant="h6" noWrap>
-                  {location.pathname === "/" ? (
-                    "eKantin"
-                  ) : location.pathname === "/daftar_menu" ? (
-                    // <Button style={{ color: "#fff" }} startIcon={<ArrowBackIosIcon />}>
-                    "eKantin"
-                  ) : (
-                    // </Button>
-                    <Button style={{ color: "#fff" }} startIcon={<ArrowBackIosIcon />}>
+                {location.pathname === "/" || location.pathname === "/daftar_menu" ? (
+                  <>
+                    {/* <IconButton
+                      onClick={toggleDrawer(true)}
+                      edge="start"
+                      className={classes.menuButton}
+                      color="inherit"
+                      aria-label="menu">
+                      <MenuIcon />
+                    </IconButton> */}
+                    <Typography className={classes.title} variant="h6" noWrap>
+                      eKantin
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography className={classes.title} variant="h6" noWrap>
+                    <Button onClick={() => history.goBack()} style={{ color: "#fff" }} startIcon={<ArrowBackIosIcon />}>
                       Back
                     </Button>
-                  )}
-                </Typography>
+                  </Typography>
+                )}
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
                     <SearchIcon />
@@ -140,23 +158,19 @@ export default function SearchAppBar(props) {
           </AppBar>
         </div>
       </ElevationScroll>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}>
-        <div style={{ width: 480, marginLeft: "auto", marginRight: "auto" }}>
-          <Typography className={classes.typography}>The content of the Popover.</Typography>
-        </div>
-      </Popover>
+      {/* <SwipeableDrawer anchor="left" open={state} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
+        <div className={classes.toolbar} />
+        <Divider />
+        <Paper elevation={0} style={{ width: 200 }}>
+          <ListItem>
+            <Button component={Link} to="/admin/login">
+              Login
+            </Button>
+          </ListItem>
+        </Paper>
+      </SwipeableDrawer> */}
     </Fragment>
   );
 }
+
+export default HeaderAppBar;

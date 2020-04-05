@@ -12,7 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 
-import ScrollToTop from "../components/ScrollToTop";
+import ScrollToTop from "../../components/scrollToTop";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -33,18 +33,18 @@ function TabPanel(props) {
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`
+    "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 480,
     paddingLeft: 30,
     paddingRight: 30,
     marginLeft: "auto",
     marginRight: "auto",
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   root: {
     backgroundColor: theme.palette.background.paper,
@@ -52,14 +52,14 @@ const useStyles = makeStyles(theme => ({
     minHeight: "100vh",
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: 5
+    marginTop: 5,
   },
   nested: {
-    paddingLeft: theme.spacing(4)
-  }
+    paddingLeft: theme.spacing(4),
+  },
 }));
 
-export default function DaftarMenu() {
+function MenuList() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
@@ -129,7 +129,7 @@ const daftarMakanan = [
   { name: "Mie Goreng", description: "mie yang digoreng", price: 15000 },
   { name: "Mie Rebus", description: "mie yang direbus", price: 15000 },
   { name: "Cap Cay", description: "yur sayur", price: 12000 },
-  { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 }
+  { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
 ];
 
 const daftarMinuman = [
@@ -151,5 +151,7 @@ const daftarMinuman = [
   { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
   { name: "Teh Manis", description: "dingin/panas", price: 4000 },
   { name: "Kopi", description: "dingin/panas", price: 4000 },
-  { name: "Mineral Prima", description: "botol dingin/panas", price: 5000 }
+  { name: "Mineral Prima", description: "botol dingin/panas", price: 5000 },
 ];
+
+export default MenuList;
