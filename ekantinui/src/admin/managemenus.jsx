@@ -258,8 +258,8 @@ class Managemenus extends Component {
                                         {/* <MenuItem value="">
                                             <em>Kategori</em>
                                         </MenuItem> */}
-                                        <MenuItem value="makanan">Makanan</MenuItem>
-                                        <MenuItem value="minuman">Minuman</MenuItem>
+                                        <MenuItem value="Makanan">Makanan</MenuItem>
+                                        <MenuItem value="Minuman">Minuman</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Box>
@@ -345,23 +345,23 @@ class Managemenus extends Component {
                                 />
                             </Box>
                             <Box mb={1}> 
-                                    <FormControl variant="outlined" style={{ margin: 4, minWidth:120, width:'100%' }}>
-                                        <InputLabel id="demo-simple-select-outlined-label">Menu's Category</InputLabel>
-                                        <Select
-                                        labelId="demo-simple-select-outlined-label"
-                                        id="demo-simple-select-outlined"
-                                        value={this.state.editcategory || this.state.datamenu[this.state.indexedit].kategori}
-                                        onChange={(e)=>this.setState({ editcategory: (e.target.value)})}
-                                        label="Menu's Category "
-                                        >
-                                        {/* <MenuItem value="">
-                                            <em>Kategori</em>
-                                        </MenuItem> */}
-                                        <MenuItem value="makanan">Makanan</MenuItem>
-                                        <MenuItem value="minuman">Minuman</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                </Box>
+                                <FormControl variant="outlined" style={{ margin: 4, minWidth:120, width:'100%' }}>
+                                    <InputLabel id="demo-simple-select-outlined-label">Menu's Category</InputLabel>
+                                    <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={this.state.editcategory || this.state.datamenu[this.state.indexedit].kategori}
+                                    onChange={(e)=>this.setState({ editcategory: (e.target.value)})}
+                                    label="Menu's Category "
+                                    >
+                                    {/* <MenuItem value="">
+                                        <em>Kategori</em>
+                                    </MenuItem> */}
+                                    <MenuItem value="Makanan">Makanan</MenuItem>
+                                    <MenuItem value="Minuman">Minuman</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Box>
                             <Box mb={1}>
                                 <TextField
                                     onChange={(e)=>this.setState({ editharga: (e.target.value)})}

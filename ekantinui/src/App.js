@@ -32,7 +32,7 @@ import { Switch, Route } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import './App.css';
+import './styles/App.css';
 
 import AppBar from "./components/AppBar";
 import BottomNav from "./components/BottomNav";
