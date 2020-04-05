@@ -38,7 +38,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 // numeral
 import numeral from "numeral";
 
-class ManageMenu extends Component {
+class ManageMenus extends Component {
   state = {
     datamenu: [],
     loading: true,
@@ -174,29 +174,23 @@ class ManageMenu extends Component {
           <TableCell style={{ width: "100px" }}>{val.kategori}</TableCell>
           <TableCell style={{ width: "150px" }}>{"Rp." + numeral(val.harga).format("Rp,0.00")}</TableCell>
           <TableCell>
-            <TableBody>
-              <TableRow>
-                <Box mb={1}>
-                  <Button
-                    onClick={() => this.setState({ idedit: val.id, indexedit: index, modaledit: true })}
-                    variant="outlined"
-                    style={{ width: "150px", color: purple.A200 }}>
-                    Edit Menu
-                  </Button>
-                </Box>
-              </TableRow>
-              <TableRow>
-                <Button
-                  onClick={() => {
-                    this.onClickDelete(val.id, index);
-                  }}
-                  variant="outlined"
-                  style={{ width: "150px" }}
-                  color="secondary">
-                  Delete
-                </Button>
-              </TableRow>
-            </TableBody>
+            <Box mb={1}>
+              <Button
+                onClick={() => this.setState({ idedit: val.id, indexedit: index, modaledit: true })}
+                variant="outlined"
+                style={{ width: "150px", color: purple.A200 }}>
+                Edit Menu
+              </Button>
+            </Box>
+            <Button
+              onClick={() => {
+                this.onClickDelete(val.id, index);
+              }}
+              variant="outlined"
+              style={{ width: "150px" }}
+              color="secondary">
+              Delete
+            </Button>
           </TableCell>
         </TableRow>
       );
@@ -207,7 +201,7 @@ class ManageMenu extends Component {
     if (this.state.loading) {
       return (
         <div>
-          <div class="loading">Loading&#8230;</div>
+          <div className="loading">Loading&#8230;</div>
         </div>
       );
     }
@@ -427,11 +421,13 @@ class ManageMenu extends Component {
                   <TableCell></TableCell>
                   <TableCell>
                     <Box mb={1} mt={1} style={{ paddingLeft: "42vh" }}>
-                      <Link to={"/managemerchant"}>
-                        <Button variant="outlined" style={{ width: "150px", color: lightGreen.A700 }}>
-                          Kembali
-                        </Button>
-                      </Link>
+                      <Button
+                        component={Link}
+                        to={"/admin/managemerchant"}
+                        variant="outlined"
+                        style={{ width: "150px", color: lightGreen.A700 }}>
+                        Kembali
+                      </Button>
                     </Box>
                     <Box mb={1} mt={1} style={{ paddingLeft: "42vh" }}>
                       <Button
@@ -446,6 +442,7 @@ class ManageMenu extends Component {
                   </TableCell>
                   <TableCell></TableCell>
                   <TableCell></TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableBody>
               <TableBody>{this.rendermenu()}</TableBody>
@@ -457,4 +454,4 @@ class ManageMenu extends Component {
   }
 }
 
-export default ManageMenu;
+export default ManageMenus;

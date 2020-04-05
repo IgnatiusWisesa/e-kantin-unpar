@@ -164,7 +164,7 @@ function HeaderAppBar(props) {
         <Divider />
         <Paper elevation={0} style={{ width: 200 }}>
           <ListItem>
-            <Button component={Link} to="/admin">
+            <Button component={Link} to="/admin/login">
               Login
             </Button>
           </ListItem>

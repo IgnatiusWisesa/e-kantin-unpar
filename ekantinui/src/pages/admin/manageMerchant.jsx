@@ -222,11 +222,13 @@ class ManageMerchant extends Component {
               </TableRow>
               <TableRow>
                 <Box mb={1}>
-                  <Link to={"/managemenus/" + val.id}>
-                    <Button variant="outlined" style={{ width: "150px", color: blue.A200 }}>
-                      Detail Menu
-                    </Button>
-                  </Link>
+                  <Button
+                    component={Link}
+                    to={"/admin/managemenus/" + val.id}
+                    variant="outlined"
+                    style={{ width: "150px", color: blue.A200 }}>
+                    Detail Menu
+                  </Button>
                 </Box>
               </TableRow>
               <TableRow>

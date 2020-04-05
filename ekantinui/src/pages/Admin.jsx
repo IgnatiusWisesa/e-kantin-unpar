@@ -2,22 +2,22 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import ManageMerchant from "./admin/manageMerchant";
-import ManageMenu from "./admin/manageMenu";
-import LoginPage from "./admin/login";
+import ManageMenus from "./admin/manageMenus";
 
 import AdminHeader from "../components/admin/adminHeader";
 import AdminFooter from "../components/admin/adminFooter";
+import LoginPage from "../components/login";
 
 function Admin(props) {
   return (
     <div className="content">
       <div className="App">
-        {/* <AdminHeader /> */}
+        <AdminHeader />
         <AdminFooter />
         <Switch>
-          <Route path="/admin" component={LoginPage} />
-          <Route path="/managemerchant" component={ManageMerchant} />
-          <Route path="/managemenu/:id" component={ManageMenu} />
+          <Route path="/admin/managemerchant" component={ManageMerchant} />
+          <Route path="/admin/managemenus/:id" component={ManageMenus} />
+          <Route path="/admin/login" component={LoginPage} />
         </Switch>
       </div>
     </div>
