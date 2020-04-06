@@ -1,5 +1,7 @@
+
 // Import Database
 const db = require('../database/db');
+const paginate = require('jw-paginate');
 const { uploader } = require('../helper/uploader');
 
 module.exports = {
@@ -13,7 +15,12 @@ module.exports = {
 		const { adminMail, adminPassword } = req.body; // req.body.data
 
 		// Validation Email And Password
-		if (adminMail === undefined || adminPassword === undefined) {
+		if (
+			adminMail === undefined ||
+			adminMail === '' ||
+			adminPassword === undefined ||
+			adminMail === ''
+		) {
 			return res
 				.status(200)
 				.send({ error: true, message: 'Kolom email/password tidak boleh kosong!' });
@@ -43,23 +50,58 @@ module.exports = {
 	 */
 	adminGetListStand: (req, res) => {
 		// Set SQL Syntax
-		const sqlStand = `
-			SELECT 
-				sp.profileId, 
-				sp.standName, 
-				sp.standContact, 
-				sp.standPhoto
-			FROM stand_profile sp`;
+		const sqlCount = 'SELECT COUNT(*) AS count FROM stand_profile';
 
 		// Database Action
-		db.query(sqlStand, (err, standResult) => {
-			if (err) res.status(500).send(err);
+		db.query(sqlCount, (err, countResult) => {
+			if (err) return res.status(500).send(err);
 
-			if (standResult.length === 0) {
-				return res.status(200).send({ error: true, message: 'Data tidak tersedia!' });
+			// Collection Data Count
+			const dataCount = countResult[0].count;
+
+			// Get Page or Default to First Page
+			const page = parseInt(req.body.page) || 1;
+
+			// Set Page Size
+			const pageSize = 3;
+
+			// Get Pager Object for Specified Page
+			const pager = paginate(dataCount, page, pageSize);
+
+			// Set Limit Data
+			let offset;
+
+			if (page === 1) {
+				offset = 0;
 			} else {
-				return res.status(200).send({ error: false, standResult });
+				offset = pageSize * (page - 1);
 			}
+
+			// Set SQL Syntax
+			const sqlStand = `
+				SELECT 
+					sp.profileId, 
+					sp.standName, 
+					sp.standContact, 
+					sp.standPhoto,
+					sa.standAddress
+				FROM stand_profile sp
+					JOIN
+						stand_address sa ON sa.profileId = sp.profileId
+				LIMIT ? OFFSET ?`;
+
+			// Database Action
+			db.query(sqlStand, [pageSize, offset], (err, standResult) => {
+				if (err) res.status(500).send(err);
+
+				if (standResult.length === 0) {
+					return res.status(200).send({ error: true, message: 'Data tidak tersedia!' });
+				} else {
+					// Collection Data Stand
+					const pageOfData = standResult;
+					return res.status(200).send({ error: false, standResult, pager });
+				}
+			});
 		});
 	},
 
@@ -179,7 +221,7 @@ module.exports = {
 	 */
 	adminEditPhotoStand: (req, res) => {
 		// Set Path
-		const path = '/standimages';
+		const path = '/images';
 
 		// Multer Action
 		const upload = uploader(path, 'standimg').fields([{ name: 'standImage' }]);
@@ -260,7 +302,8 @@ module.exports = {
 				sm.menuId, 
 				sm.menuName, 
 				sm.menuPrice, 
-				sm.menuDesc 
+				sm.menuDesc,
+				sm.menuCategory
 			FROM 
 				stand_menu sm 
 			WHERE sm.profileId = ?`;
@@ -335,16 +378,23 @@ module.exports = {
 	 */
 	adminEditStandMenu: (req, res) => {
 		// Get Data Update
-		const { profileId } = req.body; // req.body.data
+		const { menuId } = req.body; // req.body.data
 
 		// Set Data
-		const data = req.body; // req.body.data
+		const {profileId,menuName,menuDesc,menuCategory,menuPrice} = req.body.data; // req.body.data
+		const data = {
+			profileId:parseInt(profileId),
+			menuName,
+			menuPrice,
+			menuCategory,
+			menuDesc
+		}
 
 		// Set SQL Syntax
-		const sqlUpdateMenu = `UPDATE FROM stand_menu sm SET ? WHERE sm.profileId = ?`;
+		const sqlUpdateMenu = `UPDATE stand_menu sm SET ? WHERE sm.menuId = ?`;
 
 		// Database Action
-		db.query(sqlUpdateMenu, [data, parseInt(profileId)], (err, updateResult) => {
+		db.query(sqlUpdateMenu, [data, parseInt(menuId)], (err, updateResult) => {
 			if (err) res.status(500).send(err);
 
 			if (updateResult.affectedRows === 0) {
