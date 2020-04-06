@@ -2,6 +2,7 @@
 const db = require('../database/db');
 const paginate = require('jw-paginate');
 const cryptoGenerate = require('../helper/encrypt');
+const jwtGenerate = require('../helper/jwt');
 const { uploader } = require('../helper/uploader');
 
 module.exports = {
@@ -68,7 +69,8 @@ module.exports = {
 				.send({ error: true, message: 'Kolom email/password tidak boleh kosong!' });
 		} else {
 			// Set SQL Syntax
-			const sqlLogin = 'SELECT * FROM admin WHERE adminMail = ? AND adminPassword = ?';
+			const sqlLogin =
+				'SELECT a.adminId, a.adminMail, a.adminRole FROM admin a WHERE adminMail = ? AND adminPassword = ?';
 
 			// Database Action
 			db.query(sqlLogin, [adminMail, cryptoGenerate(adminPassword)], (err, loginResult) => {
@@ -79,7 +81,16 @@ module.exports = {
 						.status(200)
 						.send({ error: true, message: 'Email yang anda masukkan tidak terdaftar!' });
 				} else {
-					return res.status(200).send({ error: false, result: loginResult[0] });
+					// Create token
+					const token = jwtGenerate({
+						adminId: loginResult[0].adminId,
+						adminMail: loginResult[0].adminMail,
+						adminRole: loginResult[0].adminRole
+					});
+
+					console.log('token', token);
+
+					return res.status(200).send({ token, error: false, result: loginResult[0] });
 				}
 			});
 		}
