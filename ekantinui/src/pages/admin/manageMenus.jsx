@@ -62,14 +62,16 @@ class ManageMenus extends Component {
   };
 
   componentDidMount() {
-    Axios.get(`http://localhost:2020/menus?merchantid=${this.props.match.params.id}`)
-      .then((res) => {
-        console.log(res.data);
-        this.setState({ datamenu: res.data, loading: false });
-      })
-      .catch((err) => {
-        console.log(err);
+    Axios.post(`http://localhost:1919/admin/menu`, { profileId: this.props.match.params.id })
+    .then((res) => {
+      console.log(res.data)
+      this.setState({ 
+        datamenu: res.data.menuResult,
+        loading: false 
       });
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
   onClickSave = () => {
@@ -80,88 +82,91 @@ class ManageMenus extends Component {
     let harga = this.state.addharga;
 
     let menubaru = {
-      merchantid,
-      menu,
-      deskripsi,
-      kategori,
-      harga,
+      profileId: merchantid,
+      menuName: menu,
+      menuDesc: deskripsi,
+      menuCategory: kategori,
+      menuPrice: harga,
     };
 
     console.log(menubaru);
 
-    Axios.post(`http://localhost:2020/menus`, menubaru)
+    Axios.post(`http://localhost:1919/admin/add-menu`, menubaru)
+    .then((res) => {
+      console.log(res.data)
+      Axios.post(`http://localhost:1919/admin/menu`, { profileId: this.props.match.params.id })
       .then((res) => {
-        console.log(res.data);
-        Axios.get(`http://localhost:2020/menus?merchantid=${this.props.match.params.id}`)
-          .then((res1) => {
-            console.log(res1.data);
-            this.setState({ datamenu: res1.data, modaladd: false });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        console.log(res.data)
+        this.setState({ 
+          datamenu: res.data.menuResult,
+          modaladd: false 
+        });
+      }).catch((err) => {
+        console.log(err)
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    }).catch((err) => {
+      console.log(err)
+    })
   };
 
   onClickDelete = (id, index) => {
     console.log(id, index);
 
-    Axios.delete(`http://localhost:2020/menus/${id}`)
+    Axios.post(`http://localhost:1919/admin/delete-menu`,{menuId:id})
+    .then((res) => {
+      console.log(res.data)
+      Axios.post(`http://localhost:1919/admin/menu`, { profileId: this.props.match.params.id })
       .then((res) => {
-        console.log(res.data);
-        Axios.get(`http://localhost:2020/menus?merchantid=${this.props.match.params.id}`)
-          .then((res1) => {
-            console.log(res1.data);
-            this.setState({ datamenu: res1.data, modaladd: false });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        console.log(res.data)
+        this.setState({ 
+          datamenu: res.data.menuResult
+        });
+      }).catch((err) => {
+        console.log(err)
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    }).catch((err) => {
+      console.log(err)
+    })
   };
 
   onClickEdit = () => {
     // id dan index edit
     let id = this.state.idedit;
+    console.log(id)
     let index = this.state.indexedit;
 
     let merchantid = this.props.match.params.id;
-    let menu = this.state.editmenu || this.state.datamenu[index].menu;
-    let deskripsi = this.state.editdeskripsi || this.state.datamenu[index].deskripsi;
-    let kategori = this.state.editcategory || this.state.datamenu[index].kategori;
-    let harga = this.state.editharga || this.state.datamenu[index].harga;
+    let menu = this.state.editmenu || this.state.datamenu[index].menuName;
+    let deskripsi = this.state.editdeskripsi || this.state.datamenu[index].menuDesc;
+    let kategori = this.state.editcategory || this.state.datamenu[index].menuCategory;
+    let harga = this.state.editharga || this.state.datamenu[index].hamenuPricerga;
 
     let menuedit = {
-      merchantid,
-      menu,
-      deskripsi,
-      kategori,
-      harga,
+      profileId: merchantid,
+      menuName: menu,
+      menuDesc: deskripsi,
+      menuCategory: kategori,
+      menuPrice: harga,
     };
 
     console.log(menuedit);
 
-    Axios.put(`http://localhost:2020/menus/${id}`, menuedit)
+    Axios.post(`http://localhost:1919/admin/edit-menu`, {menuId:id, data:menuedit})
+    .then((res) => {
+      console.log(res.data)
+      Axios.post(`http://localhost:1919/admin/menu`, { profileId: this.props.match.params.id })
       .then((res) => {
-        console.log(res.data);
-        Axios.get(`http://localhost:2020/menus?merchantid=${this.props.match.params.id}`)
-          .then((res1) => {
-            console.log(res1.data);
-            this.setState({ datamenu: res1.data, modaledit: false });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        console.log(res.data)
+        this.setState({ 
+          datamenu: res.data.menuResult,
+          modaledit: false 
+        });
+      }).catch((err) => {
+        console.log(err)
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    }).catch((err) => {
+      console.log(err)
+    })
   };
 
   rendermenu = () => {
@@ -169,25 +174,23 @@ class ManageMenus extends Component {
       return (
         <TableRow key={index}>
           <TableCell style={{ width: "0px" }}>{index + 1}</TableCell>
-          <TableCell style={{ width: "250px" }}>{val.menu}</TableCell>
-          <TableCell style={{ width: "600px" }}>{val.deskripsi}</TableCell>
-          <TableCell style={{ width: "100px" }}>{val.kategori}</TableCell>
-          <TableCell style={{ width: "150px" }}>{"Rp." + numeral(val.harga).format("Rp,0.00")}</TableCell>
+          <TableCell style={{ width: "250px" }}>{val.menuName}</TableCell>
+          <TableCell style={{ width: "600px" }}>{val.menuDesc}</TableCell>
+          <TableCell style={{ width: "100px" }}>{val.menuCategory}</TableCell>
+          <TableCell style={{ width: "150px" }}>{"Rp." + numeral(val.menuPrice).format("Rp,0.00")}</TableCell>
           <TableCell>
-            <Box mb={1}>
-              <Button
-                onClick={() => this.setState({ idedit: val.id, indexedit: index, modaledit: true })}
-                variant="outlined"
-                style={{ width: "150px", color: purple.A200 }}>
-                Edit Menu
-              </Button>
-            </Box>
+            <Button
+              onClick={() => this.setState({ idedit: val.menuId, indexedit: index, modaledit: true })}
+              variant="outlined"
+              style={{ width: "130px", marginRight:'10px', color: purple.A200 }}>
+              Edit Menu
+            </Button>
             <Button
               onClick={() => {
-                this.onClickDelete(val.id, index);
+                this.onClickDelete(val.menuId, index);
               }}
               variant="outlined"
-              style={{ width: "150px" }}
+              style={{ width: "130px" }}
               color="secondary">
               Delete
             </Button>
@@ -338,7 +341,7 @@ class ManageMenus extends Component {
                     onChange={(e) => this.setState({ editmenu: e.target.value })}
                     label="Canteen's Menu"
                     style={{ margin: 4 }}
-                    defaultValue={this.state.datamenu[this.state.indexedit].menu}
+                    defaultValue={this.state.datamenu[this.state.indexedit].menuName}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -352,7 +355,7 @@ class ManageMenus extends Component {
                     onChange={(e) => this.setState({ editdeskripsi: e.target.value })}
                     label="Menu's Description"
                     style={{ margin: 4 }}
-                    defaultValue={this.state.datamenu[this.state.indexedit].deskripsi}
+                    defaultValue={this.state.datamenu[this.state.indexedit].menuDesc}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -367,7 +370,7 @@ class ManageMenus extends Component {
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
-                      value={this.state.editcategory || this.state.datamenu[this.state.indexedit].kategori}
+                      value={this.state.editcategory || this.state.datamenu[this.state.indexedit].menuCategory}
                       onChange={(e) => this.setState({ editcategory: e.target.value })}
                       label="Menu's Category ">
                       {/* <MenuItem value="">
@@ -383,7 +386,7 @@ class ManageMenus extends Component {
                     onChange={(e) => this.setState({ editharga: e.target.value })}
                     label="Menu's Price"
                     style={{ margin: 4 }}
-                    defaultValue={this.state.datamenu[this.state.indexedit].harga}
+                    defaultValue={this.state.datamenu[this.state.indexedit].menuPrice}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -420,7 +423,7 @@ class ManageMenus extends Component {
                   <TableCell></TableCell>
                   <TableCell></TableCell>
                   <TableCell>
-                    <Box mb={1} mt={1} style={{ paddingLeft: "42vh" }}>
+                    <Box mb={1} mt={1} style={{ paddingLeft: "48vh" }}>
                       <Button
                         component={Link}
                         to={"/admin/managemerchant"}
@@ -429,7 +432,7 @@ class ManageMenus extends Component {
                         Kembali
                       </Button>
                     </Box>
-                    <Box mb={1} mt={1} style={{ paddingLeft: "42vh" }}>
+                    <Box mb={1} mt={1} style={{ paddingLeft: "48vh" }}>
                       <Button
                         onClick={() => {
                           this.setState({ modaladd: true });
