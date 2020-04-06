@@ -17,11 +17,25 @@ router.post('/login', adminControllers.adminLogin);
 router.post('/stand', adminControllers.adminGetListStand);
 
 /**
+ * @routes POST admin/add-stand
+ * @description Admin create a new stand
+ * @access Admin
+ */
+router.post('/add-stand', adminControllers.adminAddStand);
+
+/**
  * @routes POST admin/edit-stand-profile
  * @description Admin edit profile stand action
  * @access Admin
  */
 router.post('/edit-stand-profile', adminControllers.adminEditProfileStand);
+
+/**
+ * @routes POST admin/edit-stand-photo
+ * @description Admin edit photo stand action
+ * @access Admin
+ */
+router.post('/edit-stand-photo', adminControllers.adminEditPhotoStand);
 
 /**
  * @routes POST admin/delete-stand
