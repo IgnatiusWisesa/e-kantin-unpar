@@ -22,6 +22,9 @@ app.use(bodyParser.json());
 // Set cors
 app.use(cors());
 
+// Set Static File
+app.use(express.static('public'));
+
 // Set routes
 const { adminRoutes, publicRoutes } = require('./routes');
 app.get('/', (req, res) => res.send('Server e-kantin Unpar is running...'));
