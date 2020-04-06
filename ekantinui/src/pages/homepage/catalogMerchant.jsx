@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
 import LogoWA from "../../chat_via_wa.svg";
-import ScrollToTop from "../../components/scrollToTop";
+import ScrollToTop from "../../components/ScrollToTop";
 
 const useStyles = makeStyles((theme) => ({
   container: {
