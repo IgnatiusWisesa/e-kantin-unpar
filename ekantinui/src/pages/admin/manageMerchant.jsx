@@ -210,8 +210,8 @@ class ManageMerchant extends Component {
     return this.state.datakantin.map((val, index) => {
       return (
         <TableRow key={index}>
-          <TableCell style={{ width: "50px" }}>{val.profileId}</TableCell>
-          <TableCell style={{ width: "150px" }}>
+          <TableCell align="center">{val.profileId}</TableCell>
+          <TableCell align="center">
             {this.state.insertfoto === val.profileId ? (
               <Button variant="contained" component="label">
                 Upload File
@@ -230,40 +230,32 @@ class ManageMerchant extends Component {
               />
             )}
           </TableCell>
-          <TableCell style={{ width: "100px" }}>
-            <p>
-              Nama <span style={{ paddingLeft: "30px" }}>: {val.standName}</span>
-            </p>
-            <p>
-              Lokasi <span style={{ paddingLeft: "27px" }}>: {val.standAddress}</span>
-            </p>
-            <p>
-              Whatsapp <span style={{ paddingLeft: "6px" }}>: {val.standContact}</span>
-            </p>
+          <TableCell>
+            Nama <span style={{ paddingLeft: "30px" }}>: {val.standName}</span> <br />
+            Lokasi <span style={{ paddingLeft: "27px" }}>: {val.standAddress}</span> <br />
+            Whatsapp <span style={{ paddingLeft: "6px" }}>: {val.standContact}</span> <br />
           </TableCell>
-          <TableCell style={{ width: "100px" }}>
-            <TableBody style={{ display: "flex", marginLeft: "-95px" }}>
-              <Button
-                onClick={() => this.setState({ idedit: val.profileId, indexedit: index, modaledit: true })}
-                variant="outlined"
-                style={{ width: "80px", marginRight: "10px", color: purple.A200 }}>
-                Edit Profile
-              </Button>
-              <Button
-                component={Link}
-                to={"/admin/managemenus/" + val.profileId}
-                variant="outlined"
-                style={{ width: "80px", marginRight: "10px", color: blue.A200 }}>
-                Detail Menu
-              </Button>
-              <Button
-                onClick={() => this.onClickDelete(val.profileId, index)}
-                variant="outlined"
-                style={{ width: "80px" }}
-                color="secondary">
-                Delete
-              </Button>
-            </TableBody>
+          <TableCell align="center">
+            <Button
+              onClick={() => this.setState({ idedit: val.profileId, indexedit: index, modaledit: true })}
+              variant="outlined"
+              style={{ width: "150px", marginBottom: "5px", color: purple.A200 }}>
+              Edit Profile
+            </Button>
+            <Button
+              component={Link}
+              to={"/admin/managemenus/" + val.profileId}
+              variant="outlined"
+              style={{ width: "150px", marginBottom: "5px", color: blue.A200 }}>
+              Detail Menu
+            </Button>
+            <Button
+              onClick={() => this.onClickDelete(val.profileId, index)}
+              variant="outlined"
+              style={{ width: "150px" }}
+              color="secondary">
+              Delete
+            </Button>
           </TableCell>
         </TableRow>
       );
@@ -282,7 +274,7 @@ class ManageMerchant extends Component {
     }
 
     return (
-      <div>
+      <div style={{ minHeight: "70vh" }}>
         {this.state.modaladd ? (
           <Modal
             aria-labelledby="transition-modal-title"
@@ -344,7 +336,7 @@ class ManageMerchant extends Component {
                     onChange={(e) => this.setState({ addkantinwhatsapp: e.target.value })}
                     label="Canteen's Whatsapp Number"
                     style={{ margin: 4 }}
-                    placeholder="0895 - 804 - xxx"
+                    placeholder="628xxx"
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -447,18 +439,24 @@ class ManageMerchant extends Component {
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  <TableCell className="text-center">ID.</TableCell>
-                  <TableCell className="text-center">Foto</TableCell>
-                  <TableCell className="text-center">Profil</TableCell>
-                  <TableCell className="text-center">Action</TableCell>
+                  <TableCell align="center" style={{ width: "10vw" }}>
+                    ID.
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "20vw" }}>
+                    Foto
+                  </TableCell>
+                  <TableCell align="left" style={{ width: "50vw" }}>
+                    Profil
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "20vw" }}>
+                    Action
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell>
-                    <Box mb={1} mt={1} style={{ paddingLeft: "34vh" }}>
+                  <TableCell align="center" colSpan={4}>
+                    <Box mb={1} mt={1}>
                       <Button
                         onClick={() => {
                           this.setState({ modaladd: true });
@@ -469,10 +467,9 @@ class ManageMerchant extends Component {
                       </Button>
                     </Box>
                   </TableCell>
-                  <TableCell></TableCell>
                 </TableRow>
+                {this.renderkantin()}
               </TableBody>
-              <TableBody>{this.renderkantin()}</TableBody>
             </Table>
           </TableContainer>
         </Paper>
