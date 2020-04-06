@@ -1,10 +1,52 @@
-
 // Import Database
 const db = require('../database/db');
 const paginate = require('jw-paginate');
+const cryptoGenerate = require('../helper/encrypt');
 const { uploader } = require('../helper/uploader');
 
 module.exports = {
+	/**
+	 * @routes POST admin/register
+	 * @description Admin register action
+	 * @access Admin
+	 */
+	adminRegister: (req, res) => {
+		// Get Email And Password
+		const { adminMail, adminPassword } = req.body; // req.body.data
+
+		// Validation Email And Password
+		if (
+			adminMail === undefined ||
+			adminMail === '' ||
+			adminPassword === undefined ||
+			adminMail === ''
+		) {
+			return res
+				.status(200)
+				.send({ error: true, message: 'Kolom email/password tidak boleh kosong!' });
+		} else {
+			// Set Data
+			const data = {
+				adminMail,
+				adminPassword: cryptoGenerate(adminPassword)
+			};
+
+			// Set SQL Syntax
+			const sqlRegister = 'INSERT INTO admin SET ?';
+
+			// Database Action
+			db.query(sqlRegister, data, (err, registerResutl) => {
+				if (err) res.status(500).send(err);
+
+				if (registerResutl.indertId === 0) {
+					return res.status(200).send({ error: true, message: 'Registrasi admin gagal' });
+				} else {
+					return res.status(200).send({ error: false, message: 'Registrasi admin berhasil!' });
+				}
+			});
+		}
+	},
+
 	/**
 	 * @routes POST admin/login
 	 * @description Admin login action
@@ -29,7 +71,7 @@ module.exports = {
 			const sqlLogin = 'SELECT * FROM admin WHERE adminMail = ? AND adminPassword = ?';
 
 			// Database Action
-			db.query(sqlLogin, [adminMail, adminPassword], (err, loginResult) => {
+			db.query(sqlLogin, [adminMail, cryptoGenerate(adminPassword)], (err, loginResult) => {
 				if (err) res.status(500).send(err);
 
 				if (loginResult.length === 0) {
@@ -381,14 +423,14 @@ module.exports = {
 		const { menuId } = req.body; // req.body.data
 
 		// Set Data
-		const {profileId,menuName,menuDesc,menuCategory,menuPrice} = req.body.data; // req.body.data
+		const { profileId, menuName, menuDesc, menuCategory, menuPrice } = req.body.data; // req.body.data
 		const data = {
-			profileId:parseInt(profileId),
+			profileId: parseInt(profileId),
 			menuName,
 			menuPrice,
 			menuCategory,
 			menuDesc
-		}
+		};
 
 		// Set SQL Syntax
 		const sqlUpdateMenu = `UPDATE stand_menu sm SET ? WHERE sm.menuId = ?`;
