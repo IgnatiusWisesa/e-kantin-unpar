@@ -1,3 +1,4 @@
+
 // Import Database
 const db = require('../database/db');
 const paginate = require('jw-paginate');
@@ -62,7 +63,7 @@ module.exports = {
 			const page = parseInt(req.body.page) || 1;
 
 			// Set Page Size
-			const pageSize = 10;
+			const pageSize = 3;
 
 			// Get Pager Object for Specified Page
 			const pager = paginate(dataCount, page, pageSize);
@@ -73,7 +74,7 @@ module.exports = {
 			if (page === 1) {
 				offset = 0;
 			} else {
-				offst === pageSize * (page - 1);
+				offset = pageSize * (page - 1);
 			}
 
 			// Set SQL Syntax
@@ -220,7 +221,7 @@ module.exports = {
 	 */
 	adminEditPhotoStand: (req, res) => {
 		// Set Path
-		const path = '/standimages';
+		const path = '/images';
 
 		// Multer Action
 		const upload = uploader(path, 'standimg').fields([{ name: 'standImage' }]);
@@ -301,7 +302,8 @@ module.exports = {
 				sm.menuId, 
 				sm.menuName, 
 				sm.menuPrice, 
-				sm.menuDesc 
+				sm.menuDesc,
+				sm.menuCategory
 			FROM 
 				stand_menu sm 
 			WHERE sm.profileId = ?`;
@@ -376,16 +378,23 @@ module.exports = {
 	 */
 	adminEditStandMenu: (req, res) => {
 		// Get Data Update
-		const { profileId } = req.body; // req.body.data
+		const { menuId } = req.body; // req.body.data
 
 		// Set Data
-		const data = req.body; // req.body.data
+		const {profileId,menuName,menuDesc,menuCategory,menuPrice} = req.body.data; // req.body.data
+		const data = {
+			profileId:parseInt(profileId),
+			menuName,
+			menuPrice,
+			menuCategory,
+			menuDesc
+		}
 
 		// Set SQL Syntax
-		const sqlUpdateMenu = `UPDATE FROM stand_menu sm SET ? WHERE sm.profileId = ?`;
+		const sqlUpdateMenu = `UPDATE stand_menu sm SET ? WHERE sm.menuId = ?`;
 
 		// Database Action
-		db.query(sqlUpdateMenu, [data, parseInt(profileId)], (err, updateResult) => {
+		db.query(sqlUpdateMenu, [data, parseInt(menuId)], (err, updateResult) => {
 			if (err) res.status(500).send(err);
 
 			if (updateResult.affectedRows === 0) {
