@@ -1,5 +1,8 @@
 import React, { Fragment, useState } from "react";
 import Numeral from "numeral";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
@@ -67,91 +70,114 @@ function MenuList() {
     setValue(newValue);
   };
 
+  const { ListFood, ListDrink, Loading } = useSelector(({ MenuList }) => {
+    return {
+      ListFood: MenuList.listFood,
+      ListDrink: MenuList.listDrink,
+      Loading: MenuList.loading,
+    };
+  });
+
   return (
     <Fragment>
       <ScrollToTop />
       <Toolbar />
-      {/*  */}
 
-      <div className={classes.root}>
-        <AppBar position="static" color="inherit">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="fullWidth"
-            aria-label="full width tabs example">
-            <Tab label="Makanan" icon={<RestaurantIcon />} {...a11yProps(0)} />
-            <Tab label="Minuman" icon={<LocalCafeIcon />} {...a11yProps(1)} />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          {daftarMakanan.map((makanan, id) => {
-            return (
-              <ListItem key={id} button className={classes.nested}>
-                <ListItemText primary={"Rp " + Numeral(makanan.price).format("0,0")} />
-                <ListItemText style={{ width: 180 }} primary={makanan.name} secondary={makanan.description} />
-              </ListItem>
-            );
-          })}
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          {daftarMinuman.map((minuman, id) => {
-            return (
-              <ListItem key={id} button className={classes.nested}>
-                <ListItemText primary={"Rp " + Numeral(minuman.price).format("0,0")} />
-                <ListItemText style={{ width: 180 }} primary={minuman.name} secondary={minuman.description} />
-              </ListItem>
-            );
-          })}
-        </TabPanel>
-      </div>
+      {Loading ? (
+        <div className="loading">Loading&#8230;</div>
+      ) : (
+        <div className={classes.root}>
+          <AppBar position="static" color="inherit">
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              variant="fullWidth"
+              aria-label="full width tabs example">
+              <Tab label="Makanan" icon={<RestaurantIcon />} {...a11yProps(0)} />
+              <Tab label="Minuman" icon={<LocalCafeIcon />} {...a11yProps(1)} />
+            </Tabs>
+          </AppBar>
+          <TabPanel value={value} index={0} dir={theme.direction}>
+            {ListFood.map((food, index) => {
+              return (
+                <ListItem
+                  component={Link}
+                  to={{ pathname: "/profil", id: food.profileId }}
+                  key={food.menuId}
+                  button
+                  className={classes.nested}>
+                  <ListItemText primary={"Rp " + Numeral(food.menuPrice).format("0,0")} />
+                  <ListItemText style={{ width: 180 }} primary={food.menuName} secondary={`Kantin ${food.standName}`} />
+                </ListItem>
+              );
+            })}
+          </TabPanel>
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            {ListDrink.map((drink, index) => {
+              return (
+                <ListItem
+                  component={Link}
+                  to={{ pathname: "/profil", id: drink.profileId }}
+                  key={drink.menuId}
+                  button
+                  className={classes.nested}>
+                  <ListItemText primary={"Rp " + Numeral(drink.menuPrice).format("0,0")} />
+                  <ListItemText style={{ width: 180 }} primary={drink.menuName} secondary={`Kantin ${drink.standName}`} />
+                </ListItem>
+              );
+            })}
+          </TabPanel>
+        </div>
+      )}
+
+      {/* END OF ROOT */}
     </Fragment>
   );
 }
 
-const daftarMakanan = [
-  { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
-  { name: "Nasi Goreng Merah", description: "nasi goreng saos", price: 15000 },
-  { name: "Mie Goreng", description: "mie yang digoreng", price: 15000 },
-  { name: "Mie Rebus", description: "mie yang direbus", price: 15000 },
-  { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
-  { name: "Nasi Goreng Merah", description: "nasi goreng saos", price: 15000 },
-  { name: "Mie Goreng", description: "mie yang digoreng", price: 15000 },
-  { name: "Mie Rebus", description: "mie yang direbus", price: 15000 },
-  { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
-  { name: "Nasi Goreng Merah", description: "nasi goreng saos", price: 15000 },
-  { name: "Mie Goreng", description: "mie yang digoreng", price: 15000 },
-  { name: "Mie Rebus", description: "mie yang direbus", price: 15000 },
-  { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
-  { name: "Nasi Goreng Merah", description: "nasi goreng saos", price: 15000 },
-  { name: "Mie Goreng", description: "mie yang digoreng", price: 15000 },
-  { name: "Mie Rebus", description: "mie yang direbus", price: 15000 },
-  { name: "Cap Cay", description: "yur sayur", price: 12000 },
-  { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
-];
+// const daftarMakanan = [
+//   { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
+//   { name: "Nasi Goreng Merah", description: "nasi goreng saos", price: 15000 },
+//   { name: "Mie Goreng", description: "mie yang digoreng", price: 15000 },
+//   { name: "Mie Rebus", description: "mie yang direbus", price: 15000 },
+//   { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
+//   { name: "Nasi Goreng Merah", description: "nasi goreng saos", price: 15000 },
+//   { name: "Mie Goreng", description: "mie yang digoreng", price: 15000 },
+//   { name: "Mie Rebus", description: "mie yang direbus", price: 15000 },
+//   { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
+//   { name: "Nasi Goreng Merah", description: "nasi goreng saos", price: 15000 },
+//   { name: "Mie Goreng", description: "mie yang digoreng", price: 15000 },
+//   { name: "Mie Rebus", description: "mie yang direbus", price: 15000 },
+//   { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
+//   { name: "Nasi Goreng Merah", description: "nasi goreng saos", price: 15000 },
+//   { name: "Mie Goreng", description: "mie yang digoreng", price: 15000 },
+//   { name: "Mie Rebus", description: "mie yang direbus", price: 15000 },
+//   { name: "Cap Cay", description: "yur sayur", price: 12000 },
+//   { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
+// ];
 
-const daftarMinuman = [
-  { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
-  { name: "Teh Manis", description: "dingin/panas", price: 4000 },
-  { name: "Kopi", description: "dingin/panas", price: 4000 },
-  { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
-  { name: "Teh Manis", description: "dingin/panas", price: 4000 },
-  { name: "Kopi", description: "dingin/panas", price: 4000 },
-  { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
-  { name: "Teh Manis", description: "dingin/panas", price: 4000 },
-  { name: "Kopi", description: "dingin/panas", price: 4000 },
-  { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
-  { name: "Teh Manis", description: "dingin/panas", price: 4000 },
-  { name: "Kopi", description: "dingin/panas", price: 4000 },
-  { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
-  { name: "Teh Manis", description: "dingin/panas", price: 4000 },
-  { name: "Kopi", description: "dingin/panas", price: 4000 },
-  { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
-  { name: "Teh Manis", description: "dingin/panas", price: 4000 },
-  { name: "Kopi", description: "dingin/panas", price: 4000 },
-  { name: "Mineral Prima", description: "botol dingin/panas", price: 5000 },
-];
+// const daftarMinuman = [
+//   { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
+//   { name: "Teh Manis", description: "dingin/panas", price: 4000 },
+//   { name: "Kopi", description: "dingin/panas", price: 4000 },
+//   { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
+//   { name: "Teh Manis", description: "dingin/panas", price: 4000 },
+//   { name: "Kopi", description: "dingin/panas", price: 4000 },
+//   { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
+//   { name: "Teh Manis", description: "dingin/panas", price: 4000 },
+//   { name: "Kopi", description: "dingin/panas", price: 4000 },
+//   { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
+//   { name: "Teh Manis", description: "dingin/panas", price: 4000 },
+//   { name: "Kopi", description: "dingin/panas", price: 4000 },
+//   { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
+//   { name: "Teh Manis", description: "dingin/panas", price: 4000 },
+//   { name: "Kopi", description: "dingin/panas", price: 4000 },
+//   { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
+//   { name: "Teh Manis", description: "dingin/panas", price: 4000 },
+//   { name: "Kopi", description: "dingin/panas", price: 4000 },
+//   { name: "Mineral Prima", description: "botol dingin/panas", price: 5000 },
+// ];
 
 export default MenuList;

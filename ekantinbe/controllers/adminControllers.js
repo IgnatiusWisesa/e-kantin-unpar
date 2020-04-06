@@ -63,7 +63,11 @@ module.exports = {
 			const page = parseInt(req.body.page) || 1;
 
 			// Set Page Size
+<<<<<<< HEAD
 			const pageSize = 3;
+=======
+			const pageSize = 10;
+>>>>>>> 2cb34e6661ad2d278c508805b52dc8be1e251ec3
 
 			// Get Pager Object for Specified Page
 			const pager = paginate(dataCount, page, pageSize);
@@ -74,7 +78,11 @@ module.exports = {
 			if (page === 1) {
 				offset = 0;
 			} else {
+<<<<<<< HEAD
 				offset = pageSize * (page - 1);
+=======
+				offst === pageSize * (page - 1);
+>>>>>>> 2cb34e6661ad2d278c508805b52dc8be1e251ec3
 			}
 
 			// Set SQL Syntax
