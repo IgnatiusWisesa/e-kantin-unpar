@@ -232,14 +232,16 @@ module.exports = {
 	 */
 	adminEditProfileStand: (req, res) => {
 		// Get New Data Stand & Profile Id
-		const { profileId, standName, standContact } = req.body; // req.body.data
+		const { profileId, standName, standContact, standAddress } = req.body; // req.body.data
 
 		// Validation Data
 		if (
 			standName === undefined ||
 			standName === '' ||
 			standContact === undefined ||
-			standContact === ''
+			standContact === '' ||
+			standAddress === undefined ||
+			standAddress === ''
 		) {
 			return res.status(500).send({ error: true, message: 'Data tidak boleh kosong!' });
 		} else {
@@ -254,15 +256,30 @@ module.exports = {
 
 			// Database Action
 			db.query(sqlEditStand, [data, parseInt(profileId)], (err, editStandResult) => {
-				if (err) res.status(500).send({ error: err });
+				if (err) return res.status(500).send({ error: err });
 
-				if (editStandResult.affectedRows === 0) {
-					return res
-						.status(200)
-						.send({ error: true, message: 'Data tidak berhasil di update!' });
-				} else {
-					return res.status(200).send({ error: false, message: 'Data berhasil di update!' });
-				}
+				// Set Data
+				const data = {
+					standAddress
+				};
+
+				// Ser SQL Syntax
+				const sqlEditAddress = 'UPDATE stand_address sa SET ? WHERE sa.profileId = ?';
+
+				// Database Action
+				db.query(sqlEditAddress, [data, parseInt(profileId)], (err, editAddressResult) => {
+					if (err) return res.status(500).send(err);
+
+					if (editAddressResult.affectedRows === 0) {
+						return res
+							.status(200)
+							.send({ error: true, message: 'Data tidak berhasil di update!' });
+					} else {
+						return res
+							.status(200)
+							.send({ error: false, message: 'Data berhasil di update!' });
+					}
+				});
 			});
 		}
 	},
