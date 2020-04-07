@@ -9,3 +9,12 @@ export const SET_CATALOG_SUCCESS = "SET_CATALOG_SUCCESS";
 //
 // MENU LIST
 export const SET_MENULIST_SUCCESS = "SET_MENULIST_SUCCESS";
+
+//
+// AUTH
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+
+//
+// SEARCH
+export const SEARCH_START = "SEARCH_START";
+export const SEARCH_RESET = "SEARCH_RESET";

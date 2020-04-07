@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
 import BottomNavReducer from "./bottomNavReducer";
-import Authreducers from "./Authreducers";
+import AuthReducer from "./authReducer";
 import CatalogReducer from "./catalogReducer";
 import MenuListReducer from "./menuListReducer";
+import SearchReducer from "./searchReducer";
 
 export default combineReducers({
   BottomNav: BottomNavReducer,
-  Auth: Authreducers,
+  Auth: AuthReducer,
   Catalog: CatalogReducer,
   MenuList: MenuListReducer,
+  Search: SearchReducer,
 });
