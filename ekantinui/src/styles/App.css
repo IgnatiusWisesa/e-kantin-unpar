@@ -571,10 +571,9 @@ a {
 .mini-footer {
   background: #3f51b5;
   text-align: center;
-  padding: 24px 0;
+  padding: 20px 0;
   position: sticky;
   left: 0;
-  /* top: 90.5vh; */
   bottom: 0;
   width: 100%;
 }
