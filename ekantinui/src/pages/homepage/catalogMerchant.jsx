@@ -13,7 +13,9 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
 import LogoWA from "../../chat_via_wa.svg";
-import ScrollToTop from "../../components/scrollToTop";
+import ScrollToTop from "../../components/ScrollToTop";
+
+import { APIURL } from "../../helpers/APIURL";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -96,9 +98,20 @@ function CatalogMerchant() {
                 <div variant="outlined" key={stand.profileId} className={cardStyle.root}>
                   <CardActionArea component={Link} to={{ pathname: "/profil", id: stand.profileId }}>
                     <CardContent className={cardStyle.media}>
-                      <Avatar className={cardStyle.avatar}>
-                        <img width="50px" src={stand.standPhoto} alt={stand.standName} />
-                      </Avatar>
+
+                      
+                      {
+                        stand.standPhoto==='/images/img1586087837004.retail-store-icon.png'?
+                        <Avatar className={cardStyle.avatar}>
+                          <img width="50px" src={stand.standPhoto} alt={stand.standName} />
+                        </Avatar>
+                        :
+                        <Avatar className={cardStyle.avatar}>
+                          <img width="50px" src={APIURL +'/images/'+ stand.standPhoto} alt={stand.standName} />
+                        </Avatar>
+                      }
+
+
                     </CardContent>
                     <Typography variant="body2" component="p" className={cardStyle.title}>
                       {stand.standName}

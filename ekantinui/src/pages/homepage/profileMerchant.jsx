@@ -24,7 +24,7 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import LogoWA from "../../chat_via_wa.svg";
-import ScrollToTop from "../../components/scrollToTop";
+import ScrollToTop from "../../components/ScrollToTop";
 import { APIURL } from "../../helpers/APIURL";
 
 const profilStyles = makeStyles((theme) => ({
@@ -90,9 +90,18 @@ function ProfileMerchant() {
           <Paper elevation={0} className={profil.root}>
             <CardContent style={{ display: "flex" }}>
               <CardMedia>
-                <Avatar className={profil.avatar}>
-                  <img width="75px" src={APIURL + stand.standPhoto} alt={stand.standName} />
-                </Avatar>
+                
+                {
+                  stand.standPhoto==='/images/img1586087837004.retail-store-icon.png'?
+                  <Avatar className={profil.avatar}>
+                    <img width="75px" src={APIURL + stand.standPhoto} alt={stand.standName} />
+                  </Avatar>
+                  :
+                  <Avatar className={profil.avatar}>
+                    <img width="75px" src={APIURL +'/images/'+ stand.standPhoto} alt={stand.standName} />
+                  </Avatar>
+                }
+                
               </CardMedia>
               <CardContent style={{ display: "block", padding: 0, paddingLeft: 20 }}>
                 <Typography variant="h6" component="h2">

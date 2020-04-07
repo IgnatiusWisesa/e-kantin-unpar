@@ -19,6 +19,8 @@ import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 // import Paper from "@material-ui/core/Paper";
 // import Divider from "@material-ui/core/Divider";
 
+import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 480,
@@ -32,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: "#00a8cc"
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -44,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
+    marginLeft:'1vh'
   },
   search: {
     position: "relative",
@@ -58,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1),
       width: "auto",
     },
+    backgroundColor:'#005082'
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -122,13 +127,13 @@ function HeaderAppBar(props) {
                 {location.pathname === "/" || location.pathname === "/daftar_menu" ? (
                   <>
                     {/* <IconButton
-                      onClick={toggleDrawer(true)}
                       edge="start"
                       className={classes.menuButton}
                       color="inherit"
                       aria-label="menu">
                       <MenuIcon />
                     </IconButton> */}
+                    <RestaurantMenuIcon />
                     <Typography className={classes.title} variant="h6" noWrap>
                       eKantin
                     </Typography>
