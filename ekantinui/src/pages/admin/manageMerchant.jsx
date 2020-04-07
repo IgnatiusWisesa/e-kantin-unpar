@@ -207,59 +207,69 @@ class ManageMerchant extends Component {
   };
 
   renderkantin = () => {
-    return this.state.datakantin.map((val, index) => {
+    if (!this.state.datakantin) {
       return (
-        <TableRow key={index}>
-          <TableCell align="center">{val.profileId}</TableCell>
-          <TableCell align="center">
-            {this.state.insertfoto === val.profileId ? (
-              <Button variant="contained" component="label">
-                Upload File
-                <input type="file" style={{ display: "none" }} onChange={(e) => this.onEditPhoto(e, val.profileId)} />
-              </Button>
-            ) : (
-              <img
-                className="card-img-top"
-                style={{ height: "80px", width: "120px" }}
-                src={APIURL + val.standPhoto}
-                alt="Canteen's Profile"
-                onClick={() => {
-                  console.log(index);
-                  this.setState({ insertfoto: val.profileId });
-                }}
-              />
-            )}
-          </TableCell>
-          <TableCell>
-            Nama <span style={{ paddingLeft: "30px" }}>: {val.standName}</span> <br />
-            Lokasi <span style={{ paddingLeft: "27px" }}>: {val.standAddress}</span> <br />
-            Whatsapp <span style={{ paddingLeft: "6px" }}>: {val.standContact}</span> <br />
-          </TableCell>
-          <TableCell align="center">
-            <Button
-              onClick={() => this.setState({ idedit: val.profileId, indexedit: index, modaledit: true })}
-              variant="outlined"
-              style={{ width: "150px", marginBottom: "5px", color: purple.A200 }}>
-              Edit Profile
-            </Button>
-            <Button
-              component={Link}
-              to={"/admin/managemenus/" + val.profileId}
-              variant="outlined"
-              style={{ width: "150px", marginBottom: "5px", color: blue.A200 }}>
-              Detail Menu
-            </Button>
-            <Button
-              onClick={() => this.onClickDelete(val.profileId, index)}
-              variant="outlined"
-              style={{ width: "150px" }}
-              color="secondary">
-              Delete
-            </Button>
+        <TableRow>
+          <TableCell colSpan={6} align="center">
+            Data Kantin kosong
           </TableCell>
         </TableRow>
       );
-    });
+    } else {
+      return this.state.datakantin.map((val, index) => {
+        return (
+          <TableRow key={index}>
+            <TableCell align="center">{val.profileId}</TableCell>
+            <TableCell align="center">
+              {this.state.insertfoto === val.profileId ? (
+                <Button variant="contained" component="label">
+                  Upload File
+                  <input type="file" style={{ display: "none" }} onChange={(e) => this.onEditPhoto(e, val.profileId)} />
+                </Button>
+              ) : (
+                <img
+                  className="card-img-top"
+                  style={{ height: "80px", width: "120px" }}
+                  src={APIURL + val.standPhoto}
+                  alt="Canteen's Profile"
+                  onClick={() => {
+                    console.log(index);
+                    this.setState({ insertfoto: val.profileId });
+                  }}
+                />
+              )}
+            </TableCell>
+            <TableCell>
+              Nama <span style={{ paddingLeft: "30px" }}>: {val.standName}</span> <br />
+              Lokasi <span style={{ paddingLeft: "27px" }}>: {val.standAddress}</span> <br />
+              Whatsapp <span style={{ paddingLeft: "6px" }}>: {val.standContact}</span> <br />
+            </TableCell>
+            <TableCell align="center">
+              <Button
+                onClick={() => this.setState({ idedit: val.profileId, indexedit: index, modaledit: true })}
+                variant="outlined"
+                style={{ width: "150px", marginBottom: "5px", color: purple.A200 }}>
+                Edit Profile
+              </Button>
+              <Button
+                component={Link}
+                to={"/admin/managemenus/" + val.profileId}
+                variant="outlined"
+                style={{ width: "150px", marginBottom: "5px", color: blue.A200 }}>
+                Detail Menu
+              </Button>
+              <Button
+                onClick={() => this.onClickDelete(val.profileId, index)}
+                variant="outlined"
+                style={{ width: "150px" }}
+                color="secondary">
+                Delete
+              </Button>
+            </TableCell>
+          </TableRow>
+        );
+      });
+    }
   };
 
   render() {

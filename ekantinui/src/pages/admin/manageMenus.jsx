@@ -141,7 +141,7 @@ class ManageMenus extends Component {
     let menu = this.state.editmenu || this.state.datamenu[index].menuName;
     let deskripsi = this.state.editdeskripsi || this.state.datamenu[index].menuDesc;
     let kategori = this.state.editcategory || this.state.datamenu[index].menuCategory;
-    let harga = this.state.editharga || this.state.datamenu[index].hamenuPricerga;
+    let harga = this.state.editharga || this.state.datamenu[index].menuPrice;
 
     let menuedit = {
       profileId: merchantid,
@@ -172,34 +172,44 @@ class ManageMenus extends Component {
   };
 
   rendermenu = () => {
-    return this.state.datamenu.map((val, index) => {
+    if (!this.state.datamenu) {
       return (
-        <TableRow key={index}>
-          <TableCell align="center">{index + 1}</TableCell>
-          <TableCell align="center">{val.menuName}</TableCell>
-          <TableCell align="left">{val.menuDesc}</TableCell>
-          <TableCell align="center">{val.menuCategory}</TableCell>
-          <TableCell align="center">{"Rp " + numeral(val.menuPrice).format("Rp,0.00")}</TableCell>
-          <TableCell align="center">
-            <Button
-              onClick={() => this.setState({ idedit: val.menuId, indexedit: index, modaledit: true })}
-              variant="outlined"
-              style={{ width: "130px", marginBottom: 10, color: purple.A200 }}>
-              Edit Menu
-            </Button>
-            <Button
-              onClick={() => {
-                this.onClickDelete(val.menuId, index);
-              }}
-              variant="outlined"
-              style={{ width: "130px" }}
-              color="secondary">
-              Delete
-            </Button>
+        <TableRow>
+          <TableCell colSpan={6} align="center">
+            Daftar Menu kosong
           </TableCell>
         </TableRow>
       );
-    });
+    } else {
+      return this.state.datamenu.map((val, index) => {
+        return (
+          <TableRow key={index}>
+            <TableCell align="center">{index + 1}</TableCell>
+            <TableCell align="center">{val.menuName}</TableCell>
+            <TableCell align="left">{val.menuDesc}</TableCell>
+            <TableCell align="center">{val.menuCategory}</TableCell>
+            <TableCell align="center">{"Rp " + numeral(val.menuPrice).format("Rp,0.00")}</TableCell>
+            <TableCell align="center">
+              <Button
+                onClick={() => this.setState({ idedit: val.menuId, indexedit: index, modaledit: true })}
+                variant="outlined"
+                style={{ width: "130px", marginBottom: 10, color: purple.A200 }}>
+                Edit Menu
+              </Button>
+              <Button
+                onClick={() => {
+                  this.onClickDelete(val.menuId, index);
+                }}
+                variant="outlined"
+                style={{ width: "130px" }}
+                color="secondary">
+                Delete
+              </Button>
+            </TableCell>
+          </TableRow>
+        );
+      });
+    }
   };
 
   render() {
@@ -399,7 +409,7 @@ class ManageMenus extends Component {
           </Modal>
         ) : null}
 
-        <Paper style={{ width: "100%" }}>
+        <Paper style={{ width: "100%", height: "80vh" }}>
           <TableContainer style={{ maxHeight: 500 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
