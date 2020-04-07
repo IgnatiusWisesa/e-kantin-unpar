@@ -3,6 +3,13 @@ const router = express.Router();
 const { adminControllers } = require('../controllers');
 
 /**
+ * @routes POST admin/register
+ * @description Admin register action
+ * @access Admin
+ */
+router.post('/register', adminControllers.adminRegister);
+
+/**
  * @routes POST admin/login
  * @description Admin login action
  * @access Admin

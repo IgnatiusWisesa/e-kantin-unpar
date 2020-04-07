@@ -1,10 +1,53 @@
-
 // Import Database
 const db = require('../database/db');
 const paginate = require('jw-paginate');
+const cryptoGenerate = require('../helper/encrypt');
+const jwtGenerate = require('../helper/jwt');
 const { uploader } = require('../helper/uploader');
 
 module.exports = {
+	/**
+	 * @routes POST admin/register
+	 * @description Admin register action
+	 * @access Admin
+	 */
+	adminRegister: (req, res) => {
+		// Get Email And Password
+		const { adminMail, adminPassword } = req.body; // req.body.data
+
+		// Validation Email And Password
+		if (
+			adminMail === undefined ||
+			adminMail === '' ||
+			adminPassword === undefined ||
+			adminMail === ''
+		) {
+			return res
+				.status(200)
+				.send({ error: true, message: 'Kolom email/password tidak boleh kosong!' });
+		} else {
+			// Set Data
+			const data = {
+				adminMail,
+				adminPassword: cryptoGenerate(adminPassword)
+			};
+
+			// Set SQL Syntax
+			const sqlRegister = 'INSERT INTO admin SET ?';
+
+			// Database Action
+			db.query(sqlRegister, data, (err, registerResutl) => {
+				if (err) res.status(500).send(err);
+
+				if (registerResutl.indertId === 0) {
+					return res.status(200).send({ error: true, message: 'Registrasi admin gagal' });
+				} else {
+					return res.status(200).send({ error: false, message: 'Registrasi admin berhasil!' });
+				}
+			});
+		}
+	},
+
 	/**
 	 * @routes POST admin/login
 	 * @description Admin login action
@@ -26,10 +69,11 @@ module.exports = {
 				.send({ error: true, message: 'Kolom email/password tidak boleh kosong!' });
 		} else {
 			// Set SQL Syntax
-			const sqlLogin = 'SELECT * FROM admin WHERE adminMail = ? AND adminPassword = ?';
+			const sqlLogin =
+				'SELECT a.adminId, a.adminMail, a.adminRole FROM admin a WHERE adminMail = ? AND adminPassword = ?';
 
 			// Database Action
-			db.query(sqlLogin, [adminMail, adminPassword], (err, loginResult) => {
+			db.query(sqlLogin, [adminMail, cryptoGenerate(adminPassword)], (err, loginResult) => {
 				if (err) res.status(500).send(err);
 
 				if (loginResult.length === 0) {
@@ -37,7 +81,16 @@ module.exports = {
 						.status(200)
 						.send({ error: true, message: 'Email yang anda masukkan tidak terdaftar!' });
 				} else {
-					return res.status(200).send({ error: false, result: loginResult[0] });
+					// Create token
+					const token = jwtGenerate({
+						adminId: loginResult[0].adminId,
+						adminMail: loginResult[0].adminMail,
+						adminRole: loginResult[0].adminRole
+					});
+
+					console.log('token', token);
+
+					return res.status(200).send({ token, error: false, result: loginResult[0] });
 				}
 			});
 		}
@@ -381,14 +434,14 @@ module.exports = {
 		const { menuId } = req.body; // req.body.data
 
 		// Set Data
-		const {profileId,menuName,menuDesc,menuCategory,menuPrice} = req.body.data; // req.body.data
+		const { profileId, menuName, menuDesc, menuCategory, menuPrice } = req.body.data; // req.body.data
 		const data = {
-			profileId:parseInt(profileId),
+			profileId: parseInt(profileId),
 			menuName,
 			menuPrice,
 			menuCategory,
 			menuDesc
-		}
+		};
 
 		// Set SQL Syntax
 		const sqlUpdateMenu = `UPDATE stand_menu sm SET ? WHERE sm.menuId = ?`;
