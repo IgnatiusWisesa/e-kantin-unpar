@@ -46,6 +46,7 @@ const profilStyles = makeStyles((theme) => ({
     height: theme.spacing(15),
     marginRight: "auto",
     marginLeft: "auto",
+    backgroundColor: "#ebebeb",
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -89,7 +90,9 @@ function ProfileMerchant() {
           <Paper elevation={0} className={profil.root}>
             <CardContent style={{ display: "flex" }}>
               <CardMedia>
-                <Avatar alt="" src={APIURL + stand.standPhoto} className={profil.avatar} />
+                <Avatar className={profil.avatar}>
+                  <img width="75px" src={APIURL + stand.standPhoto} alt={stand.standName} />
+                </Avatar>
               </CardMedia>
               <CardContent style={{ display: "block", padding: 0, paddingLeft: 20 }}>
                 <Typography variant="h6" component="h2">

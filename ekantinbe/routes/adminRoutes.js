@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const { auth } = require('../helper/jwt-auth');
 const { adminControllers } = require('../controllers');
@@ -8,14 +8,14 @@ const { adminControllers } = require('../controllers');
  * @description Admin register action
  * @access Admin
  */
-router.post('/register', adminControllers.adminRegister);
+router.post("/register", adminControllers.adminRegister);
 
 /**
  * @routes POST admin/login
  * @description Admin login action
  * @access Admin
  */
-router.post('/login', adminControllers.adminLogin);
+router.post("/login", adminControllers.adminLogin);
 
 /**
  * @routes POST admin/keep-login
@@ -29,62 +29,62 @@ router.post('/keep-login', auth, adminControllers.adminKeepLogin);
  * @description Admin get stand list
  * @access Admin
  */
-router.post('/stand', adminControllers.adminGetListStand);
+router.post("/stand", adminControllers.adminGetListStand);
 
 /**
  * @routes POST admin/add-stand
  * @description Admin create a new stand
  * @access Admin
  */
-router.post('/add-stand', adminControllers.adminAddStand);
+router.post("/add-stand", adminControllers.adminAddStand);
 
 /**
  * @routes POST admin/edit-stand-profile
  * @description Admin edit profile stand action
  * @access Admin
  */
-router.post('/edit-stand-profile', adminControllers.adminEditProfileStand);
+router.post("/edit-stand-profile", adminControllers.adminEditProfileStand);
 
 /**
  * @routes POST admin/edit-stand-photo
  * @description Admin edit photo stand action
  * @access Admin
  */
-router.post('/edit-stand-photo', adminControllers.adminEditPhotoStand);
+router.post("/edit-stand-photo", adminControllers.adminEditPhotoStand);
 
 /**
  * @routes POST admin/delete-stand
  * @description Admin delete stand action
  * @access Admin
  */
-router.post('/delete-stand', adminControllers.adminDeleteStand);
+router.post("/delete-stand", adminControllers.adminDeleteStand);
 
 /**
  * @routes POST admin/menu
  * @description Admin get all menu
  * @access Admin
  */
-router.post('/menu', adminControllers.adminGetStandMenu);
+router.post("/menu", adminControllers.adminGetStandMenu);
 
 /**
  * @routes POST admin/add-menu
  * @description Admin create a new menu
  * @access Admin
  */
-router.post('/add-menu', adminControllers.adminAddStandMenu);
+router.post("/add-menu", adminControllers.adminAddStandMenu);
 
 /**
  * @routes POST admin/edit-menu
  * @description Admin update a menu
  * @access Admin
  */
-router.post('/edit-menu', adminControllers.adminEditStandMenu);
+router.post("/edit-menu", adminControllers.adminEditStandMenu);
 
 /**
  * @routes POST admin/delete-menu
  * @description Admin delete a menu
  * @access Admin
  */
-router.post('/delete-menu', adminControllers.adminDeleteStandMenu);
+router.post("/delete-menu", adminControllers.adminDeleteStandMenu);
 
 module.exports = router;
