@@ -1,23 +1,19 @@
-/* eslint-disable no-unused-vars */
 // class component react
 import React, { Component } from "react";
 // react-router dom
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 // material-ui styles
-import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 // material-ui select
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 // import box
@@ -38,6 +34,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 // numeral
 import numeral from "numeral";
 
+import { APIURL } from "../../helpers/APIURL";
+
 class ManageMenus extends Component {
   state = {
     datamenu: [],
@@ -52,7 +50,7 @@ class ManageMenus extends Component {
     // add menu states ends
     // edit menu states starts
     idedit: -1,
-    indexedit: -1,
+    indexedit: 0,
     modaledit: false,
     editmenu: "",
     editdeksripsi: "",
@@ -62,16 +60,16 @@ class ManageMenus extends Component {
   };
 
   componentDidMount() {
-    Axios.post(`http://localhost:1919/admin/menu`, { profileId: this.props.match.params.id })
-    .then((res) => {
-      console.log(res.data)
-      this.setState({ 
-        datamenu: res.data.menuResult,
-        loading: false 
+    Axios.post(`${APIURL}/admin/menu`, { profileId: this.props.match.params.id })
+      .then((res) => {
+        this.setState({
+          datamenu: res.data.menuResult,
+          loading: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }).catch((err) => {
-      console.log(err)
-    })
   }
 
   onClickSave = () => {
@@ -91,55 +89,59 @@ class ManageMenus extends Component {
 
     console.log(menubaru);
 
-    Axios.post(`http://localhost:1919/admin/add-menu`, menubaru)
-    .then((res) => {
-      console.log(res.data)
-      Axios.post(`http://localhost:1919/admin/menu`, { profileId: this.props.match.params.id })
+    Axios.post(`${APIURL}/admin/add-menu`, menubaru)
       .then((res) => {
-        console.log(res.data)
-        this.setState({ 
-          datamenu: res.data.menuResult,
-          modaladd: false 
-        });
-      }).catch((err) => {
-        console.log(err)
+        console.log(res.data);
+        Axios.post(`${APIURL}/admin/menu`, { profileId: this.props.match.params.id })
+          .then((res) => {
+            console.log(res.data);
+            this.setState({
+              datamenu: res.data.menuResult,
+              modaladd: false,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
-    }).catch((err) => {
-      console.log(err)
-    })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   onClickDelete = (id, index) => {
     console.log(id, index);
 
-    Axios.post(`http://localhost:1919/admin/delete-menu`,{menuId:id})
-    .then((res) => {
-      console.log(res.data)
-      Axios.post(`http://localhost:1919/admin/menu`, { profileId: this.props.match.params.id })
+    Axios.post(`${APIURL}/admin/delete-menu`, { menuId: id })
       .then((res) => {
-        console.log(res.data)
-        this.setState({ 
-          datamenu: res.data.menuResult
-        });
-      }).catch((err) => {
-        console.log(err)
+        console.log(res.data);
+        Axios.post(`${APIURL}/admin/menu`, { profileId: this.props.match.params.id })
+          .then((res) => {
+            console.log(res.data);
+            this.setState({
+              datamenu: res.data.menuResult,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
-    }).catch((err) => {
-      console.log(err)
-    })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   onClickEdit = () => {
     // id dan index edit
     let id = this.state.idedit;
-    console.log(id)
+    console.log(id);
     let index = this.state.indexedit;
 
     let merchantid = this.props.match.params.id;
     let menu = this.state.editmenu || this.state.datamenu[index].menuName;
     let deskripsi = this.state.editdeskripsi || this.state.datamenu[index].menuDesc;
     let kategori = this.state.editcategory || this.state.datamenu[index].menuCategory;
-    let harga = this.state.editharga || this.state.datamenu[index].hamenuPricerga;
+    let harga = this.state.editharga || this.state.datamenu[index].menuPrice;
 
     let menuedit = {
       profileId: merchantid,
@@ -149,55 +151,65 @@ class ManageMenus extends Component {
       menuPrice: harga,
     };
 
-    console.log(menuedit);
-
-    Axios.post(`http://localhost:1919/admin/edit-menu`, {menuId:id, data:menuedit})
-    .then((res) => {
-      console.log(res.data)
-      Axios.post(`http://localhost:1919/admin/menu`, { profileId: this.props.match.params.id })
+    Axios.post(`${APIURL}/admin/edit-menu`, { menuId: id, data: menuedit })
       .then((res) => {
-        console.log(res.data)
-        this.setState({ 
-          datamenu: res.data.menuResult,
-          modaledit: false 
-        });
-      }).catch((err) => {
-        console.log(err)
+        console.log(res.data);
+        Axios.post(`${APIURL}/admin/menu`, { profileId: this.props.match.params.id })
+          .then((res) => {
+            console.log(res.data);
+            this.setState({
+              datamenu: res.data.menuResult,
+              modaledit: false,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
-    }).catch((err) => {
-      console.log(err)
-    })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   rendermenu = () => {
-    return this.state.datamenu.map((val, index) => {
+    if (!this.state.datamenu) {
       return (
-        <TableRow key={index}>
-          <TableCell style={{ width: "0px" }}>{index + 1}</TableCell>
-          <TableCell style={{ width: "250px" }}>{val.menuName}</TableCell>
-          <TableCell style={{ width: "600px" }}>{val.menuDesc}</TableCell>
-          <TableCell style={{ width: "100px" }}>{val.menuCategory}</TableCell>
-          <TableCell style={{ width: "150px" }}>{"Rp." + numeral(val.menuPrice).format("Rp,0.00")}</TableCell>
-          <TableCell>
-            <Button
-              onClick={() => this.setState({ idedit: val.menuId, indexedit: index, modaledit: true })}
-              variant="outlined"
-              style={{ width: "130px", marginRight:'10px', color: purple.A200 }}>
-              Edit Menu
-            </Button>
-            <Button
-              onClick={() => {
-                this.onClickDelete(val.menuId, index);
-              }}
-              variant="outlined"
-              style={{ width: "130px" }}
-              color="secondary">
-              Delete
-            </Button>
+        <TableRow>
+          <TableCell colSpan={6} align="center">
+            Daftar Menu kosong
           </TableCell>
         </TableRow>
       );
-    });
+    } else {
+      return this.state.datamenu.map((val, index) => {
+        return (
+          <TableRow key={index}>
+            <TableCell align="center">{index + 1}</TableCell>
+            <TableCell align="center">{val.menuName}</TableCell>
+            <TableCell align="left">{val.menuDesc}</TableCell>
+            <TableCell align="center">{val.menuCategory}</TableCell>
+            <TableCell align="center">{"Rp " + numeral(val.menuPrice).format("Rp,0.00")}</TableCell>
+            <TableCell align="center">
+              <Button
+                onClick={() => this.setState({ idedit: val.menuId, indexedit: index, modaledit: true })}
+                variant="outlined"
+                style={{ width: "130px", marginBottom: 10, color: purple.A200 }}>
+                Edit Menu
+              </Button>
+              <Button
+                onClick={() => {
+                  this.onClickDelete(val.menuId, index);
+                }}
+                variant="outlined"
+                style={{ width: "130px" }}
+                color="secondary">
+                Delete
+              </Button>
+            </TableCell>
+          </TableRow>
+        );
+      });
+    }
   };
 
   render() {
@@ -255,10 +267,10 @@ class ManageMenus extends Component {
                 </Box>
                 <Box mb={1}>
                   <TextField
-                    onChange={(e) => this.setState({ adddeskripsi: e.target.value })}
                     label="Menu's Description"
-                    style={{ margin: 4 }}
                     placeholder="Deskripsi"
+                    onChange={(e) => this.setState({ adddeskripsi: e.target.value })}
+                    style={{ margin: 4 }}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -269,16 +281,12 @@ class ManageMenus extends Component {
                 </Box>
                 <Box mb={1}>
                   <FormControl variant="outlined" style={{ margin: 4, minWidth: 120, width: "100%" }}>
-                    <InputLabel id="demo-simple-select-outlined-label">Menu's Category</InputLabel>
+                    <InputLabel htmlFor="add-new-menu-category">Menu's Category</InputLabel>
                     <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
+                      id="add-new-menu-category"
                       value={this.state.addcategory}
                       onChange={(e) => this.setState({ addcategory: e.target.value })}
                       label="Menu's Category ">
-                      {/* <MenuItem value="">
-                                            <em>Kategori</em>
-                                        </MenuItem> */}
                       <MenuItem value="makanan">Makanan</MenuItem>
                       <MenuItem value="minuman">Minuman</MenuItem>
                     </Select>
@@ -286,15 +294,13 @@ class ManageMenus extends Component {
                 </Box>
                 <Box mb={1}>
                   <TextField
-                    onChange={(e) => this.setState({ addharga: e.target.value })}
                     label="Menu's Price"
-                    style={{ margin: 4 }}
                     placeholder="Harga"
+                    onChange={(e) => this.setState({ addharga: e.target.value })}
                     fullWidth
                     margin="normal"
-                    startAdornment={<InputAdornment position="start">Rp.</InputAdornment>}
-                    InputLabelProps={{
-                      shrink: true,
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">Rp</InputAdornment>,
                     }}
                     variant="outlined"
                   />
@@ -370,12 +376,10 @@ class ManageMenus extends Component {
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
-                      value={this.state.editcategory || this.state.datamenu[this.state.indexedit].menuCategory}
+                      value={this.state.datamenu[this.state.indexedit].menuCategory}
+                      // defaultValue={this.state.datamenu[this.state.indexedit].menuCategory}
                       onChange={(e) => this.setState({ editcategory: e.target.value })}
-                      label="Menu's Category ">
-                      {/* <MenuItem value="">
-                                            <em>Kategori</em>
-                                        </MenuItem> */}
+                      label="Menu's Category">
                       <MenuItem value="makanan">Makanan</MenuItem>
                       <MenuItem value="minuman">Minuman</MenuItem>
                     </Select>
@@ -405,50 +409,55 @@ class ManageMenus extends Component {
           </Modal>
         ) : null}
 
-        <Paper style={{ width: "100%" }}>
-          <TableContainer style={{ maxHeight: 620 }}>
+        <Paper style={{ width: "100%", height: "80vh" }}>
+          <TableContainer style={{ maxHeight: 500 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  <TableCell>No.</TableCell>
-                  <TableCell>Menu</TableCell>
-                  <TableCell>Deskripsi</TableCell>
-                  <TableCell>Kategori</TableCell>
-                  <TableCell>Harga</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell align="center" style={{ width: "5vw" }}>
+                    No.
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "15vw" }}>
+                    Menu
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "30vw" }}>
+                    Deskripsi
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "15vw" }}>
+                    Kategori
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "15vw" }}>
+                    Harga
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "20vw" }}>
+                    Action
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell>
-                    <Box mb={1} mt={1} style={{ paddingLeft: "48vh" }}>
+                  <TableCell align="center" colSpan={6}>
+                    <Box mb={1} mt={1} className="d-flex justify-content-center mx-5">
                       <Button
                         component={Link}
                         to={"/admin/managemerchant"}
                         variant="outlined"
-                        style={{ width: "150px", color: lightGreen.A700 }}>
+                        style={{ width: "150px", marginRight: 20, color: lightGreen.A700 }}>
                         Kembali
                       </Button>
-                    </Box>
-                    <Box mb={1} mt={1} style={{ paddingLeft: "48vh" }}>
                       <Button
                         onClick={() => {
                           this.setState({ modaladd: true });
                         }}
                         variant="outlined"
-                        style={{ width: "150px", color: blue.A200 }}>
+                        style={{ width: "150px", marginLeft: 20, color: blue.A200 }}>
                         Tambah Menu
                       </Button>
                     </Box>
                   </TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
                 </TableRow>
+                {this.rendermenu()}
               </TableBody>
-              <TableBody>{this.rendermenu()}</TableBody>
             </Table>
           </TableContainer>
         </Paper>
