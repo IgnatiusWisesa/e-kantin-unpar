@@ -93,7 +93,8 @@ module.exports = {
 			JOIN
 				stand_menu sm 
 					ON sm.profileId = sp.profileId
-			WHERE sm.menuCategory = 'makanan'`;
+			WHERE sm.menuCategory = 'makanan'
+			order by sm.menuName asc `;
 
 		// Database Action
 		db.query(sqlFood, (err, foodResult) => {
@@ -127,7 +128,8 @@ module.exports = {
 			JOIN
 				stand_menu sm 
 					ON sm.profileId = sp.profileId
-			WHERE sm.menuCategory = 'minuman'`;
+			WHERE sm.menuCategory = 'minuman'
+			order by sm.menuName asc `;
 
 		// Database Action
 		db.query(sqlDrink, (err, drinkResult) => {

@@ -414,7 +414,7 @@ class ManageMenus extends Component {
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center" style={{ width: "5vw" }}>
+                  <TableCell align="center" style={{ width: "10vw" }}>
                     No.
                   </TableCell>
                   <TableCell align="center" style={{ width: "15vw" }}>
@@ -429,7 +429,7 @@ class ManageMenus extends Component {
                   <TableCell align="center" style={{ width: "15vw" }}>
                     Harga
                   </TableCell>
-                  <TableCell align="center" style={{ width: "20vw" }}>
+                  <TableCell align="center" style={{ width: "15vw" }}>
                     Action
                   </TableCell>
                 </TableRow>
