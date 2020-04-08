@@ -101,7 +101,7 @@ module.exports = {
 	 * @access Admin
 	 */
 	adminKeepLogin: (req, res) => {
-		// Get Admin Id
+		// Get Admin Id After Verify Token
 		const { adminId } = req.user;
 
 		// Set SQL Syntax
