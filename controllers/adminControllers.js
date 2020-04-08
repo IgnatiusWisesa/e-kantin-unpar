@@ -71,7 +71,7 @@ module.exports = {
 		} else {
 			// Set SQL Syntax
 			const sqlLogin =
-				'SELECT a.adminId, a.adminMail, a.adminRole FROM admin a WHERE adminMail = ? AND adminPassword = ?';
+				'SELECT a.adminId, a.adminMail, a.adminRole FROM admin a WHERE a.adminMail = ? AND a.adminPassword = ?';
 
 			// Database Action
 			db.query(sqlLogin, [adminMail, cryptoGenerate(adminPassword)], (err, loginResult) => {
@@ -101,7 +101,32 @@ module.exports = {
 	 * @access Admin
 	 */
 	adminKeepLogin: (req, res) => {
-		console.log(req.user);
+		// Get Admin Id
+		const { adminId } = req.user;
+
+		// Set SQL Syntax
+		const sqlKeepLogin =
+			'SELECT a.adminId, a.adminMail, a.adminRole FROM admin a WHERE a.adminId = ?';
+
+		// Database Action
+		db.query(sqlKeepLogin, parseInt(adminId), (err, keepResult) => {
+			if (err) return res.status(500).send(err);
+
+			if (keepResult.length === 0) {
+				return res
+					.status(200)
+					.send({ error: true, message: 'Email yang anda masukkan tidak terdaftar!' });
+			} else {
+				// Create token
+				const token = jwtGenerate({
+					adminId: keepResult[0].adminId,
+					adminMail: keepResult[0].adminMail,
+					adminRole: keepResult[0].adminRole
+				});
+
+				return res.status(200).send({ token, error: false, result: keepResult[0] });
+			}
+		});
 	},
 
 	/**
