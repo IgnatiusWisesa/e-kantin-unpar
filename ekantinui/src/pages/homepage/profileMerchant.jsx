@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Fragment, useState } from "react";
 import { Redirect, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -29,17 +28,21 @@ import { APIURL } from "../../helpers/APIURL";
 
 const profilStyles = makeStyles((theme) => ({
   container: {
+    minHeight: "100vh",
     maxWidth: 480,
-    paddingLeft: 30,
-    paddingRight: 30,
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: 30,
-    minHeight: "100vh",
-    // backgroundColor: "#fff"
+    marginBottom: -55,
+    backgroundColor: "#fff",
   },
   root: {
-    padding: 20,
+    backgroundColor: theme.palette.background.paper,
+    width: 420,
+    minHeight: "100vh",
+    paddingBottom: 80,
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: 5,
   },
   avatar: {
     width: theme.spacing(15),
@@ -68,16 +71,22 @@ function ProfileMerchant() {
     setBevsOpen(!bevsOpen);
   };
 
-  const { ListStand, ListMenuFood, ListMenuDrink } = useSelector(({ Catalog, MenuList }) => {
+  const { ListStand, ListMenuFood, ListMenuDrink, onSearch, querySearch } = useSelector(({ Catalog, MenuList, Search }) => {
     return {
       ListStand: Catalog.listStand,
       ListMenuFood: MenuList.listFood,
       ListMenuDrink: MenuList.listDrink,
+      onSearch: Search.onSearch,
+      querySearch: Search.querySearch,
     };
   });
   const stand = ListStand.filter((stand) => stand.profileId === location.id)[0];
   const listFood = ListMenuFood.filter((stand) => stand.profileId === location.id);
   const listDrink = ListMenuDrink.filter((stand) => stand.profileId === location.id);
+
+  if (onSearch) {
+    return <Redirect to={{ pathname: "/search", query: querySearch }} />;
+  }
 
   if (!location.id) {
     return <Redirect to="/" />;
@@ -176,34 +185,5 @@ function ProfileMerchant() {
     );
   }
 }
-
-// const daftarMakanan = [
-//   { name: "Nasi Goreng", description: "nasi goreng kecap saos nasi goreng kecap saos goreng", price: 15000 },
-//   { name: "Nasi Goreng Merah", description: "nasi goreng saos", price: 15000 },
-//   { name: "Mie Goreng", description: "mie yang digoreng", price: 15000 },
-//   { name: "Mie Rebus", description: "mie yang direbus", price: 15000 },
-//   { name: "Cap Cay", description: "yur sayur", price: 12000 },
-//   { name: "Nasi Goreng", description: "nasi goreng kecap saos", price: 15000 },
-// ];
-
-// const daftarMinuman = [
-//   { name: "Teh Tawar", description: "dingin/panas", price: 3000 },
-//   { name: "Teh Manis", description: "dingin/panas", price: 4000 },
-//   { name: "Kopi", description: "dingin/panas", price: 4000 },
-//   { name: "Mineral Prima", description: "botol dingin/panas", price: 5000 },
-// ];
-
-// const dataKantin = [
-//   { id: 1, name: "Kantin Satu", phone: "6285735289857", photo: "https://material-ui.com/static/images/avatar/1.jpg" },
-//   { id: 2, name: "Kantin Dua", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/2.jpg" },
-//   { id: 3, name: "Kantin Tiga", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/3.jpg" },
-//   { id: 4, name: "Kantin Empat", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/4.jpg" },
-//   { id: 5, name: "Kantin Lima", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/5.jpg" },
-//   { id: 6, name: "Kantin Enam", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/6.jpg" },
-//   { id: 7, name: "Kantin Tujuh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/7.jpg" },
-//   { id: 8, name: "Kantin Delapan", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/3.jpg" },
-//   { id: 9, name: "Kantin Sembilan", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/4.jpg" },
-//   { id: 10, name: "Kantin Sepuluh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/5.jpg" },
-// ];
 
 export default ProfileMerchant;

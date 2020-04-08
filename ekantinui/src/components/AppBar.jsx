@@ -1,6 +1,7 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, Fragment } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,14 +11,7 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-// import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-// import List from "@material-ui/core/List";
-// import ListItem from "@material-ui/core/ListItem";
-// import ListItemIcon from "@material-ui/core/ListItemIcon";
-// import IconButton from "@material-ui/core/IconButton";
-// import MenuIcon from "@material-ui/icons/Menu";
-// import Paper from "@material-ui/core/Paper";
-// import Divider from "@material-ui/core/Divider";
+import { SEARCH_START } from "../redux/types";
 
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 
@@ -108,14 +102,18 @@ function HeaderAppBar(props) {
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  // const [state, setState] = useState(false);
-  // const toggleDrawer = (open) => (event) => {
-  //   if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
-  //     return;
-  //   }
-  //   setState(open);
-  // };
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleSearchQuery = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleInput = (e) => {
+    if (e.key === "Enter") {
+      dispatch({ type: SEARCH_START, payload: searchQuery });
+    }
+  };
 
   return (
     <Fragment>
@@ -145,35 +143,36 @@ function HeaderAppBar(props) {
                     </Button>
                   </Typography>
                 )}
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <SearchIcon />
+                {location.pathname !== "/search" ? (
+                  <div className={classes.search}>
+                    <>
+                      <div className={classes.searchIcon}>
+                        <SearchIcon />
+                      </div>
+                      <InputBase
+                        placeholder="Search menu…"
+                        onChange={handleSearchQuery}
+                        value={searchQuery}
+                        onKeyPress={handleInput}
+                        onFocus={() => setSearchQuery("")}
+                        classes={{
+                          root: classes.inputRoot,
+                          input: classes.inputInput,
+                        }}
+                        inputProps={{ "aria-label": "search" }}
+                      />
+                    </>
                   </div>
-                  <InputBase
-                    placeholder="Search…"
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    inputProps={{ "aria-label": "search" }}
-                  />
-                </div>
+                ) : (
+                  <Typography align="right" className={classes.title} variant="subtitle1" noWrap>
+                    {`Hasil pencarian ${searchQuery}`}
+                  </Typography>
+                )}
               </Toolbar>
             </div>
           </AppBar>
         </div>
       </ElevationScroll>
-      {/* <SwipeableDrawer anchor="left" open={state} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
-        <div className={classes.toolbar} />
-        <Divider />
-        <Paper elevation={0} style={{ width: 200 }}>
-          <ListItem>
-            <Button component={Link} to="/admin/login">
-              Login
-            </Button>
-          </ListItem>
-        </Paper>
-      </SwipeableDrawer> */}
     </Fragment>
   );
 }

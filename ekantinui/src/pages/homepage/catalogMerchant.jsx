@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,6 +10,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
+import Paper from "@material-ui/core/Paper";
 
 import LogoWA from "../../chat_via_wa.svg";
 import ScrollToTop from "../../components/ScrollToTop";
@@ -21,11 +21,12 @@ const useStyles = makeStyles((theme) => ({
   container: {
     minHeight: "100vh",
     maxWidth: 480,
+    paddingTop: 30,
     paddingLeft: 30,
     paddingRight: 30,
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: 30,
+    marginBottom: -55,
     backgroundColor: "#fff",
   },
 }));
@@ -37,6 +38,7 @@ const cardStyles = makeStyles((theme) => ({
     height: "100%",
     justifyContent: "space-around",
     alignContent: "space-between",
+    paddingBottom: 80,
   },
   root: {
     width: 180,
@@ -59,36 +61,28 @@ const cardStyles = makeStyles((theme) => ({
   },
 }));
 
-// const dataKantin = [
-//   { id: 1, name: "Kantin Satu", phone: "6285735289857", photo: "https://material-ui.com/static/images/avatar/1.jpg" },
-//   { id: 2, name: "Kantin Dua", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/2.jpg" },
-//   { id: 3, name: "Kantin Tiga", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/3.jpg" },
-//   { id: 4, name: "Kantin Empat", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/4.jpg" },
-//   { id: 5, name: "Kantin Lima", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/5.jpg" },
-//   { id: 6, name: "Kantin Enam", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/6.jpg" },
-//   { id: 7, name: "Kantin Tujuh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/7.jpg" },
-//   { id: 8, name: "Kantin Delapan", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/3.jpg" },
-//   { id: 9, name: "Kantin Sembilan", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/4.jpg" },
-//   { id: 10, name: "Kantin Sepuluh", phone: "6285735288288", photo: "https://material-ui.com/static/images/avatar/5.jpg" },
-// ];
-
 function CatalogMerchant() {
   const classes = useStyles();
   const cardStyle = cardStyles();
 
-  const { ListStand, Loading } = useSelector(({ Catalog }) => {
+  const { ListStand, Loading, onSearch, querySearch } = useSelector(({ Catalog, Search }) => {
     return {
       ListStand: Catalog.listStand,
       Loading: Catalog.loading,
+      onSearch: Search.onSearch,
+      querySearch: Search.querySearch,
     };
   });
 
+  if (onSearch) {
+    return <Redirect to={{ pathname: "/search", query: querySearch }} />;
+  }
+
   return (
     <Fragment>
+      <Toolbar />
       <ScrollToTop />
-      <div className={classes.container}>
-        <Toolbar />
-
+      <Paper className={classes.container}>
         {Loading ? (
           <div className="loading">Loading&#8230;</div>
         ) : (
@@ -131,9 +125,7 @@ function CatalogMerchant() {
             })}
           </div>
         )}
-
-        {/* END OF CONTAINER */}
-      </div>
+      </Paper>
     </Fragment>
   );
 }
