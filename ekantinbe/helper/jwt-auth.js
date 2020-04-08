@@ -18,7 +18,6 @@ module.exports = {
 						.status(401)
 						.send({ message: 'User not authorized.', name: 'User not authorized.' });
 				} else {
-					console.log('decoded', decoded);
 					req.user = decoded;
 					next();
 				}
