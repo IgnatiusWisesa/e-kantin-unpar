@@ -82,9 +82,9 @@ module.exports = {
 		// Set SQL Syntax
 		const sqlFood = `
 			SELECT
+				sp.standName,
 				sm.menuId,
 				sm.profileId,
-				sp.standName,
 				sm.menuName,
 				sm.menuPrice,
 				sm.menuDesc
@@ -94,7 +94,7 @@ module.exports = {
 				stand_menu sm 
 					ON sm.profileId = sp.profileId
 			WHERE sm.menuCategory = 'makanan'
-			order by sm.menuName asc `;
+			ORDER BY sm.menuName ACS `;
 
 		// Database Action
 		db.query(sqlFood, (err, foodResult) => {
@@ -117,9 +117,9 @@ module.exports = {
 		// Set SQL Syntax
 		const sqlDrink = `
 			SELECT
+				sp.standName,
 				sm.menuId,
 				sm.profileId,
-				sp.standName,
 				sm.menuName,
 				sm.menuPrice,
 				sm.menuDesc
@@ -129,7 +129,7 @@ module.exports = {
 				stand_menu sm 
 					ON sm.profileId = sp.profileId
 			WHERE sm.menuCategory = 'minuman'
-			order by sm.menuName asc `;
+			ORDER BY sm.menuName ASC `;
 
 		// Database Action
 		db.query(sqlDrink, (err, drinkResult) => {
