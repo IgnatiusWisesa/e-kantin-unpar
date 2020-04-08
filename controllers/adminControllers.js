@@ -3,6 +3,7 @@ const db = require('../database/db');
 const paginate = require('jw-paginate');
 const cryptoGenerate = require('../helper/encrypt');
 const jwtGenerate = require('../helper/jwt');
+const { auth } = require('../helper/jwt-auth');
 const { uploader } = require('../helper/uploader');
 
 module.exports = {
@@ -88,12 +89,19 @@ module.exports = {
 						adminRole: loginResult[0].adminRole
 					});
 
-					console.log('token', token);
-
 					return res.status(200).send({ token, error: false, result: loginResult[0] });
 				}
 			});
 		}
+	},
+
+	/**
+	 * @routes POST admin/keep-login
+	 * @description Admin keep login action
+	 * @access Admin
+	 */
+	adminKeepLogin: (req, res) => {
+		console.log(req.user);
 	},
 
 	/**
