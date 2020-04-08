@@ -1,130 +1,145 @@
 // Import Database
-const db = require("../database/db");
-const paginate = require("jw-paginate");
-const cryptoGenerate = require("../helper/encrypt");
-const jwtGenerate = require("../helper/jwt");
-const { uploader } = require("../helper/uploader");
+const db = require('../database/db');
+const paginate = require('jw-paginate');
+const cryptoGenerate = require('../helper/encrypt');
+const jwtGenerate = require('../helper/jwt');
+const { auth } = require('../helper/jwt-auth');
+const { uploader } = require('../helper/uploader');
 
 module.exports = {
-  /**
-   * @routes POST admin/hashpassword
-   * @description Generate hashing password
-   * @access
-   */
-  hashpassword: (req, res) => {
-    const pass = cryptoGenerate(req.query.pass);
-    console.log(pass);
-    return res.status(200).send(pass);
-  },
-  /**
-   * @routes POST admin/register
-   * @description Admin register action
-   * @access Admin
-   */
-  adminRegister: (req, res) => {
-    // Get Email And Password
-    const { adminMail, adminPassword } = req.body; // req.body.data
+	/**
+	 * @routes POST admin/register
+	 * @description Admin register action
+	 * @access Admin
+	 */
+	adminRegister: (req, res) => {
+		// Get Email And Password
+		const { adminMail, adminPassword } = req.body; // req.body.data
 
-    // Validation Email And Password
-    if (adminMail === undefined || adminMail === "" || adminPassword === undefined || adminMail === "") {
-      return res.status(200).send({ error: true, message: "Kolom email/password tidak boleh kosong!" });
-    } else {
-      // Set Data
-      const data = {
-        adminMail,
-        adminPassword: cryptoGenerate(adminPassword),
-      };
+		// Validation Email And Password
+		if (
+			adminMail === undefined ||
+			adminMail === '' ||
+			adminPassword === undefined ||
+			adminMail === ''
+		) {
+			return res
+				.status(200)
+				.send({ error: true, message: 'Kolom email/password tidak boleh kosong!' });
+		} else {
+			// Set Data
+			const data = {
+				adminMail,
+				adminPassword: cryptoGenerate(adminPassword)
+			};
 
-      // Set SQL Syntax
-      const sqlRegister = "INSERT INTO admin SET ?";
+			// Set SQL Syntax
+			const sqlRegister = 'INSERT INTO admin SET ?';
 
-      // Database Action
-      db.query(sqlRegister, data, (err, registerResutl) => {
-        if (err) res.status(500).send(err);
+			// Database Action
+			db.query(sqlRegister, data, (err, registerResutl) => {
+				if (err) res.status(500).send(err);
 
-        if (registerResutl.indertId === 0) {
-          return res.status(200).send({ error: true, message: "Registrasi admin gagal" });
-        } else {
-          return res.status(200).send({ error: false, message: "Registrasi admin berhasil!" });
-        }
-      });
-    }
-  },
+				if (registerResutl.indertId === 0) {
+					return res.status(200).send({ error: true, message: 'Registrasi admin gagal' });
+				} else {
+					return res.status(200).send({ error: false, message: 'Registrasi admin berhasil!' });
+				}
+			});
+		}
+	},
 
-  /**
-   * @routes POST admin/login
-   * @description Admin login action
-   * @access Admin
-   */
-  adminLogin: (req, res) => {
-    // Get Email And Password
-    const { adminMail, adminPassword } = req.body; // req.body.data
+	/**
+	 * @routes POST admin/login
+	 * @description Admin login action
+	 * @access Admin
+	 */
+	adminLogin: (req, res) => {
+		// Get Email And Password
+		const { adminMail, adminPassword } = req.body; // req.body.data
 
-    // Validation Email And Password
-    if (adminMail === undefined || adminMail === "" || adminPassword === undefined || adminMail === "") {
-      return res.status(200).send({ error: true, message: "Kolom email/password tidak boleh kosong!" });
-    } else {
-      // Set SQL Syntax
-      const sqlLogin = "SELECT a.adminId, a.adminMail, a.adminRole FROM admin a WHERE adminMail = ? AND adminPassword = ?";
+		// Validation Email And Password
+		if (
+			adminMail === undefined ||
+			adminMail === '' ||
+			adminPassword === undefined ||
+			adminMail === ''
+		) {
+			return res
+				.status(200)
+				.send({ error: true, message: 'Kolom email/password tidak boleh kosong!' });
+		} else {
+			// Set SQL Syntax
+			const sqlLogin =
+				'SELECT a.adminId, a.adminMail, a.adminRole FROM admin a WHERE adminMail = ? AND adminPassword = ?';
 
-      // Database Action
-      db.query(sqlLogin, [adminMail, cryptoGenerate(adminPassword)], (err, loginResult) => {
-        if (err) res.status(500).send(err);
+			// Database Action
+			db.query(sqlLogin, [adminMail, cryptoGenerate(adminPassword)], (err, loginResult) => {
+				if (err) res.status(500).send(err);
 
-        if (loginResult.length === 0) {
-          return res.status(200).send({ error: true, message: "Email yang anda masukkan tidak terdaftar!" });
-        } else {
-          // Create token
-          const token = jwtGenerate({
-            adminId: loginResult[0].adminId,
-            adminMail: loginResult[0].adminMail,
-            adminRole: loginResult[0].adminRole,
-          });
+				if (loginResult.length === 0) {
+					return res
+						.status(200)
+						.send({ error: true, message: 'Email yang anda masukkan tidak terdaftar!' });
+				} else {
+					// Create token
+					const token = jwtGenerate({
+						adminId: loginResult[0].adminId,
+						adminMail: loginResult[0].adminMail,
+						adminRole: loginResult[0].adminRole
+					});
 
-          console.log("token", token);
+					return res.status(200).send({ token, error: false, result: loginResult[0] });
+				}
+			});
+		}
+	},
 
-          return res.status(200).send({ token, error: false, result: loginResult[0] });
-        }
-      });
-    }
-  },
+	/**
+	 * @routes POST admin/keep-login
+	 * @description Admin keep login action
+	 * @access Admin
+	 */
+	adminKeepLogin: (req, res) => {
+		console.log(req.user);
+	},
 
-  /**
-   * @routes POST admin/stand
-   * @description Admin get stand list
-   * @access Admin
-   */
-  adminGetListStand: (req, res) => {
-    // Set SQL Syntax
-    const sqlCount = "SELECT COUNT(*) AS count FROM stand_profile";
+	/**
+	 * @routes POST admin/stand
+	 * @description Admin get stand list
+	 * @access Admin
+	 */
+	adminGetListStand: (req, res) => {
+		// Set SQL Syntax
+		const sqlCount = 'SELECT COUNT(*) AS count FROM stand_profile';
 
-    // Database Action
-    db.query(sqlCount, (err, countResult) => {
-      if (err) return res.status(500).send(err);
+		// Database Action
+		db.query(sqlCount, (err, countResult) => {
+			if (err) return res.status(500).send(err);
 
-      // Collection Data Count
-      const dataCount = countResult[0].count;
+			// Collection Data Count
+			const dataCount = countResult[0].count;
 
-      // Get Page or Default to First Page
-      const page = parseInt(req.body.page) || 1;
+			// Get Page or Default to First Page
+			const page = parseInt(req.body.page) || 1;
 
-      // Set Page Size
-      const pageSize = 3;
+			// Set Page Size
+			const pageSize = 3;
 
-      // Get Pager Object for Specified Page
-      const pager = paginate(dataCount, page, pageSize);
+			// Get Pager Object for Specified Page
+			const pager = paginate(dataCount, page, pageSize);
 
-      // Set Limit Data
-      let offset;
+			// Set Limit Data
+			let offset;
 
-      if (page === 1) {
-        offset = 0;
-      } else {
-        offset = pageSize * (page - 1);
-      }
+			if (page === 1) {
+				offset = 0;
+			} else {
+				offset = pageSize * (page - 1);
+			}
 
-      // Set SQL Syntax
-      const sqlStand = `
+			// Set SQL Syntax
+			const sqlStand = `
 				SELECT 
 					sp.profileId, 
 					sp.standName, 

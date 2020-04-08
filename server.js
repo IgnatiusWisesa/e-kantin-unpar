@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const bearerToken = require('express-bearer-token');
 
 // Set App
 const app = express();
@@ -21,6 +22,9 @@ app.use(bodyParser.json());
 
 // Set cors
 app.use(cors());
+
+// Set Token
+app.use(bearerToken());
 
 // Set Static File
 app.use(express.static('public'));
