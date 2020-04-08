@@ -1,13 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { adminControllers } = require("../controllers");
-
-/**
- * @routes POST admin/hashpassword
- * @description Generate hashing password
- * @access
- */
-router.get("/hashpassword", adminControllers.hashpassword);
+const { auth } = require('../helper/jwt-auth');
+const { adminControllers } = require('../controllers');
 
 /**
  * @routes POST admin/register
@@ -22,6 +16,13 @@ router.post("/register", adminControllers.adminRegister);
  * @access Admin
  */
 router.post("/login", adminControllers.adminLogin);
+
+/**
+ * @routes POST admin/keep-login
+ * @description Admin keep login action
+ * @access Admin
+ */
+router.post('/keep-login', auth, adminControllers.adminKeepLogin);
 
 /**
  * @routes POST admin/stand
