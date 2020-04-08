@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { Fragment, useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
