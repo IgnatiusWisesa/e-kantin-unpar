@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { auth } = require('../helper/jwt-auth');
 const { adminControllers } = require('../controllers');
 
 /**
@@ -15,6 +16,13 @@ router.post('/register', adminControllers.adminRegister);
  * @access Admin
  */
 router.post('/login', adminControllers.adminLogin);
+
+/**
+ * @routes POST admin/keep-login
+ * @description Admin keep login action
+ * @access Admin
+ */
+router.post('/keep-login', auth, adminControllers.adminKeepLogin);
 
 /**
  * @routes POST admin/stand
