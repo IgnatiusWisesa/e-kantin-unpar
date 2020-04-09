@@ -3,8 +3,8 @@ import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { GetListStand, GetMenuList } from "../redux/actions";
 
-import AppBar from "../components/appBar";
-import BottomNav from "../components/bottomNav";
+import AppBar from "../components/AppBar";
+import BottomNav from "../components/BottomNav";
 import CatalogMerchant from "./homepage/catalogMerchant";
 import MenuList from "./homepage/menuList";
 import ProfileMerchant from "./homepage/profileMerchant";

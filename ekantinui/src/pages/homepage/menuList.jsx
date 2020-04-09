@@ -16,7 +16,7 @@ import RestaurantIcon from "@material-ui/icons/Restaurant";
 import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 import Paper from "@material-ui/core/Paper";
 
-import ScrollToTop from "../../components/scrollToTop";
+import ScrollToTop from "../../components/ScrollToTop";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
