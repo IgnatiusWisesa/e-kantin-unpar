@@ -14,9 +14,7 @@ import "./styles/index.css";
 ReactDOM.render(
   <Provider store={createStore(Reducers, {}, applyMiddleware(Thunk))}>
     <Router>
-      {/* <React.StrictMode> */}
       <App />
-      {/* </React.StrictMode> */}
     </Router>
   </Provider>,
   document.getElementById("root")
