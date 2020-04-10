@@ -94,7 +94,7 @@ module.exports = {
 				stand_menu sm 
 					ON sm.profileId = sp.profileId
 			WHERE sm.menuCategory = 'makanan'
-			ORDER BY sm.menuCategory`;
+			ORDER BY sm.menuName ASC`;
 
 		// Database Action
 		db.query(sqlFood, (err, foodResult) => {
@@ -129,7 +129,7 @@ module.exports = {
 				stand_menu sm 
 					ON sm.profileId = sp.profileId
 			WHERE sm.menuCategory = 'minuman'
-			ORDER BY sm.menuCategory`;
+			ORDER BY sm.menuName ASC`;
 
 		// Database Action
 		db.query(sqlDrink, (err, drinkResult) => {

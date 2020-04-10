@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+require('dotenv').config();
 
 module.exports = {
 	auth: (req, res, next) => {
@@ -9,7 +10,7 @@ module.exports = {
 		// Validation Data
 		if (token) {
 			// Get Public Key
-			let publicKEY = fs.readFileSync('./public.key', 'utf8');
+			let publicKEY = process.env.PUBLIC_KEY.replace(/\\n/g, '\n');
 
 			// JWT Action
 			jwt.verify(token, publicKEY, { expiresIn: '6h', algorithm: ['RS256'] }, (err, decoded) => {
