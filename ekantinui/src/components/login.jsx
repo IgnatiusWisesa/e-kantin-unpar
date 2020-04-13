@@ -28,7 +28,7 @@ class LoginPage extends Component {
       .then((res) => {
         if (res.data.error === false) {
           // console.log(res.data.token)
-          let token = localStorage.setItem("e-kantin_admin", res.data.token);
+          localStorage.setItem("e-kantin_admin", res.data.token);
           this.props.LoginSuccessAction(res.data.result);
           this.setState({ berhasil: true });
         }
@@ -65,10 +65,10 @@ class LoginPage extends Component {
                 className="col-sm-12 alert fade alert-simple alert-danger alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show"
                 role="alert"
                 data-brk-library="component__alert"
-                style={{ height: "25px" }}>
-                <strong style={{ fontSize: "12px", top: "-1000%" }} className="font__weight-semibold">
+                >
+                <div style={{ fontSize: "12px", top: "-1000%" }} className="font__weight-semibold">
                   {this.state.message}
-                </strong>
+                </div>
               </div>
             </div>
           ) : null}
