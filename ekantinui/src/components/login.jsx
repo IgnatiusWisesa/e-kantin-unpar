@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 // axios
 import Axios from "axios";
+import { APIURL } from "./../helpers/APIURL";
 // react-router dom
 import { Redirect } from "react-router-dom";
 // redux
@@ -23,10 +24,11 @@ class LoginPage extends Component {
       adminPassword: this.state.adminPassword,
     };
 
-    Axios.post(`http://localhost:1919/admin/login`, data)
+    Axios.post(`${APIURL}/admin/login`, data)
       .then((res) => {
         if (res.data.error === false) {
-          localStorage.setItem("admin", res.data.result.id);
+          // console.log(res.data.token)
+          let token = localStorage.setItem("e-kantin_admin", res.data.token);
           this.props.LoginSuccessAction(res.data.result);
           this.setState({ berhasil: true });
         }
