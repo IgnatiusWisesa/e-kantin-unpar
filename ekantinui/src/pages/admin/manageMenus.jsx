@@ -190,21 +190,23 @@ class ManageMenus extends Component {
             <TableCell align="center">{val.menuCategory}</TableCell>
             <TableCell align="center">{"Rp " + numeral(val.menuPrice).format("Rp,0.00")}</TableCell>
             <TableCell align="center">
-              <Button
-                onClick={() => this.setState({ idedit: val.menuId, indexedit: index, modaledit: true })}
-                variant="outlined"
-                style={{ width: "130px", marginBottom: 10, color: purple.A200 }}>
-                Edit Menu
-              </Button>
-              <Button
-                onClick={() => {
-                  this.onClickDelete(val.menuId, index);
-                }}
-                variant="outlined"
-                style={{ width: "130px" }}
-                color="secondary">
-                Delete
-              </Button>
+              <Box display="flex">
+                <Button
+                  onClick={() => this.setState({ idedit: val.menuId, indexedit: index, modaledit: true })}
+                  variant="outlined"
+                  style={{ width: "130px", marginRight: 10, color: purple.A200 }}>
+                  Edit Menu
+                </Button>
+                <Button
+                  onClick={() => {
+                    this.onClickDelete(val.menuId, index);
+                  }}
+                  variant="outlined"
+                  style={{ width: "130px" }}
+                  color="secondary">
+                  Delete
+                </Button>
+              </Box>
             </TableCell>
           </TableRow>
         );
