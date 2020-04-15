@@ -12,12 +12,6 @@ const app = express();
 // Set Server
 const server = http.createServer(app);
 
-// Parse application / x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
-
-// Parse application / json
-app.use(bodyParser.json());
-
 // Set cors
 // const corsOptions = {
 //   origin: "https://unpar-ekantin.firebaseapp.com/",
@@ -25,6 +19,12 @@ app.use(bodyParser.json());
 // };
 
 app.use(cors());
+
+// Parse application / x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Parse application / json
+app.use(bodyParser.json());
 
 // Set Token
 app.use(bearerToken());
