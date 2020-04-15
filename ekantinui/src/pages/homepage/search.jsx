@@ -9,7 +9,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Paper from "@material-ui/core/Paper";
 
-import ScrollToTop from "../../components/ScrollToTop";
+import ScrollToTop from "../../components/scrollToTop";
 import { SEARCH_RESET } from "../../redux/types";
 
 const useStyles = makeStyles((theme) => ({
