@@ -19,12 +19,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Set cors
-const corsOptions = {
-  origin: "https://unpar-ekantin.firebaseapp.com/",
-  optionsSuccessStatus: 200,
-};
+// const corsOptions = {
+//   origin: "https://unpar-ekantin.firebaseapp.com/",
+//   optionsSuccessStatus: 200,
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Set Token
 app.use(bearerToken());
