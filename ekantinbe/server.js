@@ -3,15 +3,20 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const bearerToken = require('express-bearer-token');
+const http = require('http');
+require('dotenv').config();
 
 // Set App
 const app = express();
+
+// Set Server
+const server = http.createServer(app);
 
 // Check database connection
 const db = require('./database/db');
 db.connect(err => {
 	if (err) throw err;
-	console.log('MySql connected...');
+	console.log('Database connected...');
 });
 
 // Parse application / x-www-form-urlencoded
@@ -31,10 +36,10 @@ app.use(express.static('public'));
 
 // Set routes
 const { adminRoutes, publicRoutes } = require('./routes');
-app.get('/', (req, res) => res.send('Server e-kantin Unpar is running...'));
+app.get('/', (req, res) => res.status(200).send('Server e-kantin Unpar is running...'));
 app.use('/admin', adminRoutes);
 app.use('/public', publicRoutes);
 
 // Set PORT
 const PORT = process.env.PORT || 1919;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

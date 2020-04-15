@@ -350,6 +350,7 @@ body {
   /* text-shadow: 2px 1px #00040a; */
   transition: 0.5s;
   cursor: pointer;
+  text-align: justify;
 }
 
 .alert-danger:hover {

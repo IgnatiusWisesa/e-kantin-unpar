@@ -102,6 +102,7 @@ module.exports = {
 	 */
 	adminKeepLogin: (req, res) => {
 		// Get Admin Id After Verify Token
+		// console.log(req.user)
 		const adminId = parseInt(req.user.adminId);
 
 		// Set SQL Syntax

@@ -21,14 +21,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "grey",
     flexGrow: 1,
   },
+  rootcolor: {
+    backgroundColor: "#00a8cc"
+  },
   appBar: {
     width: 460,
     paddingLeft: 10,
     paddingRight: 10,
     marginLeft: "auto",
     marginRight: "auto",
-    zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: "#00a8cc"
+    zIndex: theme.zIndex.drawer + 1
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -119,7 +121,7 @@ function HeaderAppBar(props) {
     <Fragment>
       <ElevationScroll {...props}>
         <div className={classes.root}>
-          <AppBar>
+          <AppBar className={classes.rootcolor}>
             <div id="appbar-menu" className={classes.appBar}>
               <Toolbar>
                 {location.pathname === "/" || location.pathname === "/daftar_menu" ? (
@@ -150,7 +152,7 @@ function HeaderAppBar(props) {
                         <SearchIcon />
                       </div>
                       <InputBase
-                        placeholder="Search menu…"
+                        placeholder="search menu"
                         onChange={handleSearchQuery}
                         value={searchQuery}
                         onKeyPress={handleInput}
