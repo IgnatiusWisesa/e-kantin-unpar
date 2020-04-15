@@ -5,7 +5,7 @@ require('dotenv').config();
 module.exports = {
 	auth: (req, res, next) => {
 		// Get Token
-		const token = req.token;
+		const token = req.token
 
 		// Validation Data
 		if (token) {
@@ -19,6 +19,7 @@ module.exports = {
 						.status(401)
 						.send({ message: 'User not authorized.', name: 'User not authorized.' });
 				} else {
+					// console.log('decoded', decoded)
 					req.user = decoded;
 					next();
 				}

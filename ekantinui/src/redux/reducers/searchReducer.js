@@ -11,7 +11,6 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return { ...state, querySearch: payload, onSearch: true };
     case SEARCH_RESET:
       return INITIAL_STATE;
-
     default:
       return state;
   }

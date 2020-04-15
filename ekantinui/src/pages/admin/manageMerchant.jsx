@@ -26,8 +26,9 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 // input field
 import TextField from "@material-ui/core/TextField";
-
+// helper
 import { APIURL } from "../../helpers/APIURL";
+import { adminKeepLogin } from "./../../redux/actions"
 
 class ManageMerchant extends Component {
   state = {
@@ -216,7 +217,7 @@ class ManageMerchant extends Component {
         </TableRow>
       );
     } else {
-      console.log(this.state.datakantin)
+      // console.log(this.state.datakantin)
       return this.state.datakantin.map((val, index) => {
         return (
           <TableRow key={index}>
@@ -234,7 +235,7 @@ class ManageMerchant extends Component {
                     src={APIURL + val.standPhoto}
                     alt="Canteen's Profile"
                     onClick={() => {
-                      console.log(index);
+                      // console.log(index);
                       this.setState({ insertfoto: val.profileId });
                     }}
                   />
@@ -246,7 +247,7 @@ class ManageMerchant extends Component {
                     src={APIURL + '/images/' +val.standPhoto}
                     alt="Canteen's Profile"
                     onClick={() => {
-                      console.log(index);
+                      // console.log(index);
                       this.setState({ insertfoto: val.profileId });
                     }}
                   />
