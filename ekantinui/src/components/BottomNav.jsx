@@ -8,17 +8,17 @@ import RestaurantMenuIcon from "@material-ui/icons/RestaurantMenu";
 
 const useStyles = makeStyles({
   container: {
-    width: 480,
+    width: 360,
     backgroundColor: "#fff",
     position: "sticky",
     bottom: 0,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 0,
+    paddingRight: 0,
     marginLeft: "auto",
     marginRight: "auto",
   },
   bottomNav: {
-    width: 460,
+    width: 340,
     borderTop: "solid",
     borderWidth: 0.5,
     borderColor: "#c7c7c7",

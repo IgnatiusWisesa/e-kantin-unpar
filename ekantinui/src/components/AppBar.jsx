@@ -13,24 +13,24 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import { SEARCH_START } from "../redux/types";
 
-import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
+import RestaurantMenuIcon from "@material-ui/icons/RestaurantMenu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 480,
+    maxWidth: 360,
     backgroundColor: "grey",
     flexGrow: 1,
   },
   rootcolor: {
-    backgroundColor: "#00a8cc"
+    backgroundColor: "#00a8cc",
   },
   appBar: {
-    width: 460,
-    paddingLeft: 10,
-    paddingRight: 10,
+    width: 340,
+    paddingLeft: 0,
+    paddingRight: 0,
     marginLeft: "auto",
     marginRight: "auto",
-    zIndex: theme.zIndex.drawer + 1
+    zIndex: theme.zIndex.drawer + 1,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -43,14 +43,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
-    marginLeft:'1vh'
+    marginLeft: "1vh",
   },
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade("#005082", 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade("#005082", 0.25),
     },
     marginLeft: 0,
     width: "50%",
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1),
       width: "auto",
     },
-    backgroundColor:'#005082'
+    // backgroundColor:'#005082'
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
