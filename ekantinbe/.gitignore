@@ -4,3 +4,5 @@ npm-debug.log
 
 public.key
 private.key
+
+node_modules/
