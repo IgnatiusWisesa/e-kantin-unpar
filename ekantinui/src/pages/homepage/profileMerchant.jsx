@@ -23,7 +23,7 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import LogoWA from "../../chat_via_wa.svg";
-import ScrollToTop from "../../components/ScrollToTop";
+import ScrollToTop from "../../components/scrollToTop";
 import { APIURL } from "../../helpers/APIURL";
 
 const profilStyles = makeStyles((theme) => ({

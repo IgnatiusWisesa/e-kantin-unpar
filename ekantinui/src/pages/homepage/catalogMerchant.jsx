@@ -13,7 +13,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Paper from "@material-ui/core/Paper";
 
 import LogoWA from "../../chat_via_wa.svg";
-import ScrollToTop from "../../components/ScrollToTop";
+import ScrollToTop from "../../components/scrollToTop";
 
 import { APIURL } from "../../helpers/APIURL";
 
