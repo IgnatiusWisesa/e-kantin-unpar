@@ -9,17 +9,17 @@ require('dotenv').config();
 // Set App
 const app = express();
 
-// Set Server
-const server = http.createServer(app);
-
 // Set cors
 app.use(cors());
 app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');
-	// res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-	// res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 	next();
 });
+
+// Set Server
+const server = http.createServer(app);
 
 // Parse application / x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
