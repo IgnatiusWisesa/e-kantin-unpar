@@ -49,5 +49,5 @@ app.use("/admin", adminRoutes);
 app.use("/public", publicRoutes);
 
 // Set PORT
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 1919;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
