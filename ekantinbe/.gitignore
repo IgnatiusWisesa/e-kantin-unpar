@@ -1,4 +1,6 @@
-node_modules/
-private.key
-public.key
 .env
+npm-debug.log
+.DS_Store
+
+public.key
+private.key

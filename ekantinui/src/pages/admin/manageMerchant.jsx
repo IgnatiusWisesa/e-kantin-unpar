@@ -28,7 +28,7 @@ import Fade from "@material-ui/core/Fade";
 import TextField from "@material-ui/core/TextField";
 // helper
 import { APIURL } from "../../helpers/APIURL";
-import { adminKeepLogin } from "./../../redux/actions"
+// import { adminKeepLogin } from "./../../redux/actions"
 
 class ManageMerchant extends Component {
   state = {
@@ -228,30 +228,29 @@ class ManageMerchant extends Component {
                   Upload File
                   <input type="file" style={{ display: "none" }} onChange={(e) => this.onEditPhoto(e, val.profileId)} />
                 </Button>
-              ) : val.standPhoto==='/images/img1586087837004.retail-store-icon.png'?(
-                  <img
-                    className="card-img-top"
-                    style={{ height: "80px", width: "120px" }}
-                    src={APIURL + val.standPhoto}
-                    alt="Canteen's Profile"
-                    onClick={() => {
-                      // console.log(index);
-                      this.setState({ insertfoto: val.profileId });
-                    }}
-                  />
-              )
-                :
-                  <img
-                    className="card-img-top"
-                    style={{ height: "80px", width: "120px" }}
-                    src={APIURL + '/images/' +val.standPhoto}
-                    alt="Canteen's Profile"
-                    onClick={() => {
-                      // console.log(index);
-                      this.setState({ insertfoto: val.profileId });
-                    }}
-                  />
-              }
+              ) : val.standPhoto === "/images/img1586087837004.retail-store-icon.png" ? (
+                <img
+                  className="card-img-top"
+                  style={{ height: "80px", width: "120px" }}
+                  src={APIURL + val.standPhoto}
+                  alt="Canteen's Profile"
+                  onClick={() => {
+                    // console.log(index);
+                    this.setState({ insertfoto: val.profileId });
+                  }}
+                />
+              ) : (
+                <img
+                  className="card-img-top"
+                  style={{ height: "80px", width: "120px" }}
+                  src={APIURL + "/images/" + val.standPhoto}
+                  alt="Canteen's Profile"
+                  onClick={() => {
+                    // console.log(index);
+                    this.setState({ insertfoto: val.profileId });
+                  }}
+                />
+              )}
             </TableCell>
             <TableCell>
               Nama <span style={{ paddingLeft: "30px" }}>: {val.standName}</span> <br />
