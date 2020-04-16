@@ -82,7 +82,7 @@ function CatalogMerchant() {
     <Fragment>
       <Toolbar />
       <ScrollToTop />
-      <Paper className={classes.container}>
+      <div className={classes.container}>
         {Loading ? (
           <div className="loading">Loading&#8230;</div>
         ) : (
@@ -120,7 +120,7 @@ function CatalogMerchant() {
             })}
           </div>
         )}
-      </Paper>
+      </div>
     </Fragment>
   );
 }
