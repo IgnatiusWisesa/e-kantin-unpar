@@ -44,7 +44,7 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   container: {
     minHeight: "100vh",
-    maxWidth: 480,
+    maxWidth: 360,
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: -55,
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 420,
+    width: 340,
     minHeight: "100vh",
     paddingBottom: 80,
     marginLeft: "auto",

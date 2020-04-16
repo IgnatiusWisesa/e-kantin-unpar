@@ -29,7 +29,7 @@ import { APIURL } from "../../helpers/APIURL";
 const profilStyles = makeStyles((theme) => ({
   container: {
     minHeight: "100vh",
-    maxWidth: 480,
+    maxWidth: 360,
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: -55,
@@ -37,7 +37,7 @@ const profilStyles = makeStyles((theme) => ({
   },
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 420,
+    width: 340,
     minHeight: "100vh",
     paddingBottom: 80,
     marginLeft: "auto",
@@ -45,8 +45,8 @@ const profilStyles = makeStyles((theme) => ({
     marginTop: 5,
   },
   avatar: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
+    width: theme.spacing(12),
+    height: theme.spacing(12),
     marginRight: "auto",
     marginLeft: "auto",
     backgroundColor: "#ebebeb",
@@ -101,11 +101,11 @@ function ProfileMerchant() {
               <CardMedia>
                 {stand.standPhoto === "/images/img1586087837004.retail-store-icon.png" ? (
                   <Avatar className={profil.avatar}>
-                    <img width="75px" src={APIURL + stand.standPhoto} alt={stand.standName} />
+                    <img width="65px" src={APIURL + stand.standPhoto} alt={stand.standName} />
                   </Avatar>
                 ) : (
                   <Avatar className={profil.avatar}>
-                    <img width="75px" src={APIURL + "/images/" + stand.standPhoto} alt={stand.standName} />
+                    <img width="65px" src={APIURL + "/images/" + stand.standPhoto} alt={stand.standName} />
                   </Avatar>
                 )}
               </CardMedia>
@@ -143,7 +143,7 @@ function ProfileMerchant() {
                         return (
                           <ListItem key={id} button className={profil.nested}>
                             <ListItemText primary={"Rp " + Numeral(food.menuPrice).format("0,0")} />
-                            <ListItemText style={{ width: 180 }} primary={food.menuName} secondary={food.menuDesc} />
+                            <ListItemText style={{ width: 160 }} primary={food.menuName} secondary={food.menuDesc} />
                           </ListItem>
                         );
                       })}

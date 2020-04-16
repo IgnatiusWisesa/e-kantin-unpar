@@ -17,7 +17,7 @@ import RestaurantMenuIcon from "@material-ui/icons/RestaurantMenu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 480,
+    maxWidth: 360,
     backgroundColor: "grey",
     flexGrow: 1,
   },
@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#00a8cc",
   },
   appBar: {
-    width: 460,
-    paddingLeft: 10,
-    paddingRight: 10,
+    width: 340,
+    paddingLeft: 0,
+    paddingRight: 0,
     marginLeft: "auto",
     marginRight: "auto",
     zIndex: theme.zIndex.drawer + 1,

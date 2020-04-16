@@ -20,10 +20,10 @@ import { APIURL } from "../../helpers/APIURL";
 const useStyles = makeStyles((theme) => ({
   container: {
     minHeight: "100vh",
-    maxWidth: 480,
+    maxWidth: 360,
     paddingTop: 30,
-    paddingLeft: 30,
-    paddingRight: 30,
+    // paddingLeft: 15,
+    // paddingRight: 15,
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: -55,
