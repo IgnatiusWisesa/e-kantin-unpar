@@ -11,27 +11,6 @@ const app = express();
 
 // Set cors
 app.use(cors());
-app.use(function(req, res, next) {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-	next();
-});
-
-// Set Server
-const server = http.createServer(app);
-
-// Parse application / x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
-
-// Parse application / json
-app.use(bodyParser.json());
-
-// Set Token
-app.use(bearerToken());
-
-// Set Static File
-app.use(express.static('public'));
 
 app.use(function(req, res, next) {
 	// Website you wish to allow to connect
@@ -50,6 +29,22 @@ app.use(function(req, res, next) {
 	// Pass to next layer of middleware
 	next();
 });
+
+// Set Server
+const server = http.createServer(app);
+
+// Parse application / x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Parse application / json
+app.use(bodyParser.json());
+
+// Set Token
+app.use(bearerToken());
+
+// Set Static File
+app.use(express.static('public'));
+
 // Check database connection
 const db = require('./database/db');
 db.connect(err => {
