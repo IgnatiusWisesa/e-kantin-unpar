@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
@@ -11,9 +11,6 @@ import Admin from "./pages/Admin";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// import { useDispatch, useSelector } from "react-redux";
-// import { adminKeepLogin } from "./redux/actions";
-
 const theme = createMuiTheme({
   palette: {
     primary: blue,
@@ -24,14 +21,6 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  // const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(adminKeepLogin())
-  // }, [adminKeepLogin])
-
-  // // get data from global state
-  // const data = useSelector( state => state.Auth )
-  // console.log(data)
   return (
     <Fragment>
       <CssBaseline />
