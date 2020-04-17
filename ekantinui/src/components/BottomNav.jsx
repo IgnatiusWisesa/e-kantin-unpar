@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     marginRight: "auto",
   },
   bottomNav: {
-    width: 340,
+    width: 360,
     paddingLeft: 0,
     paddingRight: 0,
     marginLeft: "auto",
