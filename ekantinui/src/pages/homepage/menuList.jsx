@@ -14,7 +14,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import LocalCafeIcon from "@material-ui/icons/LocalCafe";
-import Paper from "@material-ui/core/Paper";
 
 import ScrollToTop from "../../components/scrollToTop";
 
