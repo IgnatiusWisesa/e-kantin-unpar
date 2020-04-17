@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const bearerToken = require("express-bearer-token");
-// const http = require('http');
+const http = require("http");
 require("dotenv").config();
 
 // Set App
@@ -12,16 +12,14 @@ const app = express();
 // Set cors
 app.use(cors());
 
-// app.all('/', function(req, res, next) {
-// 	res.header('Access-Control-Allow-Origin', '*');
-// 	res.header('Access-Control-Allow-Origin', 'X-Requested-With');
-// 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-// 	res.setHeader('Access-Control-Allow-Credentials', true);
-// 	next();
-// });
+app.all("/", function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "X-Requested-With");
+  next();
+});
 
 // Set Server
-// const server = http.createServer(app);
+const server = http.createServer(app);
 
 // Parse application / x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -39,7 +37,7 @@ app.use(express.static("public"));
 const db = require("./database/db");
 db.connect((err) => {
   if (err) throw err;
-  console.log("Database connected...");
+  console.log("MySql connected...");
 });
 
 // Set routes

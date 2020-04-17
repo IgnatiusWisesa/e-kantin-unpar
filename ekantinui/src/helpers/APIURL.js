@@ -1,1 +1,1 @@
-export const APIURL = "https://api-ekantin-unpar.herokuapp.com";
+export const APIURL = 'https://www.api.ekantin-unpar.com';
