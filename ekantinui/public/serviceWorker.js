@@ -1,4 +1,4 @@
-let CACHE_NAME = 'Ekantin Universitas Parahyangan v2';
+let CACHE_NAME = 'Ekantin Universitas Parahyangan';
 let urlsToCache = ['/'];
 
 // Install a service worker
@@ -27,7 +27,7 @@ self.addEventListener('fetch', event => {
 
 // Update a service worker / update cache
 self.addEventListener('activate', event => {
-	let cacheWhitelist = ['Ekantin Universitas Parahyangan v1'];
+	let cacheWhitelist = [CACHE_NAME];
 	event.waitUntil(
 		caches.keys().then(cacheNames => {
 			return Promise.all(
