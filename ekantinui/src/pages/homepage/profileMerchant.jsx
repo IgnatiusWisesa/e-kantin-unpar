@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Redirect, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Numeral from "numeral";
+import { Helmet } from "react-helmet";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -52,7 +53,7 @@ const profilStyles = makeStyles((theme) => ({
     backgroundColor: "#ebebeb",
   },
   nested: {
-    paddingLeft: theme.spacing(4),
+    paddingLeft: theme.spacing(2),
   },
 }));
 
@@ -93,6 +94,9 @@ function ProfileMerchant() {
   } else {
     return (
       <Fragment>
+        <Helmet>
+          <title>{`Kantin ${stand.standName}`}</title>
+        </Helmet>
         <ScrollToTop />
         <div className={profil.container}>
           <Toolbar id="back-to-top-anchor" />
@@ -143,7 +147,11 @@ function ProfileMerchant() {
                         return (
                           <ListItem key={id} button className={profil.nested}>
                             <ListItemText primary={"Rp " + Numeral(food.menuPrice).format("0,0")} />
-                            <ListItemText style={{ width: 160 }} primary={food.menuName} secondary={food.menuDesc} />
+                            <ListItemText
+                              style={{ marginLeft: 12, width: 160 }}
+                              primary={food.menuName}
+                              secondary={food.menuDesc}
+                            />
                           </ListItem>
                         );
                       })}
@@ -167,7 +175,11 @@ function ProfileMerchant() {
                         return (
                           <ListItem key={id} button className={profil.nested}>
                             <ListItemText primary={"Rp " + Numeral(drink.menuPrice).format("0,0")} />
-                            <ListItemText style={{ width: 180 }} primary={drink.menuName} secondary={drink.menuDesc} />
+                            <ListItemText
+                              style={{ marginLeft: 12, width: 160 }}
+                              primary={drink.menuName}
+                              secondary={drink.menuDesc}
+                            />
                           </ListItem>
                         );
                       })}

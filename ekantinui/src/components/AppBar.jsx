@@ -13,7 +13,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import { SEARCH_START } from "../redux/types";
 
-import RestaurantMenuIcon from "@material-ui/icons/RestaurantMenu";
+import Logo from "./../image/LOGO.png"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,8 +119,8 @@ function HeaderAppBar(props) {
 
   return (
     <Fragment>
-      <ElevationScroll {...props}>
-        <div className={classes.root}>
+      <div className={classes.root}>
+        <ElevationScroll {...props}>
           <AppBar className={classes.rootcolor}>
             <div id="appbar-menu" className={classes.appBar}>
               <Toolbar>
@@ -133,7 +133,8 @@ function HeaderAppBar(props) {
                       aria-label="menu">
                       <MenuIcon />
                     </IconButton> */}
-                    <RestaurantMenuIcon />
+                    {/* <RestaurantMenuIcon /> */}
+                    <img style={{width:'5vh'}} src={Logo} alt="logo" />
                     <Typography className={classes.title} variant="h6" noWrap>
                       eKantin
                     </Typography>
@@ -173,8 +174,8 @@ function HeaderAppBar(props) {
               </Toolbar>
             </div>
           </AppBar>
-        </div>
-      </ElevationScroll>
+        </ElevationScroll>
+      </div>
     </Fragment>
   );
 }
