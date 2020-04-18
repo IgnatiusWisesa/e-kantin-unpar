@@ -28,7 +28,8 @@ import Fade from "@material-ui/core/Fade";
 import TextField from "@material-ui/core/TextField";
 // helper
 import { APIURL } from "../../helpers/APIURL";
-// import { adminKeepLogin } from "./../../redux/actions"
+// sweetalert
+import Swal from 'sweetalert2'
 
 class ManageMerchant extends Component {
   state = {
@@ -91,6 +92,13 @@ class ManageMerchant extends Component {
       .then((res) => {
         Axios.post(`${APIURL}/admin/stand`)
           .then((res) => {
+            Swal.fire({
+              position: 'top',
+              icon: 'success',
+              title: 'A new merchant has been added',
+              showConfirmButton: false,
+              timer: 1500
+            })
             this.setState({
               datakantin: res.data.standResult,
               pager: res.data.pager,
@@ -107,22 +115,39 @@ class ManageMerchant extends Component {
   };
 
   onClickDelete = (id, index) => {
-    Axios.post(`${APIURL}/admin/delete-stand`, { profileId: id })
-      .then((res) => {
-        Axios.post(`${APIURL}/admin/stand`)
-          .then((res) => {
-            this.setState({
-              datakantin: res.data.standResult,
-              pager: res.data.pager,
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        Axios.post(`${APIURL}/admin/delete-stand`, { profileId: id })
+        .then((res) => {
+          Axios.post(`${APIURL}/admin/stand`)
+            .then((res) => {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+              this.setState({
+                datakantin: res.data.standResult,
+                pager: res.data.pager,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
             });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
+    })
   };
 
   onClickEdit = () => {
@@ -146,6 +171,13 @@ class ManageMerchant extends Component {
       .then((res) => {
         Axios.post(`${APIURL}/admin/stand`)
           .then((res) => {
+            Swal.fire({
+              position: 'top',
+              icon: 'success',
+              title: 'Your work has been saved',
+              showConfirmButton: false,
+              timer: 1500
+            })
             this.setState({
               datakantin: res.data.standResult,
               pager: res.data.pager,
@@ -217,7 +249,6 @@ class ManageMerchant extends Component {
         </TableRow>
       );
     } else {
-      // console.log(this.state.datakantin)
       return this.state.datakantin.map((val, index) => {
         return (
           <TableRow key={index}>
@@ -235,7 +266,6 @@ class ManageMerchant extends Component {
                   src={APIURL + val.standPhoto}
                   alt="Canteen's Profile"
                   onClick={() => {
-                    // console.log(index);
                     this.setState({ insertfoto: val.profileId });
                   }}
                 />
@@ -246,7 +276,6 @@ class ManageMerchant extends Component {
                   src={APIURL + "/images/" + val.standPhoto}
                   alt="Canteen's Profile"
                   onClick={() => {
-                    // console.log(index);
                     this.setState({ insertfoto: val.profileId });
                   }}
                 />

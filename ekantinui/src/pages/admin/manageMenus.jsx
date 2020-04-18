@@ -33,6 +33,8 @@ import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 // numeral
 import numeral from "numeral";
+// sweetalert
+import Swal from 'sweetalert2'
 
 import { APIURL } from "../../helpers/APIURL";
 
@@ -87,14 +89,18 @@ class ManageMenus extends Component {
       menuPrice: harga,
     };
 
-    console.log(menubaru);
 
     Axios.post(`${APIURL}/admin/add-menu`, menubaru)
       .then((res) => {
-        console.log(res.data);
         Axios.post(`${APIURL}/admin/menu`, { profileId: this.props.match.params.id })
           .then((res) => {
-            console.log(res.data);
+            Swal.fire({
+              position: 'top',
+              icon: 'success',
+              title: 'A new menu has been added',
+              showConfirmButton: false,
+              timer: 1500
+            })
             this.setState({
               datamenu: res.data.menuResult,
               modaladd: false,
@@ -110,31 +116,43 @@ class ManageMenus extends Component {
   };
 
   onClickDelete = (id, index) => {
-    console.log(id, index);
-
-    Axios.post(`${APIURL}/admin/delete-menu`, { menuId: id })
-      .then((res) => {
-        console.log(res.data);
-        Axios.post(`${APIURL}/admin/menu`, { profileId: this.props.match.params.id })
-          .then((res) => {
-            console.log(res.data);
-            this.setState({
-              datamenu: res.data.menuResult,
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        Axios.post(`${APIURL}/admin/delete-menu`, { menuId: id })
+        .then((res) => {
+          Axios.post(`${APIURL}/admin/menu`, { profileId: this.props.match.params.id })
+            .then((res) => {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+              this.setState({
+                datamenu: res.data.menuResult,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
             });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
+    })
   };
 
   onClickEdit = () => {
     // id dan index edit
     let id = this.state.idedit;
-    console.log(id);
     let index = this.state.indexedit;
 
     let merchantid = this.props.match.params.id;
@@ -153,10 +171,15 @@ class ManageMenus extends Component {
 
     Axios.post(`${APIURL}/admin/edit-menu`, { menuId: id, data: menuedit })
       .then((res) => {
-        console.log(res.data);
         Axios.post(`${APIURL}/admin/menu`, { profileId: this.props.match.params.id })
           .then((res) => {
-            console.log(res.data);
+            Swal.fire({
+              position: 'top',
+              icon: 'success',
+              title: 'Your menu has been updated!',
+              showConfirmButton: false,
+              timer: 1500
+            })
             this.setState({
               datamenu: res.data.menuResult,
               modaledit: false,
