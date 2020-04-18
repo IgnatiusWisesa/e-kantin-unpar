@@ -14,7 +14,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import LocalCafeIcon from "@material-ui/icons/LocalCafe";
-import Paper from "@material-ui/core/Paper";
 
 import ScrollToTop from "../../components/scrollToTop";
 
@@ -60,9 +59,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 5,
   },
   nested: {
-    paddingLeft: theme.spacing(4),
+    paddingLeft: theme.spacing(2),
   },
   tab: {
+    width: 360,
     paddingLeft: -20,
     paddingRight: -20,
   },
@@ -94,7 +94,7 @@ function MenuList() {
     <Fragment>
       <ScrollToTop />
       <Toolbar />
-      <Paper className={classes.container}>
+      <div className={classes.container}>
         <AppBar className={classes.tab} position="static" color="inherit">
           <Tabs value={value} onChange={handleChange} indicatorColor="primary" textColor="primary" variant="fullWidth">
             <Tab label="Makanan" icon={<RestaurantIcon />} {...a11yProps(0)} />
@@ -115,7 +115,11 @@ function MenuList() {
                     button
                     className={classes.nested}>
                     <ListItemText primary={"Rp " + Numeral(food.menuPrice).format("0,0")} />
-                    <ListItemText style={{ width: 180 }} primary={food.menuName} secondary={`Kantin ${food.standName}`} />
+                    <ListItemText
+                      style={{ width: 150, marginLeft: 15 }}
+                      primary={food.menuName}
+                      secondary={`Kantin ${food.standName}`}
+                    />
                   </ListItem>
                 );
               })}
@@ -130,14 +134,18 @@ function MenuList() {
                     button
                     className={classes.nested}>
                     <ListItemText primary={"Rp " + Numeral(drink.menuPrice).format("0,0")} />
-                    <ListItemText style={{ width: 180 }} primary={drink.menuName} secondary={`Kantin ${drink.standName}`} />
+                    <ListItemText
+                      style={{ width: 150, marginLeft: 15 }}
+                      primary={drink.menuName}
+                      secondary={`Kantin ${drink.standName}`}
+                    />
                   </ListItem>
                 );
               })}
             </TabPanel>
           </div>
         )}
-      </Paper>
+      </div>
     </Fragment>
   );
 }

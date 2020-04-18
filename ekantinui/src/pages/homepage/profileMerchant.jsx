@@ -52,7 +52,7 @@ const profilStyles = makeStyles((theme) => ({
     backgroundColor: "#ebebeb",
   },
   nested: {
-    paddingLeft: theme.spacing(4),
+    paddingLeft: theme.spacing(2),
   },
 }));
 
@@ -143,7 +143,11 @@ function ProfileMerchant() {
                         return (
                           <ListItem key={id} button className={profil.nested}>
                             <ListItemText primary={"Rp " + Numeral(food.menuPrice).format("0,0")} />
-                            <ListItemText style={{ width: 160 }} primary={food.menuName} secondary={food.menuDesc} />
+                            <ListItemText
+                              style={{ marginLeft: 12, width: 160 }}
+                              primary={food.menuName}
+                              secondary={food.menuDesc}
+                            />
                           </ListItem>
                         );
                       })}
@@ -167,7 +171,11 @@ function ProfileMerchant() {
                         return (
                           <ListItem key={id} button className={profil.nested}>
                             <ListItemText primary={"Rp " + Numeral(drink.menuPrice).format("0,0")} />
-                            <ListItemText style={{ width: 180 }} primary={drink.menuName} secondary={drink.menuDesc} />
+                            <ListItemText
+                              style={{ marginLeft: 12, width: 160 }}
+                              primary={drink.menuName}
+                              secondary={drink.menuDesc}
+                            />
                           </ListItem>
                         );
                       })}
