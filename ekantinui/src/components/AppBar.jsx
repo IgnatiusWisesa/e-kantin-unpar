@@ -119,8 +119,8 @@ function HeaderAppBar(props) {
 
   return (
     <Fragment>
-      <ElevationScroll {...props}>
-        <div className={classes.root}>
+      <div className={classes.root}>
+        <ElevationScroll {...props}>
           <AppBar className={classes.rootcolor}>
             <div id="appbar-menu" className={classes.appBar}>
               <Toolbar>
@@ -174,8 +174,8 @@ function HeaderAppBar(props) {
               </Toolbar>
             </div>
           </AppBar>
-        </div>
-      </ElevationScroll>
+        </ElevationScroll>
+      </div>
     </Fragment>
   );
 }

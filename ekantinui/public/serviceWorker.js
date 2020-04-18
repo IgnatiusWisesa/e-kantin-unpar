@@ -1,42 +1,42 @@
-let CACHE_NAME = 'Ekantin Universitas Parahyangan v2';
-let urlsToCache = ['/'];
+let CACHE_NAME = "eKantin Universitas Parahyangan";
+let urlsToCache = ["/"];
 
 // Install a service worker
-self.addEventListener('install', event => {
-	// Perform install steps
-	event.waitUntil(
-		caches.open(CACHE_NAME).then(function(cache) {
-			console.log('Opened cache');
-			return cache.addAll(urlsToCache);
-		})
-	);
+self.addEventListener("install", (event) => {
+  // Perform install steps
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(function (cache) {
+      console.log("Opened cache");
+      return cache.addAll(urlsToCache);
+    })
+  );
 });
 
 // Cache and return requests
-self.addEventListener('fetch', event => {
-	event.respondWith(
-		caches.match(event.request).then(function(response) {
-			// Cache hit - return response
-			if (response) {
-				return response;
-			}
-			return fetch(event.request);
-		})
-	);
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then(function (response) {
+      // Cache hit - return response
+      if (response) {
+        return response;
+      }
+      return fetch(event.request);
+    })
+  );
 });
 
 // Update a service worker / update cache
-self.addEventListener('activate', event => {
-	let cacheWhitelist = ['Ekantin Universitas Parahyangan v1'];
-	event.waitUntil(
-		caches.keys().then(cacheNames => {
-			return Promise.all(
-				cacheNames.map(cacheName => {
-					if (cacheWhitelist.indexOf(cacheName) === -1) {
-						return caches.delete(cacheName);
-					}
-				})
-			);
-		})
-	);
+self.addEventListener("activate", (event) => {
+  let cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
