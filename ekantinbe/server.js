@@ -1,10 +1,10 @@
 // Import global module
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const bearerToken = require("express-bearer-token");
-const http = require("http");
-require("dotenv").config();
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const bearerToken = require('express-bearer-token');
+const http = require('http');
+require('dotenv').config();
 
 // Set App
 const app = express();
@@ -15,7 +15,7 @@ app.use(cors());
 // Add headers
 app.use(function(req, res, next) {
 	// Website you wish to allow to connect
-	res.setHeader('Access-Control-Allow-Origin', 'https://ekantin-unpar.com');
+	res.setHeader('Access-Control-Allow-Origin', 'https://ekantin-unpar.com/*');
 
 	// Request methods you wish to allow
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -29,12 +29,13 @@ app.use(function(req, res, next) {
 
 	// Pass to next layer of middleware
 	next();
+});
 
-// app.all('/', function(req, res, next) {
-// 	res.header('Access-Control-Allow-Origin', '*');
-// 	res.header('Access-Control-Allow-Origin', 'X-Requested-With');
-// 	next();
-// });
+// Set routes
+const { adminRoutes, publicRoutes } = require('./routes');
+app.get('/', (req, res) => res.status(200).send('Server e-kantin Unpar is running...'));
+app.use('/admin', adminRoutes);
+app.use('/public', publicRoutes);
 
 // Parse application / x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -46,20 +47,14 @@ app.use(bodyParser.json());
 app.use(bearerToken());
 
 // Set Static File
-app.use(express.static("public"));
+app.use(express.static('public'));
 
 // Check database connection
-const db = require("./database/db");
-db.connect((err) => {
-  if (err) throw err;
-  console.log("MySql connected...");
+const db = require('./database/db');
+db.connect(err => {
+	if (err) throw err;
+	console.log('MySql connected...');
 });
-
-// Set routes
-const { adminRoutes, publicRoutes } = require("./routes");
-app.get("/", (req, res) => res.status(200).send("Server e-kantin Unpar is running..."));
-app.use("/admin", adminRoutes);
-app.use("/public", publicRoutes);
 
 // Set PORT
 const PORT = process.env.PORT || 1919;
