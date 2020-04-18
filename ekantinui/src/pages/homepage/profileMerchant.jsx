@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Redirect, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Numeral from "numeral";
+import { Helmet } from "react-helmet";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -93,6 +94,9 @@ function ProfileMerchant() {
   } else {
     return (
       <Fragment>
+        <Helmet>
+          <title>{`Kantin ${stand.standName}`}</title>
+        </Helmet>
         <ScrollToTop />
         <div className={profil.container}>
           <Toolbar id="back-to-top-anchor" />
