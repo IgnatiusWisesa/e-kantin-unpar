@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   rootcolor: {
-    backgroundColor: "#fff",
+    backgroundColor: "#00a8cc",
   },
   appBar: {
     width: 340,
