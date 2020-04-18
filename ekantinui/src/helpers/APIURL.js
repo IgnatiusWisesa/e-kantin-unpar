@@ -1,1 +1,1 @@
-export const APIURL = 'https://www.api.ekantin-unpar.com';
+export const APIURL = 'http://localhost:1919';

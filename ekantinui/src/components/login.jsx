@@ -15,8 +15,15 @@ class LoginPage extends Component {
 		adminPassword: undefined,
 		alert: false,
 		message: '',
-		berhasil: false
+		berhasil: false,
+		token: ''
 	};
+
+	componentDidMount(){
+		let token = localStorage.getItem("e-kantin_admin")
+
+		this.setState({ token })
+	}
 
 	onLoginclick = () => {
 		let data = {
@@ -43,7 +50,7 @@ class LoginPage extends Component {
   };
 
 	render() {
-		if (this.state.berhasil) {
+		if (this.state.berhasil || this.state.token) {
 			return <Redirect from='/admin/login' to='/admin/manageMerchant' />;
 		}
 
