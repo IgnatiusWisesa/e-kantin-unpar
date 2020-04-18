@@ -13,7 +13,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import { SEARCH_START } from "../redux/types";
 
-import RestaurantMenuIcon from "@material-ui/icons/RestaurantMenu";
+import Logo from "./../image/LOGO.png"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   rootcolor: {
-    backgroundColor: "#00a8cc",
+    backgroundColor: "#fff",
   },
   appBar: {
     width: 340,
@@ -133,7 +133,8 @@ function HeaderAppBar(props) {
                       aria-label="menu">
                       <MenuIcon />
                     </IconButton> */}
-                    <RestaurantMenuIcon />
+                    {/* <RestaurantMenuIcon /> */}
+                    <img style={{width:'5vh'}} src={Logo} alt="logo" />
                     <Typography className={classes.title} variant="h6" noWrap>
                       eKantin
                     </Typography>
