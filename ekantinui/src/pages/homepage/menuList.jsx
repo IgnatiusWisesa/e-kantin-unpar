@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import Numeral from "numeral";
 import { useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -92,6 +93,9 @@ function MenuList() {
 
   return (
     <Fragment>
+      <Helmet>
+        <title>Daftar Menu</title>
+      </Helmet>
       <ScrollToTop />
       <Toolbar />
       <div className={classes.container}>

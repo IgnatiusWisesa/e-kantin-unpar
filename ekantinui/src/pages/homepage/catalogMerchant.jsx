@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -79,6 +80,9 @@ function CatalogMerchant() {
 
   return (
     <Fragment>
+      <Helmet>
+        <title>eKantin Unpar</title>
+      </Helmet>
       <Toolbar />
       <ScrollToTop />
       <div className={classes.container}>
