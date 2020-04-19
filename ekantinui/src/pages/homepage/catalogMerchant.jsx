@@ -91,7 +91,6 @@ function CatalogMerchant() {
         ) : (
           <div className={cardStyle.container}>
             {ListStand.map((stand) => {
-              console.log(stand.standPhoto);
               return (
                 <div variant="outlined" key={stand.profileId} className={cardStyle.root}>
                   <CardActionArea component={Link} to={{ pathname: "/profil", id: stand.profileId }}>
