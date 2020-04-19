@@ -88,25 +88,21 @@ function CatalogMerchant() {
       <div className={classes.container}>
         {Loading ? (
           <div className="loading">Loading&#8230;</div>
-          ) : (
-            <div className={cardStyle.container}>
+        ) : (
+          <div className={cardStyle.container}>
             {ListStand.map((stand) => {
-            console.log(stand.standPhoto)
+              console.log(stand.standPhoto);
               return (
                 <div variant="outlined" key={stand.profileId} className={cardStyle.root}>
                   <CardActionArea component={Link} to={{ pathname: "/profil", id: stand.profileId }}>
                     <CardContent className={cardStyle.media}>
-                      {stand.standPhoto === "" ? (
+                      {stand.standPhoto === "/images/img1586087837004.retail-store-icon.png" ? (
                         <Avatar className={cardStyle.avatar}>
-                          <img
-                            width="50px"
-                            src={APIURL + "/images/img1586087837004.retail-store-icon.png"}
-                            alt={stand.standName}
-                          />
+                          <img width="50px" src={APIURL + stand.standPhoto} alt={stand.standName} />
                         </Avatar>
                       ) : (
                         <Avatar className={cardStyle.avatar}>
-                          <img width="50px" src={APIURL +"/images/"+ stand.standPhoto} alt={stand.standName} />
+                          <img width="100%" src={APIURL + stand.standPhoto} alt={stand.standName} />
                         </Avatar>
                       )}
                     </CardContent>
