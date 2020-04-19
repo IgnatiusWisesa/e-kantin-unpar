@@ -109,7 +109,7 @@ function ProfileMerchant() {
                   </Avatar>
                 ) : (
                   <Avatar className={profil.avatar}>
-                    <img width="65px" src={APIURL + "/images/" + stand.standPhoto} alt={stand.standName} />
+                    <img width="100%" src={APIURL + stand.standPhoto} alt={stand.standName} />
                   </Avatar>
                 )}
               </CardMedia>
